@@ -143,6 +143,7 @@ body{font-family:var(--thai);background:#EDE8E1;color:var(--gray2);min-height:10
 </head>
 <body>
 
+
 <!-- HEADER -->
 <div class="adm-header">
   <div class="h-brand">ADMIN — ANNIVERSARY</div>
@@ -235,6 +236,23 @@ body{font-family:var(--thai);background:#EDE8E1;color:var(--gray2);min-height:10
           <div class="stat-label">รอตรวจสอบ</div>
         </div>
       </div>
+    </div>
+  </div>
+
+
+  <!-- ADMIN EMAILS -->
+  <div class="acard">
+    <div class="acard-head">
+      <div class="acard-title"><span class="icon">👤</span> รายชื่อ Admin</div>
+      <button class="btn btn-sm btn-primary" onclick="saveAdmins()">บันทึกลง KU Drive</button>
+    </div>
+    <div class="acard-body">
+      <div class="status-row" id="adminsStatus" style="display:none"></div>
+      <div style="font-size:12px;color:var(--gray1);margin-bottom:10px;line-height:1.6">
+        ใส่เมล <strong>@ku.th</strong> ที่อนุญาตให้เข้า Admin — คนละบรรทัด<br>
+        ถ้าปล่อยว่าง = อนุญาตทุกเมล @ku.th
+      </div>
+      <textarea id="adminEmails" style="font-family:monospace;font-size:13px;width:100%;min-height:120px;padding:10px 14px;border:0.5px solid rgba(0,0,0,.1);border-radius:10px;resize:vertical;outline:none;" placeholder="someone@ku.th&#10;another@ku.th"></textarea>
     </div>
   </div>
 
@@ -526,6 +544,32 @@ async function deleteAll(){
 
 function closeModal(){ document.getElementById('modalWrap').classList.remove('show'); }
 
+
+async function saveAdmins(){
+  if(!NC.pass){ setStatus('adminsStatus','err','กรุณาเชื่อมต่อ KU Drive ก่อน'); return; }
+  setStatus('adminsStatus','loading','กำลังบันทึก...');
+  try{
+    const emails = document.getElementById('adminEmails').value
+      .split('\n').map(e=>e.trim().toLowerCase())
+      .filter(e=>e && e.endsWith('@ku.th'));
+    const cfg = await NC.getJSON('config.json') || {};
+    cfg.admins = emails;
+    await NC.putJSON('config.json', cfg);
+    setStatus('adminsStatus','ok','✓ บันทึกแล้ว — มีผลทันทีใน session ถัดไป');
+  }catch(e){
+    setStatus('adminsStatus','err','❌ '+e.message);
+  }
+}
+
+async function loadAdminEmailsIntoForm(){
+  try{
+    const cfg = await NC.getJSON('config.json');
+    if(cfg && Array.isArray(cfg.admins)){
+      document.getElementById('adminEmails').value = cfg.admins.join('\n');
+    }
+  }catch(_){}
+}
+
 /* ── Init ── */
 if(sessionStorage.getItem('nc_pass')){
   document.getElementById('fPass').value = '••••••••••••';
@@ -533,7 +577,100 @@ if(sessionStorage.getItem('nc_pass')){
   document.getElementById('connBadge').style.cssText='font-size:11px;padding:3px 10px;border-radius:100px;background:#e8f5e9;color:#1b5e20;border:1px solid #a5d6a7';
   loadGreetings();
   loadSiteConfig();
+  loadAdminEmailsIntoForm();
 }
 </script>
+
+<!-- GOOGLE OAUTH LOCK -->
+<div id="lockScreen" style="position:fixed;inset:0;z-index:9999;background:#EDE8E1;display:flex;align-items:center;justify-content:center;">
+  <div style="background:#fff;border-radius:16px;border:0.5px solid rgba(0,0,0,.1);padding:32px;width:340px;text-align:center;box-shadow:0 4px 24px rgba(0,0,0,.06);">
+    <div style="font-family:'Cinzel',serif;font-size:16px;letter-spacing:.08em;margin-bottom:6px">ADMIN</div>
+    <div style="font-size:12px;color:#74787B;margin-bottom:20px;line-height:1.6">เข้าสู่ระบบด้วยเมล @ku.th<br>ที่ได้รับสิทธิ์เท่านั้น</div>
+    <div id="gSignInBtn" style="display:flex;justify-content:center;margin-bottom:12px"></div>
+    <div id="lockErr" style="font-size:12px;color:#e53935;display:none;margin-top:8px;line-height:1.6"></div>
+  </div>
+</div>
+
+<script src="https://accounts.google.com/gsi/client" async></script>
+<script>
+const GOOGLE_CLIENT_ID = '860378627815-16uh0n9nb91p72vlf2h1l02pdt109p9t.apps.googleusercontent.com';
+
+/* ── Admin emails โหลดจาก config.json บน KU Drive ──
+   ถ้ายังไม่มี admins ใน config จะใช้ list นี้เป็น fallback */
+let ADMIN_EMAILS = ['kunakorn.son@ku.th'];
+
+function showLockErr(msg){
+  const el = document.getElementById('lockErr');
+  el.textContent = msg;
+  el.style.display = 'block';
+}
+
+function unlockAdmin(){
+  document.getElementById('lockScreen').style.display = 'none';
+  sessionStorage.setItem('admin_auth','1');
+  // โหลดข้อมูลหลัง login สำเร็จ
+  if(typeof loadGreetings === 'function') loadGreetings();
+  if(typeof loadSiteConfig === 'function') loadSiteConfig();
+}
+
+async function loadAdminEmails(){
+  try{
+    const r = await fetch(NC.dav+'/config.json', { headers: NC.headers });
+    if(r.ok){
+      const cfg = await r.json();
+      if(Array.isArray(cfg.admins) && cfg.admins.length){
+        ADMIN_EMAILS = cfg.admins.map(e=>e.toLowerCase().trim());
+      }
+    }
+  }catch(_){}
+}
+
+function handleGoogleCredential(response){
+  try{
+    const payload = JSON.parse(atob(response.credential.split('.')[1]));
+    const email = (payload.email||'').toLowerCase();
+    const hd = (payload.hd||'');
+
+    // เช็ค domain @ku.th
+    if(!email.endsWith('@ku.th') && hd !== 'ku.th'){
+      showLockErr('❌ อนุญาตเฉพาะเมล @ku.th เท่านั้น');
+      return;
+    }
+    // เช็ครายชื่อ admin
+    if(ADMIN_EMAILS.length && !ADMIN_EMAILS.includes(email)){
+      showLockErr('❌ เมลนี้ไม่มีสิทธิ์เข้า Admin\n(' + email + ')');
+      return;
+    }
+    // ผ่านทั้งหมด
+    sessionStorage.setItem('admin_email', email);
+    unlockAdmin();
+  }catch(e){
+    showLockErr('❌ เกิดข้อผิดพลาด: ' + e.message);
+  }
+}
+
+async function initGoogleAuth(){
+  if(sessionStorage.getItem('admin_auth')==='1'){
+    document.getElementById('lockScreen').style.display='none';
+    return;
+  }
+  await loadAdminEmails();
+  google.accounts.id.initialize({
+    client_id: GOOGLE_CLIENT_ID,
+    callback: handleGoogleCredential,
+    hd: 'ku.th'
+  });
+  google.accounts.id.renderButton(
+    document.getElementById('gSignInBtn'),
+    { theme:'outline', size:'large', text:'signin_with', locale:'th' }
+  );
+}
+
+window.addEventListener('load', ()=>{
+  if(typeof google !== 'undefined') initGoogleAuth();
+  else document.querySelector('script[src*="gsi"]').addEventListener('load', initGoogleAuth);
+});
+</script>
+
 </body>
 </html>
