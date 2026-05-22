@@ -256,6 +256,64 @@ body{font-family:var(--thai);background:#EDE8E1;color:var(--gray2);min-height:10
     </div>
   </div>
 
+  <!-- GREETING FIELDS CONFIG -->
+  <div class="acard">
+    <div class="acard-head">
+      <div class="acard-title"><span class="icon">🎴</span> ตั้งค่าหน้าอวยพร</div>
+      <button class="btn btn-sm btn-primary" onclick="saveGreetingConfig()">บันทึกลง KU Drive</button>
+    </div>
+    <div class="acard-body">
+      <div class="status-row" id="gcStatus" style="display:none"></div>
+
+      <!-- คำนำหน้า -->
+      <div style="margin-bottom:16px">
+        <div style="font-size:12px;font-weight:600;color:var(--gray2);margin-bottom:8px">คำนำหน้าชื่อ</div>
+        <div style="font-size:12px;color:var(--gray1);margin-bottom:6px">ใส่คำนำหน้าคนละบรรทัด</div>
+        <textarea id="gcPrefixes" style="font-family:monospace;font-size:13px;width:100%;min-height:80px;padding:10px 14px;border:0.5px solid rgba(0,0,0,.1);border-radius:10px;resize:vertical;outline:none;" placeholder="นาย&#10;นาง&#10;นางสาว&#10;ดร.&#10;ผศ."></textarea>
+      </div>
+
+      <!-- Extra fields -->
+      <div style="font-size:12px;font-weight:600;color:var(--gray2);margin-bottom:10px">ช่องข้อมูลเพิ่มเติม</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px">
+        <div style="border:var(--border);border-radius:10px;padding:12px">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+            <span style="font-size:13px;font-weight:500">ตำแหน่ง</span>
+            <button class="toggle-sw" id="swRole" onclick="toggleSw('swRole')" style="width:36px;height:20px;border-radius:100px;border:none;cursor:pointer;background:var(--o);position:relative;transition:background .2s">
+              <span style="position:absolute;top:3px;right:3px;width:14px;height:14px;border-radius:50%;background:#fff;transition:all .2s"></span>
+            </button>
+          </div>
+          <input type="text" id="gcRoleLabel" value="ตำแหน่ง" style="font-size:12px;padding:5px 8px" placeholder="ชื่อ label">
+          <div style="font-size:11px;color:var(--gray1);margin-top:6px">แสดงบนการ์ด <button class="toggle-sw" id="swRoleCard" onclick="toggleSw('swRoleCard')" style="width:28px;height:16px;border-radius:100px;border:none;cursor:pointer;background:var(--o);position:relative;transition:background .2s;vertical-align:middle"><span style="position:absolute;top:2px;right:2px;width:12px;height:12px;border-radius:50%;background:#fff;transition:all .2s"></span></button></div>
+        </div>
+        <div style="border:var(--border);border-radius:10px;padding:12px">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+            <span style="font-size:13px;font-weight:500">รุ่น</span>
+            <button class="toggle-sw" id="swGen" onclick="toggleSw('swGen')" style="width:36px;height:20px;border-radius:100px;border:none;cursor:pointer;background:var(--o);position:relative;transition:background .2s">
+              <span style="position:absolute;top:3px;right:3px;width:14px;height:14px;border-radius:50%;background:#fff;transition:all .2s"></span>
+            </button>
+          </div>
+          <input type="text" id="gcGenLabel" value="รุ่น" style="font-size:12px;padding:5px 8px" placeholder="ชื่อ label">
+          <div style="font-size:11px;color:var(--gray1);margin-top:6px">แสดงบนการ์ด <button class="toggle-sw" id="swGenCard" onclick="toggleSw('swGenCard')" style="width:28px;height:16px;border-radius:100px;border:none;cursor:pointer;background:var(--o);position:relative;transition:background .2s;vertical-align:middle"><span style="position:absolute;top:2px;right:2px;width:12px;height:12px;border-radius:50%;background:#fff;transition:all .2s"></span></button></div>
+        </div>
+        <div style="border:var(--border);border-radius:10px;padding:12px">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+            <span style="font-size:13px;font-weight:500">ปี</span>
+            <button class="toggle-sw" id="swYear" onclick="toggleSw('swYear')" style="width:36px;height:20px;border-radius:100px;border:none;cursor:pointer;background:#ccc;position:relative;transition:background .2s">
+              <span style="position:absolute;top:3px;left:3px;width:14px;height:14px;border-radius:50%;background:#fff;transition:all .2s"></span>
+            </button>
+          </div>
+          <input type="text" id="gcYearLabel" value="ปี" style="font-size:12px;padding:5px 8px" placeholder="ชื่อ label">
+          <div style="font-size:11px;color:var(--gray1);margin-top:6px">แสดงบนการ์ด <button class="toggle-sw" id="swYearCard" onclick="toggleSw('swYearCard')" style="width:28px;height:16px;border-radius:100px;border:none;cursor:pointer;background:#ccc;position:relative;transition:background .2s;vertical-align:middle"><span style="position:absolute;top:2px;left:2px;width:12px;height:12px;border-radius:50%;background:#fff;transition:all .2s"></span></button></div>
+        </div>
+      </div>
+
+      <!-- Presets -->
+      <div style="font-size:12px;font-weight:600;color:var(--gray2);margin-bottom:6px">ข้อความ Preset</div>
+      <div style="font-size:12px;color:var(--gray1);margin-bottom:6px">ใส่ข้อความสำเร็จรูปให้ผู้ส่งเลือก — คนละบรรทัด</div>
+      <textarea id="gcPresets" style="font-family:var(--thai);font-size:13px;width:100%;min-height:100px;padding:10px 14px;border:0.5px solid rgba(0,0,0,.1);border-radius:10px;resize:vertical;outline:none;line-height:1.7" placeholder="ขอแสดงความยินดีในโอกาสครบรอบ...&#10;ขอให้องค์กรเจริญรุ่งเรือง..."></textarea>
+    </div>
+  </div>
+
   <!-- 4. Manage Greetings -->
   <div class="acard">
     <div class="acard-head">
@@ -270,6 +328,9 @@ body{font-family:var(--thai);background:#EDE8E1;color:var(--gray2);min-height:10
       </div>
     </div>
     <div class="acard-body">
+      <div style="margin-bottom:12px;display:flex;gap:8px">
+        <input type="text" id="gSearch" placeholder="🔍 ค้นหาชื่อหรือข้อความ..." oninput="gPage=0;renderGreetings()" style="flex:1;font-size:13px;padding:7px 12px;border-radius:8px;border:var(--border)">
+      </div>
       <div id="gList">
         <div style="text-align:center;color:var(--gray1);font-size:13px;padding:30px">
           กรุณาเชื่อมต่อ KU Drive ก่อน
@@ -453,6 +514,8 @@ function renderGreetings(){
   let list = [...allGreetings].reverse();
   if(f==='new') list = list.filter(d=>new Date(d.time)>cutoff);
   if(f==='flagged') list = list.filter(d=>d.flagged);
+  const q = (document.getElementById('gSearch')?.value||'').trim().toLowerCase();
+  if(q) list = list.filter(d=>(d.fullName||d.name||'').toLowerCase().includes(q)||(d.message||'').toLowerCase().includes(q));
 
   const total = Math.ceil(list.length/G_PER_PAGE);
   if(gPage>=total) gPage=Math.max(0,total-1);
@@ -476,6 +539,7 @@ function renderGreetings(){
         ${isNew?'<span style="font-size:9px;padding:1px 5px;background:#fff3e0;color:#FF8200;border-radius:100px;font-weight:700">NEW</span>':''}
       </div>
       <div class="g-msg">${escHtml(d.message)}</div>
+      ${[d.role,d.gen,d.year].filter(Boolean).map(t=>`<span style="font-size:10px;padding:1px 6px;border-radius:100px;background:#fff3e0;color:#cc6800;margin-right:4px">${escHtml(t)}</span>`).join('')}
       <div class="g-actions">
         <button class="btn btn-sm btn-ghost" onclick="toggleFlag('${d.id}')">${d.flagged?'✓ คืนสถานะ':'⚑ Flag'}</button>
         <button class="btn btn-sm btn-danger" onclick="confirmDelete('${d.id}','${escHtml(d.name)}')">ลบ</button>
@@ -570,6 +634,73 @@ async function loadAdminEmailsIntoForm(){
   }catch(_){}
 }
 
+
+/* ── Toggle switches ── */
+const SW_STATE = {};
+function toggleSw(id){
+  const btn = document.getElementById(id);
+  const span = btn.querySelector('span');
+  SW_STATE[id] = !SW_STATE[id];
+  const on = SW_STATE[id];
+  btn.style.background = on ? 'var(--o)' : '#ccc';
+  span.style.right = on ? '3px' : '';
+  span.style.left  = on ? '' : '3px';
+}
+function getSw(id){ return !!SW_STATE[id]; }
+function setSw(id, val){
+  SW_STATE[id] = !val; // toggle will flip it
+  toggleSw(id);
+}
+
+/* ── Load greeting config into form ── */
+async function loadGreetingConfig(){
+  try{
+    const cfg = await NC.getJSON('config.json');
+    if(!cfg) return;
+    if(cfg.prefixes) document.getElementById('gcPrefixes').value = cfg.prefixes.join('\n');
+    if(cfg.roleLabel) document.getElementById('gcRoleLabel').value = cfg.roleLabel;
+    if(cfg.genLabel)  document.getElementById('gcGenLabel').value  = cfg.genLabel;
+    if(cfg.yearLabel) document.getElementById('gcYearLabel').value = cfg.yearLabel;
+    setSw('swRole',     cfg.showRole !== false);
+    setSw('swGen',      cfg.showGen  !== false);
+    setSw('swYear',     !!cfg.showYear);
+    setSw('swRoleCard', cfg.showMetaOnCard !== false);
+    setSw('swGenCard',  cfg.showMetaOnCard !== false);
+    setSw('swYearCard', !!cfg.showYear);
+    if(cfg.presets) document.getElementById('gcPresets').value = cfg.presets.join('\n');
+    // site config
+    if(cfg.orgName) document.getElementById('cfgOrg').value = cfg.orgName;
+    if(cfg.year)    document.getElementById('cfgYear').value = cfg.year;
+    if(cfg.perPage) document.getElementById('cfgPerPage').value = cfg.perPage;
+  }catch(_){}
+}
+
+async function saveGreetingConfig(){
+  if(!NC.pass){ setStatus('gcStatus','err','กรุณาเชื่อมต่อ KU Drive ก่อน'); return; }
+  setStatus('gcStatus','loading','กำลังบันทึก...');
+  try{
+    const existing = await NC.getJSON('config.json') || {};
+    const prefixes = document.getElementById('gcPrefixes').value.split('\n').map(s=>s.trim()).filter(Boolean);
+    const presets  = document.getElementById('gcPresets').value.split('\n').map(s=>s.trim()).filter(Boolean);
+    const cfg = {
+      ...existing,
+      prefixes,
+      roleLabel:  document.getElementById('gcRoleLabel').value.trim() || 'ตำแหน่ง',
+      genLabel:   document.getElementById('gcGenLabel').value.trim()  || 'รุ่น',
+      yearLabel:  document.getElementById('gcYearLabel').value.trim() || 'ปี',
+      showRole:   getSw('swRole'),
+      showGen:    getSw('swGen'),
+      showYear:   getSw('swYear'),
+      showMetaOnCard: getSw('swRoleCard') || getSw('swGenCard') || getSw('swYearCard'),
+      presets,
+    };
+    await NC.putJSON('config.json', cfg);
+    setStatus('gcStatus','ok','✓ บันทึกแล้ว');
+  }catch(e){
+    setStatus('gcStatus','err','❌ '+e.message);
+  }
+}
+
 /* ── Init ── */
 if(sessionStorage.getItem('nc_pass')){
   document.getElementById('fPass').value = '••••••••••••';
@@ -578,6 +709,7 @@ if(sessionStorage.getItem('nc_pass')){
   loadGreetings();
   loadSiteConfig();
   loadAdminEmailsIntoForm();
+  loadGreetingConfig();
 }
 </script>
 
