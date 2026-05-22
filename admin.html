@@ -165,7 +165,7 @@ body{font-family:var(--thai);background:#EDE8E1;color:var(--gray2);min-height:10
       <div class="status-row" id="connStatus" style="display:none"></div>
       <div class="form-row">
         <label>WebDAV URL (ค่าเริ่มต้น)</label>
-        <input type="text" id="fBase" value="https://kudrive.ku.ac.th" readonly style="color:var(--gray1)">
+        <input type="text" id="fBase" value="https://anniversary-proxy.kunakorn-son.workers.dev" readonly style="color:var(--gray1)">
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
         <div class="form-row">
@@ -283,7 +283,7 @@ body{font-family:var(--thai);background:#EDE8E1;color:var(--gray2);min-height:10
    KU Drive WebDAV
    ================================================================ */
 const NC = {
-  get base(){ return document.getElementById('fBase').value.trim() || 'https://kudrive.ku.ac.th' },
+  get base(){ return document.getElementById('fBase').value.trim() || 'https://anniversary-proxy.kunakorn-son.workers.dev' },
   get user(){ return document.getElementById('fUser').value.trim() || 'feconkos' },
   get folder(){ return document.getElementById('fFolder').value.trim() || 'anniversary' },
   get pass(){ return sessionStorage.getItem('nc_pass') || '' },
