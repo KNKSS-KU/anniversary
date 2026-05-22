@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — Anniversary</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Sarabun:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --o:#FF8200;--od:#CC6800;--ol:#FFF3E0;
+  --g:#3DAA6B;--gl:#E8F5E9;
+  --r:#E53935;--rl:#FFEBEE;
+  --gray1:#74787B;--gray2:#222221;--gray3:#f7f5f2;
+  --disp:'Cinzel',serif;--thai:'Sarabun',sans-serif;
+  --border:0.5px solid rgba(0,0,0,.1);
+}
+body{font-family:var(--thai);background:#EDE8E1;color:var(--gray2);min-height:100vh}
+
+/* ── HEADER ── */
+.adm-header{
+  background:#fff;border-bottom:var(--border);
+  padding:0 24px;height:52px;
+  display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;z-index:50;
+}
+.h-brand{font-family:var(--disp);font-size:14px;letter-spacing:.08em}
+.h-links{display:flex;gap:8px}
+.h-link{font-size:12px;padding:5px 12px;border-radius:100px;
+  border:var(--border);text-decoration:none;color:var(--gray1);background:#fff;transition:all .2s}
+.h-link:hover{background:var(--gray3)}
+.h-link.primary{background:var(--o);color:#fff;border-color:var(--o)}
+.h-link.primary:hover{background:var(--od)}
+
+/* ── LAYOUT ── */
+.adm-main{max-width:900px;margin:0 auto;padding:24px 16px;display:flex;flex-direction:column;gap:20px}
+
+/* ── CARD ── */
+.acard{background:#fff;border-radius:12px;border:var(--border);overflow:hidden}
+.acard-head{
+  padding:14px 20px;border-bottom:var(--border);
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+}
+.acard-title{font-size:14px;font-weight:600;display:flex;align-items:center;gap:8px}
+.acard-title .icon{font-size:16px}
+.acard-body{padding:20px}
+
+/* ── STATUS ── */
+.status-row{
+  display:flex;align-items:center;gap:10px;padding:10px 14px;
+  border-radius:8px;border:var(--border);font-size:13px;margin-bottom:16px;
+  background:var(--gray3);
+}
+.status-row.ok{background:var(--gl);border-color:#a5d6a7;color:#1b5e20}
+.status-row.err{background:var(--rl);border-color:#ef9a9a;color:#b71c1c}
+.status-row.loading{background:#fff8e1;border-color:#ffe082;color:#7c6000}
+.spin{width:14px;height:14px;border:2px solid currentColor;border-top-color:transparent;border-radius:50%;animation:spin .6s linear infinite;flex-shrink:0}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ── FORM ── */
+.form-row{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+.form-row label{font-size:12px;font-weight:500;color:var(--gray1)}
+.form-row input,.form-row textarea{
+  font-family:var(--thai);font-size:13px;padding:8px 12px;
+  border:var(--border);border-radius:8px;background:#fff;color:var(--gray2);
+  outline:none;width:100%;transition:border-color .2s;
+}
+.form-row input:focus,.form-row textarea:focus{border-color:var(--o)}
+.form-row input[type=password]{letter-spacing:.1em}
+.form-row .hint{font-size:11px;color:var(--gray1)}
+
+/* ── BUTTONS ── */
+.btn{
+  font-family:var(--thai);font-size:13px;font-weight:500;
+  padding:8px 16px;border-radius:8px;border:var(--border);
+  cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:6px;
+}
+.btn-primary{background:var(--o);color:#fff;border-color:var(--o)}
+.btn-primary:hover{background:var(--od)}
+.btn-ghost{background:transparent;color:var(--gray1)}
+.btn-ghost:hover{background:var(--gray3)}
+.btn-danger{background:var(--r);color:#fff;border-color:var(--r)}
+.btn-danger:hover{background:#c62828}
+.btn-sm{font-size:12px;padding:5px 10px;border-radius:6px}
+.btn-row{display:flex;gap:8px;flex-wrap:wrap}
+
+/* ── GRID (greetings list) ── */
+.g-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px}
+.g-card{
+  border:var(--border);border-radius:8px;padding:12px;background:var(--gray3);
+  display:flex;flex-direction:column;gap:8px;
+}
+.g-card.flagged{border-color:#ef9a9a;background:var(--rl)}
+.g-card-top{display:flex;align-items:center;gap:8px}
+.g-av{width:28px;height:28px;border-radius:50%;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:10px;font-weight:700;color:#fff}
+.g-name{font-size:13px;font-weight:600;flex:1}
+.g-time{font-size:10px;color:var(--gray1)}
+.g-msg{font-size:12px;color:var(--gray2);line-height:1.6;
+  display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.g-actions{display:flex;gap:6px}
+
+/* ── STATS ── */
+.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:0}
+.stat-box{background:var(--gray3);border-radius:8px;padding:14px;text-align:center}
+.stat-num{font-size:24px;font-weight:600;color:var(--o)}
+.stat-label{font-size:11px;color:var(--gray1);margin-top:2px}
+
+/* ── PAGINATION ── */
+.g-pager{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:14px}
+.g-pager button{font-family:var(--thai);font-size:12px;padding:4px 10px;
+  border-radius:6px;border:var(--border);background:#fff;cursor:pointer;color:var(--gray2)}
+.g-pager button.active{background:var(--o);color:#fff;border-color:var(--o)}
+.g-pager button:disabled{opacity:.35;cursor:not-allowed}
+.g-pager .info{font-size:12px;color:var(--gray1)}
+
+/* ── TOAST ── */
+.toast{
+  position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(8px);
+  background:rgba(34,34,33,.88);color:#fff;font-size:13px;
+  padding:8px 18px;border-radius:100px;z-index:300;
+  opacity:0;transition:all .25s;pointer-events:none;
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ── CONFIRM MODAL ── */
+.modal-wrap{
+  position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:200;
+  display:none;align-items:center;justify-content:center;padding:20px;
+}
+.modal-wrap.show{display:flex}
+.modal{background:#fff;border-radius:12px;padding:24px;max-width:360px;width:100%;text-align:center}
+.modal h3{font-size:16px;font-weight:600;margin-bottom:8px}
+.modal p{font-size:13px;color:var(--gray1);line-height:1.6;margin-bottom:18px}
+.modal .btn-row{justify-content:center}
+
+@media(max-width:500px){
+  .stats-row{grid-template-columns:1fr 1fr}
+  .g-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="adm-header">
+  <div class="h-brand">ADMIN — ANNIVERSARY</div>
+  <div class="h-links">
+    <a href="anniversary-wall.html" class="h-link">🖼 Wall</a>
+    <a href="anniversary-greeting.html" class="h-link primary">✦ ส่งคำอวยพร</a>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="adm-main">
+
+  <!-- 1. KU Drive Connection -->
+  <div class="acard">
+    <div class="acard-head">
+      <div class="acard-title"><span class="icon">☁</span> เชื่อมต่อ KU Drive</div>
+      <span id="connBadge" style="font-size:11px;padding:3px 10px;border-radius:100px;border:var(--border);color:var(--gray1)">ยังไม่ได้เชื่อมต่อ</span>
+    </div>
+    <div class="acard-body">
+      <div class="status-row" id="connStatus" style="display:none"></div>
+      <div class="form-row">
+        <label>WebDAV URL (ค่าเริ่มต้น)</label>
+        <input type="text" id="fBase" value="https://kudrive.ku.ac.th" readonly style="color:var(--gray1)">
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div class="form-row">
+          <label>Username</label>
+          <input type="text" id="fUser" value="feconkos">
+        </div>
+        <div class="form-row">
+          <label>Folder</label>
+          <input type="text" id="fFolder" value="anniversary">
+        </div>
+      </div>
+      <div class="form-row">
+        <label>App Password <span style="font-weight:400;color:var(--gray1)">(สร้างได้ที่ KU Drive → Settings → Security)</span></label>
+        <input type="password" id="fPass" placeholder="วาง App Password ที่นี่...">
+        <span class="hint">Password จะเก็บใน sessionStorage เท่านั้น — ปิด browser แล้วต้องกรอกใหม่</span>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-ghost" onclick="testConn()">🔍 ทดสอบการเชื่อมต่อ</button>
+        <button class="btn btn-primary" onclick="saveConn()">✓ บันทึกและเชื่อมต่อ</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Site Config -->
+  <div class="acard">
+    <div class="acard-head">
+      <div class="acard-title"><span class="icon">⚙</span> ตั้งค่าเว็บไซต์</div>
+      <button class="btn btn-sm btn-primary" onclick="saveSiteConfig()">บันทึกลง KU Drive</button>
+    </div>
+    <div class="acard-body">
+      <div class="status-row" id="cfgStatus" style="display:none"></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px">
+        <div class="form-row">
+          <label>ชื่อองค์กร</label>
+          <input type="text" id="cfgOrg" placeholder="เช่น คณะเศรษฐศาสตร์">
+        </div>
+        <div class="form-row">
+          <label>ปีครบรอบ</label>
+          <input type="number" id="cfgYear" value="50" min="1" max="200">
+        </div>
+        <div class="form-row">
+          <label>การ์ดต่อหน้า</label>
+          <input type="number" id="cfgPerPage" value="9" min="3" max="30">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. Stats -->
+  <div class="acard">
+    <div class="acard-head">
+      <div class="acard-title"><span class="icon">📊</span> สถิติ</div>
+      <button class="btn btn-sm btn-ghost" onclick="loadGreetings()">↻ รีเฟรช</button>
+    </div>
+    <div class="acard-body">
+      <div class="stats-row">
+        <div class="stat-box">
+          <div class="stat-num" id="stTotal">—</div>
+          <div class="stat-label">คำอวยพรทั้งหมด</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num" id="stNew">—</div>
+          <div class="stat-label">ใหม่ (24 ชม.)</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num" id="stFlagged">—</div>
+          <div class="stat-label">รอตรวจสอบ</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. Manage Greetings -->
+  <div class="acard">
+    <div class="acard-head">
+      <div class="acard-title"><span class="icon">💬</span> จัดการคำอวยพร</div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <select id="gFilter" onchange="renderGreetings()" style="font-family:var(--thai);font-size:12px;padding:4px 8px;border-radius:6px;border:var(--border)">
+          <option value="all">ทั้งหมด</option>
+          <option value="new">ใหม่ (24ชม.)</option>
+          <option value="flagged">รอตรวจสอบ</option>
+        </select>
+        <button class="btn btn-sm btn-danger" onclick="confirmDeleteAll()">ลบทั้งหมด</button>
+      </div>
+    </div>
+    <div class="acard-body">
+      <div id="gList">
+        <div style="text-align:center;color:var(--gray1);font-size:13px;padding:30px">
+          กรุณาเชื่อมต่อ KU Drive ก่อน
+        </div>
+      </div>
+      <div class="g-pager" id="gPager"></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- CONFIRM MODAL -->
+<div class="modal-wrap" id="modalWrap">
+  <div class="modal">
+    <h3 id="modalTitle">ยืนยันการลบ</h3>
+    <p id="modalMsg"></p>
+    <div class="btn-row">
+      <button class="btn btn-ghost" onclick="closeModal()">ยกเลิก</button>
+      <button class="btn btn-danger" id="modalConfirm">ลบ</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+/* ================================================================
+   KU Drive WebDAV
+   ================================================================ */
+const NC = {
+  get base(){ return document.getElementById('fBase').value.trim() || 'https://kudrive.ku.ac.th' },
+  get user(){ return document.getElementById('fUser').value.trim() || 'feconkos' },
+  get folder(){ return document.getElementById('fFolder').value.trim() || 'anniversary' },
+  get pass(){ return sessionStorage.getItem('nc_pass') || '' },
+  get dav(){ return `${this.base}/remote.php/dav/files/${this.user}/${this.folder}` },
+  get headers(){
+    return {
+      'Authorization': 'Basic ' + btoa(`${this.user}:${this.pass}`),
+      'Content-Type': 'application/json'
+    };
+  },
+  async getJSON(file){
+    const r = await fetch(`${this.dav}/${file}`, { headers: this.headers });
+    if(r.status===404) return null;
+    if(!r.ok) throw new Error(`GET ${file}: ${r.status} ${r.statusText}`);
+    return r.json();
+  },
+  async putJSON(file, data){
+    const r = await fetch(`${this.dav}/${file}`, {
+      method: 'PUT', headers: this.headers,
+      body: JSON.stringify(data, null, 2)
+    });
+    if(!r.ok) throw new Error(`PUT ${file}: ${r.status} ${r.statusText}`);
+    return true;
+  }
+};
+
+/* ── State ── */
+let allGreetings = [], gPage = 0;
+const G_PER_PAGE = 12;
+const COLORS = ['#FF8200','#3DAA6B','#C0715A','#5B7FA6','#8A6FB5','#D4845A'];
+function colorFor(n){ let h=0; for(let c of n) h=(h<<5)-h+c.charCodeAt(0); return COLORS[Math.abs(h)%COLORS.length]; }
+function initials(n){ return n.trim().split(/\s+/).map(w=>w[0]).slice(0,2).join('').toUpperCase(); }
+
+/* ── Status helpers ── */
+function setStatus(id, type, msg){
+  const el = document.getElementById(id);
+  el.className = 'status-row ' + type;
+  el.style.display = 'flex';
+  el.innerHTML = (type==='loading'?'<div class="spin"></div>':'')+'<span>'+msg+'</span>';
+  if(type==='ok') setTimeout(()=>el.style.display='none', 2500);
+}
+function showToast(t){
+  const el=document.getElementById('toast');
+  el.textContent=t; el.classList.add('show');
+  setTimeout(()=>el.classList.remove('show'),2800);
+}
+
+/* ── Connection ── */
+async function testConn(){
+  const pass = document.getElementById('fPass').value.trim();
+  if(!pass){ setStatus('connStatus','err','กรุณาใส่ App Password ก่อน'); return; }
+  sessionStorage.setItem('nc_pass', pass);
+  setStatus('connStatus','loading','กำลังทดสอบการเชื่อมต่อ KU Drive...');
+  try{
+    const r = await fetch(NC.dav+'/greetings.json', { headers: NC.headers });
+    if(r.status===401){ setStatus('connStatus','err','❌ Password ไม่ถูกต้อง'); return; }
+    if(r.status===403){ setStatus('connStatus','err','❌ ไม่มีสิทธิ์เข้าถึงโฟลเดอร์'); return; }
+    if(r.status===404){ setStatus('connStatus','ok','✓ เชื่อมต่อสำเร็จ — ยังไม่มี greetings.json (จะสร้างเมื่อบันทึก)'); return; }
+    if(r.ok){ setStatus('connStatus','ok','✓ เชื่อมต่อสำเร็จ — พบ greetings.json แล้ว'); return; }
+    setStatus('connStatus','err',`❌ Error ${r.status}: ${r.statusText}`);
+  }catch(e){
+    setStatus('connStatus','err','❌ เชื่อมต่อไม่ได้ — ตรวจสอบ CORS หรือ network: '+e.message);
+  }
+}
+
+async function saveConn(){
+  const pass = document.getElementById('fPass').value.trim();
+  if(!pass){ setStatus('connStatus','err','กรุณาใส่ App Password ก่อน'); return; }
+  sessionStorage.setItem('nc_pass', pass);
+  setStatus('connStatus','loading','กำลังเชื่อมต่อและตั้งค่า...');
+  try{
+    // สร้าง greetings.json ถ้ายังไม่มี
+    const check = await fetch(NC.dav+'/greetings.json', { headers: NC.headers });
+    if(check.status===404){
+      await fetch(NC.dav+'/greetings.json', {
+        method:'PUT', headers: NC.headers, body:'[]'
+      });
+    } else if(!check.ok){
+      throw new Error(`${check.status} ${check.statusText}`);
+    }
+    setStatus('connStatus','ok','✓ เชื่อมต่อสำเร็จ — Session นี้พร้อมใช้งาน');
+    document.getElementById('connBadge').textContent='✓ เชื่อมต่อแล้ว';
+    document.getElementById('connBadge').style.cssText='font-size:11px;padding:3px 10px;border-radius:100px;background:#e8f5e9;color:#1b5e20;border:1px solid #a5d6a7';
+    await loadGreetings();
+    await loadSiteConfig();
+  }catch(e){
+    setStatus('connStatus','err','❌ ไม่สำเร็จ: '+e.message);
+  }
+}
+
+/* ── Site Config ── */
+async function loadSiteConfig(){
+  try{
+    const cfg = await NC.getJSON('config.json');
+    if(cfg){
+      if(cfg.orgName) document.getElementById('cfgOrg').value = cfg.orgName;
+      if(cfg.year) document.getElementById('cfgYear').value = cfg.year;
+      if(cfg.perPage) document.getElementById('cfgPerPage').value = cfg.perPage;
+    }
+  }catch(_){}
+}
+
+async function saveSiteConfig(){
+  if(!NC.pass){ setStatus('cfgStatus','err','กรุณาเชื่อมต่อ KU Drive ก่อน'); return; }
+  setStatus('cfgStatus','loading','กำลังบันทึก config.json...');
+  try{
+    const cfg = {
+      orgName: document.getElementById('cfgOrg').value.trim(),
+      year: +document.getElementById('cfgYear').value,
+      perPage: +document.getElementById('cfgPerPage').value
+    };
+    await NC.putJSON('config.json', cfg);
+    setStatus('cfgStatus','ok','✓ บันทึก config.json เรียบร้อย');
+  }catch(e){
+    setStatus('cfgStatus','err','❌ '+e.message);
+  }
+}
+
+/* ── Greetings ── */
+async function loadGreetings(){
+  if(!NC.pass){ return; }
+  try{
+    const data = await NC.getJSON('greetings.json');
+    allGreetings = Array.isArray(data) ? data : [];
+    updateStats();
+    renderGreetings();
+  }catch(e){
+    showToast('โหลดไม่ได้: '+e.message);
+  }
+}
+
+function updateStats(){
+  const cutoff = Date.now()-86400000;
+  const newCount = allGreetings.filter(d=>new Date(d.time)>cutoff).length;
+  const flagged = allGreetings.filter(d=>d.flagged).length;
+  document.getElementById('stTotal').textContent = allGreetings.length;
+  document.getElementById('stNew').textContent = newCount;
+  document.getElementById('stFlagged').textContent = flagged;
+}
+
+function renderGreetings(){
+  const f = document.getElementById('gFilter').value;
+  const cutoff = Date.now()-86400000;
+  let list = [...allGreetings].reverse();
+  if(f==='new') list = list.filter(d=>new Date(d.time)>cutoff);
+  if(f==='flagged') list = list.filter(d=>d.flagged);
+
+  const total = Math.ceil(list.length/G_PER_PAGE);
+  if(gPage>=total) gPage=Math.max(0,total-1);
+  const page = list.slice(gPage*G_PER_PAGE,(gPage+1)*G_PER_PAGE);
+
+  const el = document.getElementById('gList');
+  if(!list.length){
+    el.innerHTML='<div style="text-align:center;color:var(--gray1);font-size:13px;padding:30px">ไม่มีข้อมูล</div>';
+    document.getElementById('gPager').innerHTML='';
+    return;
+  }
+
+  el.innerHTML='<div class="g-grid">'+page.map(d=>{
+    const col = colorFor(d.name);
+    const isNew = new Date(d.time)>cutoff;
+    return `<div class="g-card${d.flagged?' flagged':''}">
+      <div class="g-card-top">
+        <div class="g-av" style="background:${col}">${initials(d.name)}</div>
+        <div class="g-name">${escHtml(d.name)}</div>
+        <div class="g-time">${new Date(d.time).toLocaleDateString('th-TH')}</div>
+        ${isNew?'<span style="font-size:9px;padding:1px 5px;background:#fff3e0;color:#FF8200;border-radius:100px;font-weight:700">NEW</span>':''}
+      </div>
+      <div class="g-msg">${escHtml(d.message)}</div>
+      <div class="g-actions">
+        <button class="btn btn-sm btn-ghost" onclick="toggleFlag('${d.id}')">${d.flagged?'✓ คืนสถานะ':'⚑ Flag'}</button>
+        <button class="btn btn-sm btn-danger" onclick="confirmDelete('${d.id}','${escHtml(d.name)}')">ลบ</button>
+      </div>
+    </div>`;
+  }).join('')+'</div>';
+
+  // Pager
+  const pg = document.getElementById('gPager');
+  if(total<=1){ pg.innerHTML=''; return; }
+  pg.innerHTML=
+    `<button ${gPage===0?'disabled':''} onclick="gGoPage(${gPage-1})">&#8592;</button>`+
+    `<span class="info">${gPage+1} / ${total}</span>`+
+    `<button ${gPage>=total-1?'disabled':''} onclick="gGoPage(${gPage+1})">&#8594;</button>`;
+}
+
+function gGoPage(p){ gPage=p; renderGreetings(); }
+
+function escHtml(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+/* ── Flag ── */
+async function toggleFlag(id){
+  const idx = allGreetings.findIndex(d=>d.id===id);
+  if(idx<0) return;
+  allGreetings[idx].flagged = !allGreetings[idx].flagged;
+  try{
+    await NC.putJSON('greetings.json', allGreetings);
+    updateStats(); renderGreetings();
+    showToast(allGreetings[idx].flagged?'⚑ Flagged แล้ว':'✓ คืนสถานะแล้ว');
+  }catch(e){ showToast('❌ '+e.message); }
+}
+
+/* ── Delete single ── */
+function confirmDelete(id, name){
+  document.getElementById('modalTitle').textContent='ยืนยันการลบ';
+  document.getElementById('modalMsg').textContent=`ลบคำอวยพรของ "${name}" ออกจาก KU Drive?`;
+  document.getElementById('modalConfirm').onclick=()=>deleteOne(id);
+  document.getElementById('modalWrap').classList.add('show');
+}
+async function deleteOne(id){
+  closeModal();
+  allGreetings = allGreetings.filter(d=>d.id!==id);
+  try{
+    await NC.putJSON('greetings.json', allGreetings);
+    updateStats(); renderGreetings();
+    showToast('✓ ลบแล้ว');
+  }catch(e){ showToast('❌ '+e.message); }
+}
+
+/* ── Delete all ── */
+function confirmDeleteAll(){
+  document.getElementById('modalTitle').textContent='ลบทั้งหมด?';
+  document.getElementById('modalMsg').textContent=`ลบคำอวยพรทั้งหมด ${allGreetings.length} รายการออกจาก KU Drive อย่างถาวร ไม่สามารถกู้คืนได้`;
+  document.getElementById('modalConfirm').onclick=()=>deleteAll();
+  document.getElementById('modalWrap').classList.add('show');
+}
+async function deleteAll(){
+  closeModal();
+  allGreetings=[];
+  try{
+    await NC.putJSON('greetings.json',[]);
+    updateStats(); renderGreetings();
+    showToast('✓ ลบทั้งหมดแล้ว');
+  }catch(e){ showToast('❌ '+e.message); }
+}
+
+function closeModal(){ document.getElementById('modalWrap').classList.remove('show'); }
+
+/* ── Init ── */
+if(sessionStorage.getItem('nc_pass')){
+  document.getElementById('fPass').value = '••••••••••••';
+  document.getElementById('connBadge').textContent='✓ เชื่อมต่อแล้ว (session)';
+  document.getElementById('connBadge').style.cssText='font-size:11px;padding:3px 10px;border-radius:100px;background:#e8f5e9;color:#1b5e20;border:1px solid #a5d6a7';
+  loadGreetings();
+  loadSiteConfig();
+}
+</script>
+</body>
+</html>
