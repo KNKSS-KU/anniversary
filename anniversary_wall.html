@@ -234,6 +234,11 @@ body{background:#EDE8E1;font-family:var(--thai);color:var(--gray2)}
 <div class="toast" id="toast"></div>
 
 <script>
+function safeB64(str){
+  return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g,
+    (_,p)=>String.fromCharCode('0x'+p)));
+}
+
 /* ================================================================
    KU Drive WebDAV Config
    ================================================================ */
@@ -245,7 +250,7 @@ const NC = {
   get dav(){ return `${this.base}/remote.php/dav/files/${this.user}/${this.folder}` },
   get headers(){
     return {
-      'Authorization': 'Basic ' + btoa(`${this.user}:${this.pass}`),
+      'Authorization': 'Basic ' + safeB64(`${this.user}:${this.pass}`),
       'Content-Type': 'application/json'
     };
   },
