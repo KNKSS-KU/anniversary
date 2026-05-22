@@ -250,7 +250,7 @@ body{font-family:var(--thai);background:#EDE8E1;color:var(--gray2);min-height:10
       <div class="status-row" id="adminsStatus" style="display:none"></div>
       <div style="font-size:12px;color:var(--gray1);margin-bottom:10px;line-height:1.6">
         ใส่เมล <strong>@ku.th</strong> ที่อนุญาตให้เข้า Admin — คนละบรรทัด<br>
-        ถ้าปล่อยว่าง = อนุญาตทุกเมล @ku.th
+        ต้องระบุเมลที่อนุญาตเท่านั้น — ถ้าว่างจะไม่มีใครเข้าได้เลย
       </div>
       <textarea id="adminEmails" style="font-family:monospace;font-size:13px;width:100%;min-height:120px;padding:10px 14px;border:0.5px solid rgba(0,0,0,.1);border-radius:10px;resize:vertical;outline:none;" placeholder="someone@ku.th&#10;another@ku.th"></textarea>
     </div>
@@ -637,7 +637,7 @@ function handleGoogleCredential(response){
       return;
     }
     // เช็ครายชื่อ admin
-    if(ADMIN_EMAILS.length && !ADMIN_EMAILS.includes(email)){
+    if(!ADMIN_EMAILS.includes(email)){
       showLockErr('❌ เมลนี้ไม่มีสิทธิ์เข้า Admin\n(' + email + ')');
       return;
     }
