@@ -6,443 +6,419 @@
 <title>Anniversary Wall</title>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Sarabun:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
 <style>
-/* ── KU Drive WebDAV config (ใช้ร่วมกับ admin.html) ── */
-/* แก้ใน JS block ด้านล่าง ส่วน NC object */
-
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --o:#FF8200;--ol:#FF9E3D;--od:#CC6800;
-  --g:#3DAA6B;--gl:#5DC886;--gd:#2A7A4C;
-  --gray1:#74787B;--gray2:#222221;
-  --serif:'Cormorant Garamond',serif;
-  --disp:'Cinzel',serif;--thai:'Sarabun',sans-serif;
+  --o:#FF8200;--od:#CC6800;--ol:#FFF3E0;
+  --g:#3DAA6B;--gray1:#74787B;--gray2:#222221;--gray3:#f7f5f2;
+  --serif:'Cormorant Garamond',serif;--disp:'Cinzel',serif;--thai:'Sarabun',sans-serif;
+  --border:0.5px solid rgba(0,0,0,.08);--radius:12px;
 }
-html,body{height:100%;overflow:hidden}
-body{background:#EDE8E1;font-family:var(--thai);color:var(--gray2)}
+html,body{min-height:100%;background:#EDE8E1;font-family:var(--thai);color:var(--gray2)}
 
-/* ── HEADER ── */
+/* HEADER */
 .wall-header{
-  position:fixed;top:0;left:0;right:0;z-index:50;
+  position:sticky;top:0;z-index:50;
   background:rgba(255,255,255,.96);backdrop-filter:blur(10px);
-  border-bottom:0.5px solid rgba(0,0,0,.08);
-  padding:0 20px;height:52px;
-  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  border-bottom:var(--border);height:52px;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 clamp(12px,4vw,24px);gap:10px;
 }
-.h-left{display:flex;align-items:center;gap:10px}
-.h-brand{font-family:var(--disp);font-size:15px;letter-spacing:.08em;color:var(--gray2)}
-.h-year{font-family:var(--serif);font-style:italic;font-size:13px;color:var(--o);margin-left:2px}
-.h-count{font-size:12px;color:var(--gray1);border:0.5px solid rgba(0,0,0,.12);
-  border-radius:100px;padding:2px 10px;background:#fff}
-.h-right{display:flex;align-items:center;gap:8px}
-.filter-btn{font-family:var(--thai);font-size:12px;padding:4px 12px;
-  border-radius:100px;border:0.5px solid rgba(0,0,0,.15);
-  background:transparent;color:var(--gray1);cursor:pointer;transition:all .2s}
-.filter-btn.active{background:var(--o);color:#fff;border-color:var(--o)}
-.btn-greet{
-  font-family:var(--thai);font-size:12px;font-weight:500;
-  padding:6px 14px;border-radius:100px;
-  background:var(--o);color:#fff;border:none;cursor:pointer;
-  display:flex;align-items:center;gap:5px;transition:all .2s;text-decoration:none;
-}
-.btn-greet:hover{background:var(--od);transform:translateY(-1px)}
-.btn-admin{
-  font-size:11px;padding:5px 10px;border-radius:100px;
-  border:0.5px solid rgba(0,0,0,.15);background:transparent;
-  color:var(--gray1);cursor:pointer;text-decoration:none;transition:all .2s
-}
-.btn-admin:hover{background:#f5f3ef}
+.h-brand{font-family:var(--disp);font-size:clamp(11px,2.5vw,14px);letter-spacing:.08em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:50%}
+.h-right{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.h-count{font-size:11px;color:var(--gray1);border:var(--border);border-radius:100px;padding:2px 10px;background:#fff;white-space:nowrap}
+.btn-greet{font-family:var(--thai);font-size:12px;font-weight:500;padding:7px clamp(10px,3vw,16px);border-radius:100px;background:var(--o);color:#fff;border:none;cursor:pointer;text-decoration:none;transition:all .2s;white-space:nowrap}
+.btn-greet:hover{background:var(--od)}
+.btn-admin{font-size:11px;padding:5px 10px;border-radius:100px;border:var(--border);background:transparent;color:var(--gray1);cursor:pointer;text-decoration:none;transition:all .2s;white-space:nowrap}
+.btn-admin:hover{background:var(--gray3)}
 
-/* ── STATUS BAR (WebDAV connection) ── */
+/* BANNER */
+.banner-wrap{width:100%;max-height:280px;overflow:hidden;background:#e0dcd6;position:relative}
+.banner-wrap img{width:100%;height:100%;object-fit:cover;display:block;max-height:280px}
+.banner-placeholder{height:120px;display:flex;align-items:center;justify-content:center;color:var(--gray1);font-size:13px}
+
+/* NC STATUS */
 .nc-bar{
-  position:fixed;top:52px;left:0;right:0;z-index:40;
-  font-size:12px;padding:5px 20px;
   display:none;align-items:center;gap:8px;
-  background:#fff8e1;border-bottom:0.5px solid #ffe082;color:#7c6000;
+  padding:6px clamp(12px,4vw,24px);font-size:12px;
 }
-.nc-bar.err{background:#fff0f0;border-color:#ffcdd2;color:#b71c1c}
-.nc-bar.ok{background:#f0faf5;border-color:#a5d6a7;color:#1b5e20}
 .nc-bar.show{display:flex}
-.nc-spinner{width:12px;height:12px;border:2px solid currentColor;
-  border-top-color:transparent;border-radius:50%;animation:spin .6s linear infinite;flex-shrink:0}
+.nc-bar.loading{background:#fff8e1;color:#7c6000;border-bottom:0.5px solid #ffe082}
+.nc-bar.err{background:#fff0f0;color:#b71c1c;border-bottom:0.5px solid #ffcdd2}
+.nc-bar.ok{background:#f0faf5;color:#1b5e20;border-bottom:0.5px solid #a5d6a7}
+.spin{width:12px;height:12px;border:2px solid currentColor;border-top-color:transparent;border-radius:50%;animation:spin .6s linear infinite;flex-shrink:0}
 @keyframes spin{to{transform:rotate(360deg)}}
 
-/* ── GRID STAGE ── */
-.stage{
-  position:fixed;top:52px;left:0;right:0;bottom:48px;
-  overflow:hidden;padding:20px 20px 0;
+/* TOOLBAR */
+.toolbar{
+  display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+  padding:clamp(10px,3vw,14px) clamp(12px,4vw,24px);
+  border-bottom:var(--border);background:#fff;
 }
-.page{
-  position:absolute;top:20px;left:20px;right:20px;
-  display:grid;grid-template-columns:repeat(3,1fr);gap:14px;
-  transition:opacity .35s,transform .35s;
-  will-change:transform,opacity;
-}
-.page.out-left{opacity:0;transform:translateX(-40px)}
-.page.out-right{opacity:0;transform:translateX(40px)}
-.page.hidden{display:none}
+.filter-btn{font-family:var(--thai);font-size:12px;padding:5px 12px;border-radius:100px;border:var(--border);background:transparent;color:var(--gray1);cursor:pointer;transition:all .2s}
+.filter-btn.active{background:var(--o);color:#fff;border-color:var(--o)}
+.search-wrap{margin-left:auto;position:relative}
+.search-wrap input{font-family:var(--thai);font-size:12px;padding:6px 12px 6px 30px;border:var(--border);border-radius:100px;background:#fafaf9;outline:none;width:clamp(140px,30vw,200px);transition:all .2s}
+.search-wrap input:focus{border-color:var(--o);background:#fff}
+.search-wrap::before{content:'🔍';position:absolute;left:9px;top:50%;transform:translateY(-50%);font-size:11px;pointer-events:none}
 
-/* ── CARD ── */
-.card{
-  background:#fff;border-radius:12px;
-  border:0.5px solid rgba(0,0,0,.07);
-  padding:16px;cursor:pointer;
+/* GRID */
+.wall-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(clamp(160px,28vw,240px),1fr));
+  gap:clamp(10px,2vw,16px);
+  padding:clamp(12px,3vw,20px) clamp(12px,4vw,24px);
+}
+
+/* CARD */
+.w-card{
+  background:#fff;border-radius:var(--radius);border:var(--border);
+  overflow:hidden;cursor:pointer;
   transition:box-shadow .2s,transform .2s;
-  display:flex;flex-direction:column;gap:8px;
-  min-height:130px;opacity:0;animation:cardIn .4s forwards;
+  display:flex;flex-direction:column;
 }
-.card:hover{box-shadow:0 6px 20px rgba(0,0,0,.08);transform:translateY(-2px)}
-@keyframes cardIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
-.card-msg{font-family:var(--serif);font-size:14px;line-height:1.65;
-  color:var(--gray2);flex:1;display:-webkit-box;-webkit-line-clamp:3;
-  -webkit-box-orient:vertical;overflow:hidden}
-.card-footer{display:flex;align-items:center;gap:8px;margin-top:4px}
-.card-av{width:26px;height:26px;border-radius:50%;flex-shrink:0;
+.w-card:hover{box-shadow:0 6px 20px rgba(0,0,0,.1);transform:translateY(-2px)}
+.w-card-img{
+  width:100%;aspect-ratio:4/3;object-fit:cover;display:block;
+  background:linear-gradient(135deg,#f0ede8,#e0dcd6);
+}
+.w-card-img.no-img{
   display:flex;align-items:center;justify-content:center;
-  font-size:10px;font-weight:600;color:#fff;letter-spacing:.02em}
-.card-name{font-size:12px;font-weight:500;color:var(--gray2);flex:1;
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.card-time{font-size:10px;color:var(--gray1)}
-.card-new{display:inline-flex;align-items:center;font-size:9px;
-  background:#fff3e0;color:var(--o);border-radius:100px;
-  padding:1px 6px;font-weight:600;letter-spacing:.04em;margin-left:auto}
+  font-size:24px;opacity:.2;
+}
+.w-card-body{padding:clamp(10px,3vw,14px)}
+.w-card-msg{
+  font-family:var(--serif);font-size:clamp(12px,3vw,14px);line-height:1.65;
+  color:var(--gray2);display:-webkit-box;-webkit-line-clamp:3;
+  -webkit-box-orient:vertical;overflow:hidden;margin-bottom:8px;
+}
+.w-card-footer{display:flex;align-items:center;gap:8px}
+.w-card-av{width:24px;height:24px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#fff}
+.w-card-name{font-size:11px;font-weight:500;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.w-card-time{font-size:10px;color:var(--gray1);white-space:nowrap}
+.w-card-new{font-size:9px;padding:1px 5px;border-radius:100px;background:var(--ol);color:var(--od);font-weight:700;white-space:nowrap}
 
-/* ── EMPTY STATE ── */
-.empty{
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  height:calc(100vh - 52px - 48px);gap:12px;text-align:center;
-}
-.empty-icon{font-size:40px;opacity:.25}
-.empty-title{font-family:var(--disp);font-size:18px;color:var(--gray1);letter-spacing:.05em}
-.empty-sub{font-size:13px;color:var(--gray1);line-height:1.6}
-
-/* ── PAGINATION ── */
-.pager{
-  position:fixed;bottom:0;left:0;right:0;height:48px;
-  background:rgba(255,255,255,.96);backdrop-filter:blur(10px);
-  border-top:0.5px solid rgba(0,0,0,.07);
-  display:flex;align-items:center;justify-content:center;gap:10px;
-}
-.pager-btn{
-  width:30px;height:30px;border-radius:50%;border:0.5px solid rgba(0,0,0,.15);
-  background:transparent;cursor:pointer;font-size:16px;color:var(--gray2);
-  display:flex;align-items:center;justify-content:center;transition:all .2s;
-}
+/* PAGINATION */
+.pager{display:flex;align-items:center;justify-content:center;gap:8px;padding:16px;flex-wrap:wrap}
+.pager-btn{width:32px;height:32px;border-radius:50%;border:var(--border);background:#fff;cursor:pointer;font-size:16px;color:var(--gray2);display:flex;align-items:center;justify-content:center;transition:all .2s}
 .pager-btn:hover:not(:disabled){background:var(--o);color:#fff;border-color:var(--o)}
 .pager-btn:disabled{opacity:.3;cursor:not-allowed}
-.dots{display:flex;gap:5px;align-items:center}
-.dot{
-  width:6px;height:6px;border-radius:50%;
-  background:rgba(0,0,0,.15);cursor:pointer;transition:all .25s;border:none;padding:0;
-}
+.pager-info{font-size:12px;color:var(--gray1)}
+.dot-wrap{display:flex;gap:5px;align-items:center}
+.dot{width:6px;height:6px;border-radius:50%;background:rgba(0,0,0,.15);cursor:pointer;border:none;padding:0;transition:all .25s}
 .dot.active{width:18px;border-radius:3px;background:var(--o)}
-.dot.ellipsis{background:transparent;width:10px;
-  cursor:default;font-size:11px;color:var(--gray1);line-height:6px;letter-spacing:1px}
 
-/* ── POPUP ── */
-.pop-backdrop{
-  position:fixed;inset:0;z-index:200;
-  background:rgba(0,0,0,.45);display:none;
-  align-items:center;justify-content:center;padding:20px;
-}
-.pop-backdrop.show{display:flex}
-.pop-card{
-  background:#fff;border-radius:16px;
-  max-width:480px;width:100%;padding:28px;
-  position:relative;animation:popIn .25s ease;
-}
+/* EMPTY */
+.empty{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 20px;gap:12px;text-align:center}
+.empty-icon{font-size:36px;opacity:.2}
+.empty-title{font-family:var(--disp);font-size:18px;letter-spacing:.05em;color:var(--gray1)}
+.empty-sub{font-size:13px;color:var(--gray1);line-height:1.6}
+
+/* POPUP */
+.pop-bg{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center;padding:16px}
+.pop-bg.show{display:flex}
+.pop-box{background:#fff;border-radius:16px;max-width:500px;width:100%;overflow:hidden;animation:popIn .25s ease;max-height:90vh;display:flex;flex-direction:column}
 @keyframes popIn{from{opacity:0;transform:scale(.94)}to{opacity:1;transform:scale(1)}}
-.pop-close{
-  position:absolute;top:14px;right:14px;
-  width:28px;height:28px;border-radius:50%;border:none;
-  background:#f5f3ef;cursor:pointer;font-size:16px;color:var(--gray1);
-  display:flex;align-items:center;justify-content:center;
-}
-.pop-av{width:48px;height:48px;border-radius:50%;
-  display:flex;align-items:center;justify-content:center;
-  font-size:16px;font-weight:600;color:#fff;margin-bottom:12px}
-.pop-name{font-size:16px;font-weight:600;color:var(--gray2)}
-.pop-time{font-size:12px;color:var(--gray1);margin-top:2px}
-.pop-msg{
-  font-family:var(--serif);font-size:16px;line-height:1.8;
-  color:var(--gray2);margin-top:16px;padding-top:16px;
-  border-top:0.5px solid rgba(0,0,0,.08);
-}
+.pop-img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;background:#f0ede8;flex-shrink:0}
+.pop-img.no-img{display:none}
+.pop-body{padding:clamp(16px,4vw,24px);overflow-y:auto}
+.pop-close{position:absolute;top:10px;right:10px;width:28px;height:28px;border-radius:50%;border:none;background:rgba(0,0,0,.3);color:#fff;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center}
+.pop-wrap{position:relative}
+.pop-msg{font-family:var(--serif);font-size:clamp(15px,4vw,18px);line-height:1.8;color:var(--gray2);margin-bottom:16px}
+.pop-from{font-size:13px;color:var(--gray1)}
+.pop-detail{font-size:12px;color:var(--gray1);margin-top:3px}
 
-/* ── TOAST ── */
-.toast{
-  position:fixed;bottom:60px;left:50%;transform:translateX(-50%) translateY(12px);
-  background:rgba(34,34,33,.88);color:#fff;font-size:13px;
-  padding:8px 18px;border-radius:100px;z-index:300;
-  opacity:0;transition:all .25s;pointer-events:none;white-space:nowrap;
-}
+/* TOAST */
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(8px);background:rgba(34,34,33,.88);color:#fff;font-size:13px;padding:8px 18px;border-radius:100px;z-index:300;opacity:0;transition:all .25s;pointer-events:none;white-space:nowrap}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
-/* ── RESPONSIVE ── */
-@media(max-width:680px){
-  .page{grid-template-columns:repeat(2,1fr)}
-  .h-brand{font-size:13px}
-}
-@media(max-width:420px){
-  .page{grid-template-columns:1fr}
+@media(max-width:480px){
+  .h-count{display:none}
+  .search-wrap input{width:120px}
 }
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
 <div class="wall-header">
-  <div class="h-left">
-    <div class="h-brand">ANNIVERSARY<span class="h-year" id="hYear"></span></div>
-    <div class="h-count"><span id="liveCount">0</span> คำอวยพร</div>
-    <button class="filter-btn active" onclick="setFilter('all')">ทั้งหมด</button>
-    <button class="filter-btn" onclick="setFilter('new')">ใหม่</button>
-  </div>
+  <div class="h-brand" id="hBrand">ANNIVERSARY</div>
   <div class="h-right">
+    <div class="h-count"><span id="liveCount">0</span> คำอวยพร</div>
     <a class="btn-admin" href="admin.html">⚙ Admin</a>
-    <a class="btn-greet" href="anniversary-greeting.html">✦ ส่งคำอวยพร</a>
+    <a class="btn-greet" href="anniversary-greeting.html" id="btnGreet">✦ ร่วมอวยพร</a>
   </div>
 </div>
 
-<!-- NC STATUS BAR -->
-<div class="nc-bar" id="ncBar">
-  <div class="nc-spinner" id="ncSpin"></div>
-  <span id="ncMsg">กำลังโหลดข้อมูลจาก KU Drive...</span>
+<div class="nc-bar" id="ncBar"><div class="spin" id="ncSpin"></div><span id="ncMsg"></span></div>
+
+<!-- BANNER -->
+<div class="banner-wrap" id="bannerWrap">
+  <div class="banner-placeholder" id="bannerPlaceholder">กำลังโหลด...</div>
+  <img id="bannerImg" style="display:none" alt="banner">
 </div>
 
-<!-- GRID STAGE -->
-<div class="stage" id="stage"></div>
-
-<!-- PAGINATION -->
-<div class="pager">
-  <button class="pager-btn" id="btnPrev" onclick="navigate(-1)">&#8592;</button>
-  <div class="dots" id="dots"></div>
-  <button class="pager-btn" id="btnNext" onclick="navigate(1)">&#8594;</button>
+<!-- TOOLBAR -->
+<div class="toolbar">
+  <button class="filter-btn active" onclick="setFilter('all')">ทั้งหมด</button>
+  <button class="filter-btn" onclick="setFilter('new')">ใหม่วันนี้</button>
+  <div class="search-wrap">
+    <input type="text" id="searchBox" placeholder="ค้นหา..." oninput="onSearch()">
+  </div>
 </div>
+
+<!-- GRID -->
+<div id="wallContent"></div>
+
+<!-- PAGER -->
+<div class="pager" id="pager"></div>
 
 <!-- POPUP -->
-<div class="pop-backdrop" id="pop" onclick="closePop(event)">
-  <div class="pop-card">
-    <button class="pop-close" onclick="closePop()">✕</button>
-    <div class="pop-av" id="popAv"></div>
-    <div class="pop-name" id="popName"></div>
-    <div class="pop-time" id="popTime"></div>
-    <div class="pop-msg" id="popMsg"></div>
+<div class="pop-bg" id="popBg" onclick="closePop(event)">
+  <div class="pop-box">
+    <div class="pop-wrap">
+      <img class="pop-img no-img" id="popImg" alt="">
+      <button class="pop-close" onclick="closePop()">✕</button>
+    </div>
+    <div class="pop-body">
+      <div class="pop-msg" id="popMsg"></div>
+      <div class="pop-from" id="popFrom"></div>
+      <div class="pop-detail" id="popDetail"></div>
+    </div>
   </div>
 </div>
 
-<!-- TOAST -->
 <div class="toast" id="toast"></div>
 
 <script>
-function safeB64(str){
-  return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g,
-    (_,p)=>String.fromCharCode('0x'+p)));
-}
+function safeB64(s){return btoa(encodeURIComponent(s).replace(/%([0-9A-F]{2})/g,(_,p)=>String.fromCharCode('0x'+p)))}
+function escHtml(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
 
-/* ================================================================
-   KU Drive WebDAV Config
-   ================================================================ */
-const NC = {
-  base:   'https://anniversary-proxy.kunakorn-son.workers.dev',
-  user:   'feconkos',
-  folder: 'anniversary',
-  get pass(){ return sessionStorage.getItem('nc_pass') || '' },
-  get dav(){ return `${this.base}/remote.php/dav/files/${this.user}/${this.folder}` },
-  get headers(){
-    return {
-      'Authorization': 'Basic ' + safeB64(`${this.user}:${this.pass}`),
-      'Content-Type': 'application/json'
-    };
-  },
-  async getJSON(file){
-    const r = await fetch(`${this.dav}/${file}`, { headers: this.headers });
-    if(r.status === 404) return null;
-    if(!r.ok) throw new Error(`GET ${file}: ${r.status}`);
-    return r.json();
-  }
+const NC={
+  base:'https://anniversary-proxy.kunakorn-son.workers.dev',
+  user:'feconkos',folder:'anniversary',
+  get pass(){return sessionStorage.getItem('nc_pass')||''},
+  get dav(){return`${this.base}/remote.php/dav/files/${this.user}/${this.folder}`},
+  get headers(){return{'Authorization':'Basic '+safeB64(`${this.user}:${this.pass}`),'Content-Type':'application/json'}},
+  get imgHeaders(){return{'Authorization':'Basic '+safeB64(`${this.user}:${this.pass}`)}},
+  async getJSON(f){const r=await fetch(`${this.dav}/${f}`,{headers:this.headers});if(r.status===404)return null;if(!r.ok)throw new Error(r.status);return r.json()},
+  imgURL(path){return`${this.dav}/${path}`}
 };
 
-/* ================================================================
-   ADMIN Config (โหลดจาก KU Drive หรือใช้ default)
-   ================================================================ */
-let CFG = { orgName:'ครบรอบ', year:50, perPage:9 };
+const COLORS=['#FF8200','#3DAA6B','#C0715A','#5B7FA6','#8A6FB5','#D4845A'];
+function colorFor(n){let h=0;for(let c of String(n))h=(h<<5)-h+c.charCodeAt(0);return COLORS[Math.abs(h)%COLORS.length]}
+function initials(n){return String(n).trim().split(/\s+/).map(w=>w[0]).slice(0,2).join('').toUpperCase()||'?'}
+function timeAgo(iso){const d=(Date.now()-new Date(iso))/1000;if(d<3600)return`${Math.floor(d/60)||1} นาทีที่แล้ว`;if(d<86400)return`${Math.floor(d/3600)} ชม.ที่แล้ว`;return`${Math.floor(d/86400)} วันที่แล้ว`}
+function showToast(t){const el=document.getElementById('toast');el.textContent=t;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),2800)}
 
-/* ── Helpers ── */
-const COLORS = ['#FF8200','#3DAA6B','#C0715A','#5B7FA6','#8A6FB5','#D4845A'];
-function colorFor(name){ let h=0; for(let c of name) h=(h<<5)-h+c.charCodeAt(0); return COLORS[Math.abs(h)%COLORS.length]; }
-function initials(n){ return n.trim().split(/\s+/).map(w=>w[0]).slice(0,2).join('').toUpperCase(); }
-function timeAgo(iso){
-  const d=(Date.now()-new Date(iso))/1000;
-  if(d<60) return 'เมื่อกี้';
-  if(d<3600) return `${Math.floor(d/60)} นาทีที่แล้ว`;
-  if(d<86400) return `${Math.floor(d/3600)} ชม.ที่แล้ว`;
-  return `${Math.floor(d/86400)} วันที่แล้ว`;
-}
+let allData=[],filtered=[],curFilter='all',curPage=0,CFG={perPage:12};
+const PER_PAGE=()=>CFG.perPage||12;
 
-/* ── UI State ── */
-let allData=[], filtered=[], curFilter='all', curPage=0, isNew={};
-
-function setNCBar(state, msg){
-  const bar=document.getElementById('ncBar');
-  const spin=document.getElementById('ncSpin');
+function setNCBar(state,msg){
+  const b=document.getElementById('ncBar'),s=document.getElementById('ncSpin');
   document.getElementById('ncMsg').textContent=msg;
-  bar.className='nc-bar show '+(state==='loading'?'':state);
-  spin.style.display=state==='loading'?'block':'none';
-  if(state==='ok') setTimeout(()=>bar.classList.remove('show'),2500);
+  b.className='nc-bar show '+state;
+  s.style.display=state==='loading'?'block':'none';
+  if(state==='ok')setTimeout(()=>b.classList.remove('show'),2000);
 }
 
+/* BANNER */
+async function loadBanner(){
+  try{
+    // PROPFIND banner folder
+    const r=await fetch(`${NC.dav}/banner/`,{method:'PROPFIND',headers:{...NC.imgHeaders,'Depth':'1'}});
+    if(!r.ok){document.getElementById('bannerPlaceholder').textContent='';return;}
+    const txt=await r.text();
+    const parser=new DOMParser();
+    const xml=parser.parseFromString(txt,'application/xml');
+    const hrefs=[...xml.querySelectorAll('response href')]
+      .map(h=>h.textContent)
+      .filter(h=>/\.(jpg|jpeg|png|webp|gif)$/i.test(h));
+    if(!hrefs.length){document.getElementById('bannerPlaceholder').textContent='';return;}
+    // ใช้รูปแรก
+    const path=hrefs[0].replace(/.*\/dav\/files\/[^/]+\//,'');
+    const img=document.getElementById('bannerImg');
+    img.src=NC.imgURL(path)+'?t='+Date.now();
+    img.style.display='block';
+    // auth header ผ่าน fetch → blob
+    const blob=await fetch(NC.imgURL(path),{headers:NC.imgHeaders}).then(r=>r.blob());
+    img.src=URL.createObjectURL(blob);
+    document.getElementById('bannerPlaceholder').style.display='none';
+  }catch(_){document.getElementById('bannerPlaceholder').textContent='';}
+}
+
+/* CARD IMAGES */
+let cardImages=[];
+async function loadCardImages(){
+  try{
+    const r=await fetch(`${NC.dav}/cards/`,{method:'PROPFIND',headers:{...NC.imgHeaders,'Depth':'1'}});
+    if(!r.ok)return;
+    const txt=await r.text();
+    const xml=new DOMParser().parseFromString(txt,'application/xml');
+    cardImages=[...xml.querySelectorAll('response href')]
+      .map(h=>h.textContent)
+      .filter(h=>/\.(jpg|jpeg|png|webp|gif)$/i.test(h))
+      .map(h=>h.replace(/.*\/dav\/files\/[^/]+\//,''));
+  }catch(_){}
+}
+
+async function getCardImgBlob(path){
+  try{
+    const blob=await fetch(NC.imgURL(path),{headers:NC.imgHeaders}).then(r=>r.blob());
+    return URL.createObjectURL(blob);
+  }catch(_){return null;}
+}
+
+/* MAIN DATA */
 async function loadData(){
-  setNCBar('loading','กำลังโหลดข้อมูลจาก KU Drive...');
-  try {
-    const [data, cfg] = await Promise.all([
-      NC.getJSON('greetings.json'),
-      NC.getJSON('config.json')
-    ]);
-    if(cfg) CFG = {...CFG, ...cfg};
-    document.getElementById('hYear').textContent = ` — ${CFG.year} ปี`;
-    allData = Array.isArray(data) ? data.reverse() : [];
-    // mark new (ส่งมาภายใน 24 ชม.)
-    isNew = {};
-    const cutoff = Date.now() - 86400000;
-    allData.forEach(d => { if(new Date(d.time) > cutoff) isNew[d.id]=true; });
+  setNCBar('loading','กำลังโหลด...');
+  try{
+    const [data,cfg]=await Promise.all([NC.getJSON('greetings.json'),NC.getJSON('config.json')]);
+    if(cfg){CFG={...CFG,...cfg};applyConfig(cfg);}
+    allData=Array.isArray(data)?[...data].reverse():[];
+    document.getElementById('liveCount').textContent=allData.length;
     applyFilter(curFilter);
     setNCBar('ok','✓ โหลดสำเร็จ');
-  } catch(e){
-    setNCBar('err','❌ '+e.message+' — ตรวจสอบ App Password ใน admin.html');
-    renderEmpty('เชื่อมต่อ KU Drive ไม่ได้','กรุณาตั้งค่า App Password ใน admin.html ก่อน');
+  }catch(e){
+    setNCBar('err','❌ '+e.message+' — ตั้งค่าใน admin.html ก่อน');
+    renderEmpty('เชื่อมต่อไม่ได้','กรุณาตั้งค่า App Password ใน admin.html');
   }
 }
+
+function applyConfig(cfg){
+  if(cfg.orgName)document.getElementById('hBrand').textContent=cfg.orgName.toUpperCase();
+  if(cfg.orgName&&cfg.year)document.title=`ครบรอบ ${cfg.year} ปี — ${cfg.orgName}`;
+}
+
+function setFilter(f){
+  curFilter=f;
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.toggle('active',
+    (f==='all'&&b.textContent.includes('ทั้งหมด'))||(f==='new'&&b.textContent.includes('ใหม่'))
+  ));
+  applyFilter(f);
+}
+
+function onSearch(){curPage=0;applyFilter(curFilter);}
 
 function applyFilter(f){
-  curFilter=f;
-  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.toggle('active',b.textContent.includes(f==='all'?'ทั้งหมด':'ใหม่')));
-  filtered = f==='new' ? allData.filter(d=>isNew[d.id]) : [...allData];
-  document.getElementById('liveCount').textContent = filtered.length;
+  const q=document.getElementById('searchBox').value.trim().toLowerCase();
+  const cutoff=Date.now()-86400000;
+  filtered=allData.filter(d=>{
+    if(f==='new'&&new Date(d.time)<=cutoff)return false;
+    if(q&&!((d.name||'').toLowerCase().includes(q)||(d.message||'').toLowerCase().includes(q)||(d.detail||'').toLowerCase().includes(q)))return false;
+    return true;
+  });
   curPage=0;
-  buildPages();
-  showPage(0,0);
+  renderGrid();
 }
-function setFilter(f){ applyFilter(f); }
 
-/* ── Page builder ── */
-function buildPages(){
-  const stage=document.getElementById('stage');
-  stage.innerHTML='';
-  if(!filtered.length){ renderEmpty('ยังไม่มีคำอวยพร','เป็นคนแรกที่ส่งคำอวยพรได้เลย!'); return; }
-  const pp=CFG.perPage||9, total=Math.ceil(filtered.length/pp);
-  for(let p=0;p<total;p++){
-    const div=document.createElement('div');
-    div.className='page hidden';
-    div.id='page-'+p;
-    filtered.slice(p*pp,(p+1)*pp).forEach((d,i)=>{
-      const col=colorFor(d.name);
-      const ni=isNew[d.id]?'<span class="card-new">NEW</span>':'';
-      div.innerHTML+=`
-        <div class="card" style="animation-delay:${i*40}ms" onclick="openPop(${JSON.stringify(d).replace(/"/g,'&quot;')})">
-          <div class="card-msg">${d.message}</div>
-          <div class="card-footer">
-            <div class="card-av" style="background:${col}">${initials(d.name)}</div>
-            <div class="card-name">${d.name}</div>
-            <div class="card-time">${timeAgo(d.time)}</div>
-            ${ni}
-          </div>
-        </div>`;
-    });
-    stage.appendChild(div);
-  }
-  buildDots(total);
+/* RENDER */
+async function renderGrid(){
+  const content=document.getElementById('wallContent');
+  if(!filtered.length){renderEmpty('ยังไม่มีคำอวยพร','เป็นคนแรกที่ร่วมอวยพรได้เลย!');renderPager(0);return;}
+  const pp=PER_PAGE(),total=Math.ceil(filtered.length/pp);
+  const page=filtered.slice(curPage*pp,(curPage+1)*pp);
+  const cutoff=Date.now()-86400000;
+
+  const grid=document.createElement('div');
+  grid.className='wall-grid';
+
+  // สร้าง card elements
+  const cards=page.map((d,i)=>{
+    const col=colorFor(d.name);
+    const isNew=new Date(d.time)>cutoff;
+    const cardImg=d.cardImage||null;
+
+    const el=document.createElement('div');
+    el.className='w-card';
+    el.setAttribute('data-id',d.id);
+    el.innerHTML=`
+      <div class="w-card-img no-img" id="ci-${d.id}">✦</div>
+      <div class="w-card-body">
+        <div class="w-card-msg">${escHtml(d.message)}</div>
+        <div class="w-card-footer">
+          <div class="w-card-av" style="background:${col}">${escHtml(initials(d.name))}</div>
+          <div class="w-card-name">${escHtml(d.name)}</div>
+          <div class="w-card-time">${timeAgo(d.time)}</div>
+          ${isNew?'<span class="w-card-new">NEW</span>':''}
+        </div>
+      </div>`;
+    el.onclick=()=>openPop(d);
+    el.style.animationDelay=`${i*30}ms`;
+    el.style.animation='cardIn .35s ease forwards';
+    el.style.opacity='0';
+
+    // โหลดรูปการ์ดถ้ามี
+    if(cardImg){
+      getCardImgBlob(cardImg).then(url=>{
+        if(!url)return;
+        const ci=el.querySelector(`#ci-${d.id}`);
+        const img=document.createElement('img');
+        img.className='w-card-img';
+        img.src=url;
+        img.alt='';
+        ci.replaceWith(img);
+      });
+    }
+    return el;
+  });
+
+  cards.forEach(c=>grid.appendChild(c));
+  content.innerHTML='';
+  content.appendChild(grid);
+  renderPager(total);
 }
 
 function renderEmpty(title,sub){
-  document.getElementById('stage').innerHTML=`
-    <div class="empty">
-      <div class="empty-icon">✦</div>
-      <div class="empty-title">${title}</div>
-      <div class="empty-sub">${sub}</div>
-    </div>`;
-  buildDots(0);
+  document.getElementById('wallContent').innerHTML=`<div class="empty"><div class="empty-icon">✦</div><div class="empty-title">${title}</div><div class="empty-sub">${sub}</div></div>`;
 }
 
-function showPage(idx, dir){
-  const pages=document.querySelectorAll('.page');
-  if(!pages.length) return;
-  const prev=document.getElementById('page-'+curPage);
-  if(prev && prev !== pages[idx]){
-    prev.classList.remove('hidden');
-    prev.classList.add(dir>0?'out-left':'out-right');
-    setTimeout(()=>{prev.classList.add('hidden');prev.classList.remove('out-left','out-right');},350);
-  }
-  curPage=idx;
-  const cur=document.getElementById('page-'+curPage);
-  if(cur){ cur.classList.remove('hidden','out-left','out-right'); }
-  updateDots();
-  document.getElementById('btnPrev').disabled=curPage===0;
-  document.getElementById('btnNext').disabled=curPage>=pages.length-1;
+/* PAGER */
+function renderPager(total){
+  const p=document.getElementById('pager');
+  if(total<=1){p.innerHTML='';return;}
+  p.innerHTML=`
+    <button class="pager-btn" onclick="goPage(${curPage-1})" ${curPage===0?'disabled':''}>&#8592;</button>
+    <div class="dot-wrap">${Array.from({length:Math.min(total,8)},(_,i)=>`<button class="dot${i===curPage?' active':''}" onclick="goPage(${i})"></button>`).join('')}${total>8?'<span style="font-size:11px;color:var(--gray1)">…</span>':''}</div>
+    <span class="pager-info">${curPage+1} / ${total}</span>
+    <button class="pager-btn" onclick="goPage(${curPage+1})" ${curPage>=total-1?'disabled':''}>&#8594;</button>`;
 }
+function goPage(p){curPage=p;renderGrid();window.scrollTo({top:document.querySelector('.toolbar').offsetTop-60,behavior:'smooth'})}
 
-function navigate(dir){
-  const total=document.querySelectorAll('.page').length;
-  const np=Math.max(0,Math.min(total-1,curPage+dir));
-  if(np!==curPage) showPage(np,dir);
-}
-
-/* ── Dots ── */
-function buildDots(total){
-  const c=document.getElementById('dots');
-  c.innerHTML='';
-  for(let i=0;i<Math.min(total,10);i++){
-    const b=document.createElement('button');
-    b.className='dot'+(i===0?' active':'');
-    b.setAttribute('data-i',i);
-    b.onclick=()=>showPage(i, i>curPage?1:-1);
-    c.appendChild(b);
-  }
-  if(total>10){
-    const sp=document.createElement('button');
-    sp.className='dot ellipsis';sp.textContent='…';sp.disabled=true;
-    c.appendChild(sp);
-  }
-}
-function updateDots(){
-  document.querySelectorAll('.dot[data-i]').forEach(b=>b.classList.toggle('active',+b.getAttribute('data-i')===curPage));
-}
-
-/* ── Popup ── */
-function openPop(d){
-  const dark = (d.message+d.name).charCodeAt(0)%2===0;
-  document.getElementById('popAv').style.background=colorFor(d.name);
-  document.getElementById('popAv').textContent=initials(d.name);
-  document.getElementById('popName').textContent=d.name;
-  document.getElementById('popTime').textContent=new Date(d.time).toLocaleString('th-TH');
+/* POPUP */
+async function openPop(d){
   document.getElementById('popMsg').textContent=d.message;
-  document.getElementById('pop').classList.add('show');
+  document.getElementById('popFrom').textContent='— '+d.name;
+  document.getElementById('popDetail').textContent=d.detail||'';
+  const pi=document.getElementById('popImg');
+  pi.className='pop-img no-img';
+  if(d.cardImage){
+    const url=await getCardImgBlob(d.cardImage);
+    if(url){pi.src=url;pi.className='pop-img';}
+  }
+  document.getElementById('popBg').classList.add('show');
 }
-function closePop(e){
-  if(e && e.target!==document.getElementById('pop')) return;
-  document.getElementById('pop').classList.remove('show');
-}
+function closePop(e){if(e&&e.target!==document.getElementById('popBg'))return;document.getElementById('popBg').classList.remove('show')}
 
-function showToast(t){
-  const el=document.getElementById('toast');
-  el.textContent=t;el.classList.add('show');
-  setTimeout(()=>el.classList.remove('show'),2800);
-}
-
-/* ── Poll for new greetings every 30s ── */
+/* POLL */
 setInterval(async()=>{
-  const prev=allData.length;
   try{
     const data=await NC.getJSON('greetings.json');
-    if(data && data.length!==prev){
-      allData=data.reverse();
+    if(data&&data.length!==allData.length){
+      const prev=allData.length;
+      allData=[...data].reverse();
+      document.getElementById('liveCount').textContent=allData.length;
       applyFilter(curFilter);
-      if(data.length>prev) showToast('✦ มีคำอวยพรใหม่เข้ามา!');
+      if(data.length>prev)showToast('✦ มีคำอวยพรใหม่!');
     }
   }catch(_){}
-}, 30000);
+},30000);
 
-/* ── Init ── */
-loadData();
+/* CSS anim */
+const style=document.createElement('style');
+style.textContent='@keyframes cardIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}';
+document.head.appendChild(style);
+
+/* INIT */
+Promise.all([loadBanner(),loadCardImages()]).then(()=>loadData());
 </script>
 </body>
 </html>
