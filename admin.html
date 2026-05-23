@@ -141,7 +141,7 @@ html,body{min-height:100%;background:#EDE8E1;font-family:var(--thai);color:var(-
   </div>
 </div>
 
-<script src="https://accounts.google.com/gsi/client" async defer onload="initGoogleAuth()"></script>
+<script src="https://accounts.google.com/gsi/client"></script>
 
 <!-- HEADER -->
 <div class="adm-header">
@@ -357,7 +357,15 @@ function afterLogin(){
   }
 }
 
-// initGoogleAuth called via script onload above
+window.addEventListener('DOMContentLoaded', function(){
+  if(typeof google !== 'undefined'){
+    initGoogleAuth();
+  } else {
+    var s = document.querySelector('script[src*="gsi"]');
+    s.addEventListener('load', initGoogleAuth);
+    s.addEventListener('error', function(){ document.getElementById('lockErr').textContent='โหลด Google Sign-In ไม่ได้ กรุณาตรวจสอบการเชื่อมต่ออินเทอร์เน็ต'; document.getElementById('lockErr').style.display='block'; });
+  }
+});
 
 /* ── KU Drive ── */
 const NC={
@@ -367,7 +375,7 @@ const NC={
   get pass(){return sessionStorage.getItem('nc_pass')||''},
   get dav(){return`${this.base}/remote.php/dav/files/${this.user}/${this.folder}`},
   get headers(){return{'Authorization':'Basic '+safeB64(`${this.user}:${this.pass}`),'Content-Type':'application/json'}},
-  get imgHeaders(){return{}}  // Worker ฝัง credentials สำหรับ GET แล้ว,
+  get imgHeaders(){return{}},
   async getJSON(f){const r=await fetch(`${this.dav}/${f}`,{headers:this.headers});if(r.status===404)return null;if(!r.ok)throw new Error(`${r.status} ${r.statusText}`);return r.json()},
   async putJSON(f,d){const r=await fetch(`${this.dav}/${f}`,{method:'PUT',headers:this.headers,body:JSON.stringify(d,null,2)});if(!r.ok)throw new Error(`${r.status} ${r.statusText}`)},
   async putFile(f,blob,mime){
