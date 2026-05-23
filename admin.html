@@ -141,7 +141,7 @@ html,body{min-height:100%;background:#EDE8E1;font-family:var(--thai);color:var(-
   </div>
 </div>
 
-<script src="https://accounts.google.com/gsi/client" async></script>
+<script src="https://accounts.google.com/gsi/client" async defer onload="initGoogleAuth()"></script>
 
 <!-- HEADER -->
 <div class="adm-header">
@@ -357,10 +357,7 @@ function afterLogin(){
   }
 }
 
-window.addEventListener('load',()=>{
-  if(typeof google!=='undefined')initGoogleAuth();
-  else document.querySelector('script[src*="gsi"]').addEventListener('load',initGoogleAuth);
-});
+// initGoogleAuth called via script onload above
 
 /* ── KU Drive ── */
 const NC={
