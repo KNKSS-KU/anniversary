@@ -10,184 +10,205 @@
 :root{
   --o:#FF8200;--od:#CC6800;--ol:#FFF3E0;
   --gray1:#74787B;--gray2:#222221;--gray3:#f7f5f2;
-  --serif:'Cormorant Garamond',serif;
-  --disp:'Cinzel',serif;--thai:'Sarabun',sans-serif;
-  --border:0.5px solid rgba(0,0,0,.1);
+  --serif:'Cormorant Garamond',serif;--disp:'Cinzel',serif;--thai:'Sarabun',sans-serif;
+  --border:0.5px solid rgba(0,0,0,.1);--radius:12px;
 }
 html,body{min-height:100%;background:#EDE8E1;font-family:var(--thai);color:var(--gray2)}
-body::before{content:'✦';position:fixed;font-size:320px;color:rgba(255,130,0,.04);top:-60px;right:-60px;font-family:serif;pointer-events:none;z-index:0;line-height:1}
 
-.g-header{background:rgba(255,255,255,.95);backdrop-filter:blur(10px);border-bottom:var(--border);padding:0 20px;height:52px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50}
-.h-brand{font-family:var(--disp);font-size:14px;letter-spacing:.08em}
-.h-back{font-size:12px;color:var(--gray1);text-decoration:none;display:flex;align-items:center;gap:4px;padding:5px 10px;border-radius:100px;border:var(--border);transition:all .2s}
+/* HEADER */
+.g-header{background:rgba(255,255,255,.96);backdrop-filter:blur(10px);border-bottom:var(--border);padding:0 clamp(12px,4vw,24px);height:52px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50}
+.h-brand{font-family:var(--disp);font-size:clamp(11px,2.5vw,14px);letter-spacing:.08em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:55%}
+.h-back{font-size:12px;color:var(--gray1);text-decoration:none;display:flex;align-items:center;gap:4px;padding:5px 10px;border-radius:100px;border:var(--border);transition:all .2s;white-space:nowrap;flex-shrink:0}
 .h-back:hover{background:var(--gray3)}
 
-.g-main{max-width:580px;margin:0 auto;padding:32px 16px 60px;position:relative;z-index:1}
+/* BANNER */
+.banner-wrap{width:100%;max-height:200px;overflow:hidden;background:#e0dcd6}
+.banner-wrap img{width:100%;max-height:200px;object-fit:cover;display:block}
 
-.g-hero{text-align:center;margin-bottom:28px}
-.g-hero-icon{font-size:32px;margin-bottom:10px;opacity:.7}
-.g-hero-title{font-family:var(--disp);font-size:22px;letter-spacing:.06em;color:var(--gray2);margin-bottom:6px}
-.g-hero-sub{font-family:var(--serif);font-style:italic;font-size:16px;color:var(--gray1)}
+/* STEPS */
+.steps{display:flex;border-bottom:var(--border);background:#fff}
+.step{flex:1;padding:12px;text-align:center;font-size:12px;color:var(--gray1);border-bottom:2px solid transparent;transition:all .2s;position:relative}
+.step.active{color:var(--o);border-bottom-color:var(--o);font-weight:500}
+.step.done{color:var(--gray1)}
+.step-num{display:inline-flex;width:20px;height:20px;border-radius:50%;background:#f0ede8;align-items:center;justify-content:center;font-size:10px;font-weight:700;margin-right:5px;transition:all .2s}
+.step.active .step-num{background:var(--o);color:#fff}
+.step.done .step-num{background:var(--gray1);color:#fff}
 
-.nc-warn{background:#fff8e1;border:0.5px solid #ffe082;border-radius:10px;padding:10px 14px;font-size:12px;color:#7c6000;margin-bottom:16px;display:none}
-.nc-warn a{color:var(--o);font-weight:500}
+/* PAGES */
+.page{display:none;animation:fadeIn .25s ease}
+.page.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 
-/* PREVIEW */
-.card-preview{background:#fff;border-radius:16px;border:var(--border);padding:20px 24px;margin-bottom:24px;display:flex;flex-direction:column;gap:10px;min-height:120px;transition:all .3s;box-shadow:0 4px 20px rgba(0,0,0,.04)}
-.preview-msg{font-family:var(--serif);font-size:17px;line-height:1.75;color:var(--gray2);flex:1}
-.preview-msg.placeholder{color:rgba(116,120,123,.4);font-style:italic}
-.preview-meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px}
-.preview-tag{font-size:11px;padding:2px 8px;border-radius:100px;background:var(--ol);color:var(--od);font-weight:500}
-.preview-footer{display:flex;align-items:center;gap:10px;padding-top:8px;border-top:var(--border)}
-.preview-av{width:32px;height:32px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;background:var(--o);transition:background .3s}
-.preview-name{font-size:13px;font-weight:500;color:var(--gray2)}
-.preview-time{font-size:11px;color:var(--gray1);margin-left:auto}
+/* STEP 1 — เลือกการ์ด */
+.s1-main{max-width:900px;margin:0 auto;padding:clamp(14px,4vw,24px) clamp(12px,4vw,20px)}
+.s1-title{font-family:var(--disp);font-size:clamp(13px,3vw,16px);letter-spacing:.06em;margin-bottom:4px}
+.s1-sub{font-size:12px;color:var(--gray1);margin-bottom:clamp(12px,3vw,20px)}
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(clamp(130px,22vw,200px),1fr));gap:clamp(8px,2vw,14px)}
+.card-opt{border-radius:10px;overflow:hidden;cursor:pointer;border:2.5px solid transparent;transition:all .2s;aspect-ratio:4/3;background:#e0dcd6;display:flex;align-items:center;justify-content:center}
+.card-opt img{width:100%;height:100%;object-fit:cover;display:block}
+.card-opt:hover{border-color:var(--o);transform:scale(1.02)}
+.card-opt.selected{border-color:var(--o);box-shadow:0 0 0 3px rgba(255,130,0,.2)}
+.card-opt-placeholder{font-size:24px;opacity:.2}
+.loading-cards{text-align:center;padding:40px;color:var(--gray1);font-size:13px}
+.s1-footer{display:flex;justify-content:flex-end;margin-top:clamp(12px,3vw,20px)}
 
-/* FORM */
-.form-card{background:#fff;border-radius:16px;border:var(--border);overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.04)}
-.form-section{padding:18px 20px}
-.form-section+.form-section{border-top:var(--border)}
-.form-section label{font-size:12px;font-weight:500;color:var(--gray1);margin-bottom:6px;display:block}
-.form-section .sec-title{font-size:13px;font-weight:600;color:var(--gray2);margin-bottom:12px}
+/* STEP 2 — กรอกฟอร์ม */
+.s2-main{max-width:900px;margin:0 auto;padding:clamp(14px,4vw,24px) clamp(12px,4vw,20px)}
+.s2-layout{display:grid;grid-template-columns:1fr 1.4fr;gap:clamp(14px,3vw,24px);align-items:start}
+@media(max-width:600px){.s2-layout{grid-template-columns:1fr}}
+.s2-card-preview{position:sticky;top:70px}
+.s2-card-img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:var(--radius);display:block;background:#e0dcd6}
+.s2-card-img.no-img{display:flex;align-items:center;justify-content:center;font-size:36px;opacity:.2}
+.s2-change{font-size:11px;color:var(--o);cursor:pointer;margin-top:6px;display:inline-block}
+.s2-change:hover{text-decoration:underline}
 
-input[type=text],select,textarea{font-family:var(--thai);font-size:14px;width:100%;padding:9px 12px;border:var(--border);border-radius:10px;background:#fafaf9;color:var(--gray2);outline:none;transition:border-color .2s;-webkit-appearance:none}
-input[type=text]:focus,select:focus,textarea:focus{border-color:var(--o);background:#fff}
-textarea{line-height:1.65;min-height:110px;resize:vertical}
-select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2374787B' d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;background-size:10px;padding-right:30px;background-color:#fafaf9}
+.form-card{background:#fff;border-radius:var(--radius);border:var(--border);overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,.04)}
+.form-sec{padding:clamp(12px,3vw,18px) clamp(14px,4vw,20px)}
+.form-sec+.form-sec{border-top:var(--border)}
+.form-sec label{font-size:12px;font-weight:500;color:var(--gray1);margin-bottom:5px;display:block}
+.form-sec .sec-t{font-size:13px;font-weight:600;color:var(--gray2);margin-bottom:10px}
+input[type=text],select,textarea{font-family:var(--thai);font-size:clamp(13px,3.5vw,14px);width:100%;padding:9px 12px;border:var(--border);border-radius:8px;background:#fafaf9;color:var(--gray2);outline:none;transition:border-color .2s,box-shadow .2s;-webkit-appearance:none;appearance:none}
+input[type=text]:focus,select:focus,textarea:focus{border-color:var(--o);background:#fff;box-shadow:0 0 0 3px rgba(255,130,0,.08)}
+textarea{line-height:1.7;min-height:90px;resize:vertical}
+select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2374787B' d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;background-size:10px;background-color:#fafaf9;padding-right:32px;cursor:pointer}
+.input-wrap{position:relative}
+.char-c{position:absolute;right:8px;bottom:7px;font-size:10px;color:var(--gray1);pointer-events:none}
+.char-c.warn{color:#e53935}
+textarea.has-c{padding-bottom:22px}
 
-.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
-.field{display:flex;flex-direction:column;gap:5px}
-.field.hidden{display:none}
+/* Preset/custom tabs */
+.msg-tabs{display:flex;border-radius:8px;border:var(--border);overflow:hidden;margin-bottom:10px}
+.msg-tab{flex:1;padding:8px;font-family:var(--thai);font-size:12px;font-weight:500;border:none;cursor:pointer;transition:all .2s;background:#fafaf9;color:var(--gray1)}
+.msg-tab+.msg-tab{border-left:var(--border)}
+.msg-tab.active{background:var(--o);color:#fff}
+.msg-panel{display:none}
+.msg-panel.active{display:block}
 
-/* PRESETS */
-.preset-list{display:flex;flex-direction:column;gap:6px}
-.preset-item{font-family:var(--serif);font-size:14px;line-height:1.55;padding:10px 14px;border-radius:10px;border:var(--border);background:#fafaf9;cursor:pointer;color:var(--gray2);transition:all .2s;text-align:left;width:100%}
-.preset-item:hover{border-color:var(--o);background:var(--ol)}
-.preset-item.selected{border-color:var(--o);background:var(--ol);color:var(--od)}
-.or-divider{display:flex;align-items:center;gap:10px;margin:10px 0;color:var(--gray1);font-size:12px}
-.or-divider::before,.or-divider::after{content:'';flex:1;border-top:var(--border)}
+/* Preset preview */
+.preset-prev{margin-top:8px;padding:10px 12px;background:var(--gray3);border-radius:8px;font-family:var(--serif);font-size:14px;line-height:1.7;color:var(--gray2);display:none}
 
-.char-row{display:flex;justify-content:flex-end;margin-top:5px}
-.char-count{font-size:11px;color:var(--gray1)}
-.char-count.warn{color:#e53935}
-
-/* SUBMIT */
-.submit-section{padding:16px 20px;background:var(--gray3);border-top:var(--border)}
-.btn-submit{width:100%;font-family:var(--disp);font-size:13px;letter-spacing:.1em;padding:14px;border:none;border-radius:12px;background:var(--o);color:#fff;cursor:pointer;transition:all .25s;display:flex;align-items:center;justify-content:center;gap:8px}
-.btn-submit:hover:not(:disabled){background:var(--od);transform:translateY(-1px);box-shadow:0 4px 16px rgba(255,130,0,.3)}
-.btn-submit:disabled{opacity:.45;cursor:not-allowed;transform:none}
-.spin{width:16px;height:16px;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite;display:none}
+/* Submit bar */
+.submit-bar{padding:clamp(12px,3vw,14px) clamp(14px,4vw,20px);background:var(--gray3);border-top:var(--border);display:flex;gap:10px;align-items:center}
+.btn-back{font-family:var(--thai);font-size:13px;padding:10px 16px;border-radius:8px;border:var(--border);background:#fff;color:var(--gray1);cursor:pointer;transition:all .2s}
+.btn-back:hover{background:var(--gray3)}
+.btn-submit{flex:1;font-family:var(--disp);font-size:clamp(11px,3vw,13px);letter-spacing:.08em;padding:12px;border:none;border-radius:8px;background:var(--o);color:#fff;cursor:pointer;transition:all .25s;display:flex;align-items:center;justify-content:center;gap:8px}
+.btn-submit:hover:not(:disabled){background:var(--od)}
+.btn-submit:disabled{opacity:.4;cursor:not-allowed}
+.spin{width:14px;height:14px;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite;display:none;flex-shrink:0}
 @keyframes spin{to{transform:rotate(360deg)}}
 
-.status-box{margin-top:12px;padding:10px 14px;border-radius:10px;font-size:13px;display:none;align-items:center;gap:8px}
-.status-box.ok{background:#e8f5e9;color:#1b5e20;border:0.5px solid #a5d6a7;display:flex}
-.status-box.err{background:#ffebee;color:#b71c1c;border:0.5px solid #ef9a9a;display:flex}
-.status-box.loading{background:#fff8e1;color:#7c6000;border:0.5px solid #ffe082;display:flex}
+.status-msg{margin-top:8px;padding:8px 12px;border-radius:8px;font-size:12px;display:none;gap:6px;align-items:center;line-height:1.5}
+.status-msg.err{background:#ffebee;color:#b71c1c;border:0.5px solid #ef9a9a;display:flex}
+.status-msg.loading{background:#fff8e1;color:#7c6000;border:0.5px solid #ffe082;display:flex}
+
+/* NEXT BTN */
+.btn-next{font-family:var(--thai);font-size:13px;font-weight:500;padding:10px 22px;border-radius:8px;background:var(--o);color:#fff;border:none;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:6px}
+.btn-next:hover:not(:disabled){background:var(--od)}
+.btn-next:disabled{opacity:.4;cursor:not-allowed}
 
 /* SUCCESS */
-.success-wrap{position:fixed;inset:0;background:#EDE8E1;z-index:200;display:none;flex-direction:column;align-items:center;justify-content:center;gap:16px;text-align:center;padding:20px}
+.success-wrap{position:fixed;inset:0;background:#EDE8E1;z-index:200;display:none;flex-direction:column;align-items:center;justify-content:center;gap:clamp(10px,3vw,16px);text-align:center;padding:clamp(16px,5vw,24px);overflow-y:auto}
 .success-wrap.show{display:flex}
-.success-icon{font-size:56px;animation:popIn .4s ease}
-.success-title{font-family:var(--disp);font-size:24px;letter-spacing:.06em}
-.success-sub{font-family:var(--serif);font-style:italic;font-size:16px;color:var(--gray1)}
-.success-card{background:#fff;border-radius:16px;border:var(--border);padding:20px 24px;max-width:420px;width:100%;text-align:left;box-shadow:0 4px 20px rgba(0,0,0,.06)}
-.success-card .msg{font-family:var(--serif);font-size:16px;line-height:1.75;color:var(--gray2)}
-.success-card .from{font-size:13px;color:var(--gray1);margin-top:8px}
+.success-icon{font-size:clamp(36px,10vw,52px);animation:popIn .4s ease}
+.success-title{font-family:var(--disp);font-size:clamp(18px,5vw,24px);letter-spacing:.06em}
+.success-sub{font-family:var(--serif);font-style:italic;font-size:clamp(13px,3.5vw,16px);color:var(--gray1)}
+.success-card{background:#fff;border-radius:var(--radius);border:var(--border);padding:clamp(14px,4vw,20px) clamp(16px,4vw,24px);max-width:420px;width:100%;text-align:left;box-shadow:0 4px 20px rgba(0,0,0,.06)}
+.success-card .s-msg{font-family:var(--serif);font-size:clamp(14px,4vw,16px);line-height:1.75;color:var(--gray2)}
+.success-card .s-from{font-size:13px;color:var(--gray1);margin-top:8px}
 .success-btns{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
 .btn-wall{font-family:var(--thai);font-size:13px;padding:10px 20px;border-radius:100px;background:var(--o);color:#fff;border:none;cursor:pointer;text-decoration:none;transition:all .2s}
 .btn-wall:hover{background:var(--od)}
-.btn-again{font-family:var(--thai);font-size:13px;padding:10px 20px;border-radius:100px;background:transparent;color:var(--gray1);border:var(--border);cursor:pointer;text-decoration:none;transition:all .2s}
-.btn-again:hover{background:var(--gray3)}
 @keyframes popIn{from{transform:scale(.5);opacity:0}to{transform:scale(1);opacity:1}}
-
-@media(max-width:420px){.row3{grid-template-columns:1fr 1fr}.g-hero-title{font-size:18px}}
 </style>
 </head>
 <body>
 
 <div class="g-header">
   <div class="h-brand" id="hBrand">ANNIVERSARY</div>
-  <a class="h-back" href="anniversary-wall.html">← ดู Wall</a>
+  <a class="h-back" href="anniversary-wall.html">← กลับหน้าหลัก</a>
 </div>
 
-<div class="g-main">
-  <div class="g-hero">
-    <div class="g-hero-icon">✦</div>
-    <div class="g-hero-title" id="heroTitle">ส่งคำอวยพร</div>
-    <div class="g-hero-sub" id="heroSub">ร่วมอวยพรในโอกาสพิเศษนี้</div>
-  </div>
+<!-- BANNER -->
+<div class="banner-wrap" id="bannerWrap" style="display:none"><img id="bannerImg" alt="banner"></div>
 
-  <div class="nc-warn" id="ncWarn">⚠ ยังไม่ได้ตั้งค่า — กรุณาไปที่ <a href="admin.html">admin.html</a> ก่อน</div>
+<!-- STEPS -->
+<div class="steps">
+  <div class="step active" id="st1"><span class="step-num">1</span>เลือกบัตรอวยพร</div>
+  <div class="step" id="st2"><span class="step-num">2</span>กรอกข้อมูล</div>
+</div>
 
-  <!-- PREVIEW -->
-  <div class="card-preview" id="cardPreview">
-    <div class="preview-msg placeholder" id="previewMsg">ข้อความของคุณจะแสดงที่นี่...</div>
-    <div class="preview-meta" id="previewMeta"></div>
-    <div class="preview-footer">
-      <div class="preview-av" id="previewAv">?</div>
-      <div class="preview-name" id="previewName">ชื่อของคุณ</div>
-      <div class="preview-time" id="previewTime"></div>
+<!-- STEP 1 -->
+<div class="page active" id="page1">
+  <div class="s1-main">
+    <div class="s1-title" id="s1Title">กรุณาเลือกบัตรอวยพร</div>
+    <div class="s1-sub">Please select a greeting card.</div>
+    <div id="cardsContainer"><div class="loading-cards">กำลังโหลดบัตรอวยพร...</div></div>
+    <div class="s1-footer">
+      <button class="btn-next" id="btnNext" onclick="goStep2()" disabled>ถัดไป →</button>
     </div>
   </div>
+</div>
 
-  <!-- FORM -->
-  <div class="form-card">
-
-    <!-- ข้อมูลผู้ส่ง -->
-    <div class="form-section">
-      <div class="sec-title">ข้อมูลผู้ส่ง</div>
-      <div class="row3" style="margin-bottom:10px">
-        <div class="field" id="fPrefixWrap">
-          <label>คำนำหน้า</label>
-          <select id="fPrefix" onchange="updatePreview()">
-            <option value="">— ไม่ระบุ —</option>
-          </select>
-        </div>
-        <div class="field" style="grid-column:span 2">
-          <label>ชื่อ-นามสกุล <span style="color:var(--o)">*</span></label>
-          <input type="text" id="fName" placeholder="กรอกชื่อที่ต้องการแสดง" maxlength="80" oninput="updatePreview()">
-        </div>
-      </div>
-      <div class="row3" id="extraFieldsRow">
-        <div class="field hidden" id="fRoleWrap">
-          <label id="fRoleLabel">ตำแหน่ง</label>
-          <input type="text" id="fRole" placeholder="เช่น อาจารย์" maxlength="60" oninput="updatePreview()">
-        </div>
-        <div class="field hidden" id="fGenWrap">
-          <label id="fGenLabel">รุ่น</label>
-          <input type="text" id="fGen" placeholder="เช่น รุ่น 25" maxlength="30" oninput="updatePreview()">
-        </div>
-        <div class="field hidden" id="fYearWrap">
-          <label id="fYearLabel">ปี</label>
-          <input type="text" id="fYear" placeholder="เช่น 2567" maxlength="10" oninput="updatePreview()">
-        </div>
-      </div>
-    </div>
-
-    <!-- ข้อความ -->
-    <div class="form-section">
-      <div class="sec-title">ข้อความอวยพร</div>
-
-      <!-- Presets -->
-      <div id="presetSection" style="display:none">
-        <div class="preset-list" id="presetList"></div>
-        <div class="or-divider">หรือเขียนเอง</div>
+<!-- STEP 2 -->
+<div class="page" id="page2">
+  <div class="s2-main">
+    <div class="s2-layout">
+      <!-- ซ้าย: รูปการ์ด -->
+      <div class="s2-card-preview">
+        <div class="s2-card-img no-img" id="s2CardImg">✦</div>
+        <span class="s2-change" onclick="backStep1()">← เปลี่ยนบัตรอวยพร</span>
       </div>
 
-      <textarea id="fMsg" placeholder="เขียนคำอวยพรจากใจ..." maxlength="500" oninput="updatePreview(); clearPreset()"></textarea>
-      <div class="char-row">
-        <span class="char-count" id="charCount">0 / 500</span>
-      </div>
-    </div>
+      <!-- ขวา: ฟอร์ม -->
+      <div class="form-card">
+        <!-- คำอวยพร -->
+        <div class="form-sec">
+          <div class="sec-t">คำอวยพร <span style="color:var(--o)">*</span></div>
+          <div class="msg-tabs" id="msgTabs">
+            <button class="msg-tab active" onclick="switchMsgTab('preset')">เลือกข้อความสำเร็จรูป</button>
+            <button class="msg-tab" onclick="switchMsgTab('custom')">เขียนเอง</button>
+          </div>
+          <div class="msg-panel active" id="mpPreset">
+            <select id="fPreset" onchange="onPresetChange()">
+              <option value="">— กรุณาเลือกคำอวยพร —</option>
+            </select>
+            <div class="preset-prev" id="presetPrev"></div>
+          </div>
+          <div class="msg-panel" id="mpCustom">
+            <div class="input-wrap">
+              <textarea id="fMsg" class="has-c" maxlength="500" placeholder="เขียนคำอวยพรจากใจ..." oninput="onMsgInput()"></textarea>
+              <span class="char-c" id="charC">0/500</span>
+            </div>
+          </div>
+        </div>
 
-    <!-- Submit -->
-    <div class="submit-section">
-      <button class="btn-submit" id="btnSubmit" onclick="submitGreeting()" disabled>
-        <span class="spin" id="submitSpin"></span>
-        <span id="btnLabel">SEND GREETING ✦</span>
-      </button>
-      <div class="status-box" id="statusBox"></div>
+        <!-- ข้อมูลผู้ส่ง -->
+        <div class="form-sec">
+          <div class="sec-t">ข้อมูลผู้ส่ง</div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div>
+              <label for="fName">ชื่อ-นามสกุล / ผู้อวยพร <span style="color:var(--o)">*</span></label>
+              <input type="text" id="fName" placeholder="กรอกชื่อที่ต้องการแสดง" maxlength="80" oninput="checkForm()">
+            </div>
+            <div id="fDetailWrap">
+              <label for="fDetail" id="fDetailLabel">รายละเอียด (ตำแหน่ง / รุ่น / แผนก)</label>
+              <input type="text" id="fDetail" placeholder="เช่น อาจารย์ / รุ่น 25 / คณะเศรษฐศาสตร์" maxlength="120">
+            </div>
+          </div>
+        </div>
+
+        <!-- Submit -->
+        <div class="submit-bar">
+          <button class="btn-back" onclick="backStep1()">← ย้อนกลับ</button>
+          <button class="btn-submit" id="btnSubmit" onclick="submitGreeting()" disabled>
+            <span class="spin" id="submitSpin"></span>
+            <span id="btnLabel">ส่งคำอวยพร ✦</span>
+          </button>
+        </div>
+        <div style="padding:0 clamp(14px,4vw,20px) 12px">
+          <div class="status-msg" id="statusMsg"></div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -198,215 +219,250 @@ select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/
   <div class="success-title">ส่งสำเร็จแล้ว!</div>
   <div class="success-sub">ขอบคุณสำหรับคำอวยพร</div>
   <div class="success-card">
-    <div class="msg" id="successMsg"></div>
-    <div class="from" id="successFrom"></div>
+    <div class="s-msg" id="successMsg"></div>
+    <div class="s-from" id="successFrom"></div>
   </div>
   <div class="success-btns">
-    <a class="btn-wall" href="anniversary-wall.html">🖼 ดูบน Wall</a>
-    <button class="btn-again" onclick="resetForm()">✎ ส่งอีกครั้ง</button>
+    <a class="btn-wall" href="anniversary-wall.html">🖼 กลับหน้าหลัก</a>
   </div>
 </div>
 
 <script>
-const NC = {
-  base:   'https://anniversary-proxy.kunakorn-son.workers.dev',
-  user:   'feconkos',
-  folder: 'anniversary',
-  get pass(){ return sessionStorage.getItem('nc_pass') || '' },
-  get dav(){ return `${this.base}/remote.php/dav/files/${this.user}/${this.folder}` },
-  get headers(){
-    return { 'Authorization': 'Basic ' + safeB64(`${this.user}:${this.pass}`), 'Content-Type': 'application/json' };
-  },
-  async getJSON(file){
-    const r = await fetch(`${this.dav}/${file}`, { headers: this.headers });
-    if(r.status===404) return null;
-    if(!r.ok) throw new Error(`${r.status}`);
-    return r.json();
-  },
-  async putJSON(file, data){
-    const r = await fetch(`${this.dav}/${file}`, { method:'PUT', headers: this.headers, body: JSON.stringify(data, null, 2) });
-    if(!r.ok) throw new Error(`${r.status} ${r.statusText}`);
-    return true;
-  }
+/* Security */
+function sanitizeRaw(s,max=500){return typeof s!=='string'?'':s.slice(0,max).replace(/<[^>]*>/g,'').replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g,'').trim()}
+function rateLimit(){const k='gr_last',w=15000,l=+sessionStorage.getItem(k)||0;if(Date.now()-l<w)return false;sessionStorage.setItem(k,Date.now());return true}
+function safeB64(s){return btoa(encodeURIComponent(s).replace(/%([0-9A-F]{2})/g,(_,p)=>String.fromCharCode('0x'+p)))}
+
+const NC={
+  base:'https://anniversary-proxy.kunakorn-son.workers.dev',
+  user:'feconkos',folder:'anniversary',
+  get pass(){return sessionStorage.getItem('nc_pass')||''},
+  get dav(){return`${this.base}/remote.php/dav/files/${this.user}/${this.folder}`},
+  get headers(){return{'Authorization':'Basic '+safeB64(`${this.user}:${this.pass}`),'Content-Type':'application/json'}},
+  get imgHeaders(){return{'Authorization':'Basic '+safeB64(`${this.user}:${this.pass}`)}},
+  async getJSON(f){const r=await fetch(`${this.dav}/${f}`,{headers:this.headers});if(r.status===404)return null;if(!r.ok)throw new Error(r.status);return r.json()},
+  async putJSON(f,d){const r=await fetch(`${this.dav}/${f}`,{method:'PUT',headers:this.headers,body:JSON.stringify(d,null,2)});if(!r.ok)throw new Error(`${r.status}`)},
+  imgURL(p){return`${this.dav}/${p}`}
 };
 
-function safeB64(str){ return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g,(_,p)=>String.fromCharCode('0x'+p))); }
-
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6)}
 const COLORS=['#FF8200','#3DAA6B','#C0715A','#5B7FA6','#8A6FB5','#D4845A'];
-function colorFor(n){ let h=0; for(let c of n) h=(h<<5)-h+c.charCodeAt(0); return COLORS[Math.abs(h)%COLORS.length]; }
-function initials(n){ return n.trim().split(/\s+/).map(w=>w[0]).slice(0,2).join('').toUpperCase()||'?'; }
-function uid(){ return Date.now().toString(36)+Math.random().toString(36).slice(2,6); }
+function colorFor(n){let h=0;for(let c of String(n))h=(h<<5)-h+c.charCodeAt(0);return COLORS[Math.abs(h)%COLORS.length]}
+function initials(n){return String(n).trim().split(/\s+/).map(w=>w[0]).slice(0,2).join('').toUpperCase()||'?'}
 
-/* ── Config ── */
-let CFG = {
-  orgName:'', year:50,
-  prefixes:['นาย','นาง','นางสาว','ดร.','ผศ.','รศ.','ศ.'],
-  showRole:true, showGen:true, showYear:false,
-  roleLabel:'ตำแหน่ง', genLabel:'รุ่น', yearLabel:'ปี',
-  showMetaOnCard:true,
-  presets:[]
-};
+let CFG={presets:[],detailLabel:'รายละเอียด (ตำแหน่ง / รุ่น / แผนก)'};
+let cardImages=[],selectedCard=null,activeTab='preset';
+
+/* INIT */
+async function init(){
+  await Promise.all([loadBanner(),loadConfig(),loadCards()]);
+}
+
+async function loadBanner(){
+  try{
+    const r=await fetch(`${NC.dav}/banner/`,{method:'PROPFIND',headers:{...NC.imgHeaders,'Depth':'1'}});
+    if(!r.ok)return;
+    const xml=new DOMParser().parseFromString(await r.text(),'application/xml');
+    const hrefs=[...xml.querySelectorAll('response href')].map(h=>h.textContent).filter(h=>/\.(jpg|jpeg|png|webp|gif)$/i.test(h));
+    if(!hrefs.length)return;
+    const path=hrefs[0].replace(/.*\/dav\/files\/[^/]+\//,'');
+    const blob=await fetch(NC.imgURL(path),{headers:NC.imgHeaders}).then(r=>r.blob());
+    const img=document.getElementById('bannerImg');
+    img.src=URL.createObjectURL(blob);
+    document.getElementById('bannerWrap').style.display='block';
+  }catch(_){}
+}
 
 async function loadConfig(){
   try{
-    const cfg = await NC.getJSON('config.json');
-    if(cfg) CFG = {...CFG, ...cfg};
+    const cfg=await NC.getJSON('config.json');
+    if(!cfg)return;
+    CFG={...CFG,...cfg};
+    if(cfg.orgName)document.getElementById('hBrand').textContent=cfg.orgName.toUpperCase();
+    if(cfg.orgName&&cfg.year){
+      document.getElementById('s1Title').textContent=`กรุณาเลือกบัตรอวยพร — ครบรอบ ${cfg.year} ปี`;
+    }
+    if(cfg.detailLabel)document.getElementById('fDetailLabel').textContent=cfg.detailLabel;
+    // presets
+    const sel=document.getElementById('fPreset');
+    sel.innerHTML='<option value="">— กรุณาเลือกคำอวยพร —</option>';
+    if(CFG.presets&&CFG.presets.length){
+      CFG.presets.forEach((p,i)=>{const o=document.createElement('option');o.value=i;o.textContent=p.length>60?p.slice(0,60)+'…':p;sel.appendChild(o)});
+    } else {
+      switchMsgTab('custom');
+      document.getElementById('msgTabs').style.display='none';
+    }
   }catch(_){}
-  applyConfig();
 }
 
-function applyConfig(){
-  // hero text
-  if(CFG.orgName) document.getElementById('heroSub').textContent = `ร่วมอวยพรในโอกาสครบรอบ ${CFG.year} ปี ของ${CFG.orgName}`;
-  if(CFG.orgName) document.getElementById('heroTitle').textContent = `ส่งคำอวยพร — ${CFG.year} ปี`;
-  if(CFG.orgName) document.getElementById('hBrand').textContent = CFG.orgName.toUpperCase();
+async function loadCards(){
+  try{
+    const r=await fetch(`${NC.dav}/cards/`,{method:'PROPFIND',headers:{...NC.imgHeaders,'Depth':'1'}});
+    if(!r.ok){renderNoCards();return;}
+    const xml=new DOMParser().parseFromString(await r.text(),'application/xml');
+    const paths=[...xml.querySelectorAll('response href')]
+      .map(h=>h.textContent)
+      .filter(h=>/\.(jpg|jpeg|png|webp|gif)$/i.test(h))
+      .map(h=>h.replace(/.*\/dav\/files\/[^/]+\//,''));
+    cardImages=paths;
+    if(!paths.length){renderNoCards();return;}
+    renderCards(paths);
+  }catch(_){renderNoCards();}
+}
 
-  // คำนำหน้า
-  const sel = document.getElementById('fPrefix');
-  sel.innerHTML = '<option value="">— ไม่ระบุ —</option>';
-  (CFG.prefixes||[]).forEach(p=>{ const o=document.createElement('option'); o.value=p; o.textContent=p; sel.appendChild(o); });
+function renderNoCards(){
+  // ไม่มีรูปการ์ด — ข้ามไป step 2 ทันที
+  document.querySelector('.steps').style.display='none';
+  document.getElementById('page1').classList.remove('active');
+  document.getElementById('page2').classList.add('active');
+  document.getElementById('s2CardImg').textContent='✦';
+}
 
-  // extra fields
-  toggleField('fRoleWrap', CFG.showRole, 'fRoleLabel', CFG.roleLabel||'ตำแหน่ง');
-  toggleField('fGenWrap',  CFG.showGen,  'fGenLabel',  CFG.genLabel||'รุ่น');
-  toggleField('fYearWrap', CFG.showYear, 'fYearLabel', CFG.yearLabel||'ปี');
+async function renderCards(paths){
+  const container=document.getElementById('cardsContainer');
+  const grid=document.createElement('div');
+  grid.className='cards-grid';
+  container.innerHTML='';
 
-  // presets
-  if(CFG.presets && CFG.presets.length){
-    const sec = document.getElementById('presetSection');
-    const list = document.getElementById('presetList');
-    sec.style.display='block';
-    list.innerHTML='';
-    CFG.presets.forEach(p=>{
-      const btn = document.createElement('button');
-      btn.className='preset-item'; btn.textContent=p;
-      btn.onclick=()=>{
-        document.querySelectorAll('.preset-item').forEach(b=>b.classList.remove('selected'));
-        btn.classList.add('selected');
-        document.getElementById('fMsg').value=p;
-        updatePreview();
-      };
-      list.appendChild(btn);
-    });
+  for(const path of paths){
+    const el=document.createElement('div');
+    el.className='card-opt';
+    el.innerHTML='<div class="card-opt-placeholder">⌛</div>';
+    el.onclick=()=>selectCard(path,el);
+    grid.appendChild(el);
+    // โหลดรูป async
+    fetch(NC.imgURL(path),{headers:NC.imgHeaders}).then(r=>r.blob()).then(blob=>{
+      const url=URL.createObjectURL(blob);
+      el.innerHTML=`<img src="${url}" alt="" loading="lazy">`;
+    }).catch(()=>{el.innerHTML='<div class="card-opt-placeholder">✦</div>'});
   }
+  container.appendChild(grid);
 }
 
-function toggleField(wrapId, show, labelId, labelText){
-  const w = document.getElementById(wrapId);
-  if(!w) return;
-  w.classList.toggle('hidden', !show);
-  if(labelId) document.getElementById(labelId).textContent = labelText;
+function selectCard(path,el){
+  document.querySelectorAll('.card-opt').forEach(c=>c.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedCard=path;
+  document.getElementById('btnNext').disabled=false;
 }
 
-/* ── Preview ── */
-function updatePreview(){
-  const prefix = document.getElementById('fPrefix').value;
-  const name   = document.getElementById('fName').value.trim();
-  const role   = document.getElementById('fRole').value.trim();
-  const gen    = document.getElementById('fGen').value.trim();
-  const year   = document.getElementById('fYear').value.trim();
-  const msg    = document.getElementById('fMsg').value.trim();
-  const len    = document.getElementById('fMsg').value.length;
-
-  const fullName = [prefix, name].filter(Boolean).join('');
-
-  // message
-  const pm = document.getElementById('previewMsg');
-  if(msg){ pm.textContent=msg; pm.classList.remove('placeholder'); }
-  else { pm.textContent='ข้อความของคุณจะแสดงที่นี่...'; pm.classList.add('placeholder'); }
-
-  // meta tags
-  const meta = document.getElementById('previewMeta');
-  if(CFG.showMetaOnCard){
-    const tags = [];
-    if(CFG.showRole && role) tags.push(role);
-    if(CFG.showGen  && gen)  tags.push(gen);
-    if(CFG.showYear && year) tags.push(year);
-    meta.innerHTML = tags.map(t=>`<span class="preview-tag">${t}</span>`).join('');
-  } else { meta.innerHTML=''; }
-
-  // avatar
-  const av = document.getElementById('previewAv');
-  const pn = document.getElementById('previewName');
-  if(name){
-    av.textContent=initials(name); av.style.background=colorFor(name);
-    pn.textContent=fullName||name;
-  } else {
-    av.textContent='?'; av.style.background='#ccc'; pn.textContent='ชื่อของคุณ';
+/* STEP NAV */
+function goStep2(){
+  if(!selectedCard)return;
+  document.getElementById('page1').classList.remove('active');
+  document.getElementById('page2').classList.add('active');
+  document.getElementById('st1').classList.remove('active');document.getElementById('st1').classList.add('done');
+  document.getElementById('st2').classList.add('active');
+  // แสดงรูปการ์ดที่เลือก
+  const sel=document.querySelector('.card-opt.selected img');
+  const s2=document.getElementById('s2CardImg');
+  if(sel){
+    const img=document.createElement('img');
+    img.className='s2-card-img';
+    img.src=sel.src;
+    img.alt='';
+    s2.replaceWith(img);
+    document.getElementById('page2').querySelector('.s2-card-preview').prepend;
   }
-  document.getElementById('previewTime').textContent = new Date().toLocaleTimeString('th-TH',{hour:'2-digit',minute:'2-digit'});
-
-  // char
-  const cc = document.getElementById('charCount');
-  cc.textContent=`${len} / 500`; cc.classList.toggle('warn', len>420);
-
-  // button
-  document.getElementById('btnSubmit').disabled = !(name && msg);
+  window.scrollTo({top:0,behavior:'smooth'});
+  checkForm();
 }
 
-function clearPreset(){
-  document.querySelectorAll('.preset-item').forEach(b=>b.classList.remove('selected'));
+function backStep1(){
+  document.getElementById('page2').classList.remove('active');
+  document.getElementById('page1').classList.add('active');
+  document.getElementById('st2').classList.remove('active');
+  document.getElementById('st1').classList.remove('done');document.getElementById('st1').classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
 }
 
-/* ── Submit ── */
-function setStatus(type, msg){
-  const el=document.getElementById('statusBox');
-  el.className='status-box '+type;
+/* MSG TABS */
+function switchMsgTab(tab){
+  activeTab=tab;
+  document.querySelectorAll('.msg-tab').forEach((b,i)=>b.classList.toggle('active',(i===0&&tab==='preset')||(i===1&&tab==='custom')));
+  document.getElementById('mpPreset').classList.toggle('active',tab==='preset');
+  document.getElementById('mpCustom').classList.toggle('active',tab==='custom');
+  checkForm();
+}
+
+function onPresetChange(){
+  const idx=document.getElementById('fPreset').value;
+  const prev=document.getElementById('presetPrev');
+  if(idx!==''&&CFG.presets[+idx]){prev.textContent=CFG.presets[+idx];prev.style.display='block';}
+  else prev.style.display='none';
+  checkForm();
+}
+
+function onMsgInput(){
+  const len=document.getElementById('fMsg').value.length;
+  const cc=document.getElementById('charC');
+  cc.textContent=`${len}/500`;cc.classList.toggle('warn',len>420);
+  checkForm();
+}
+
+function checkForm(){
+  const name=document.getElementById('fName').value.trim();
+  let hasMsg=activeTab==='preset'?document.getElementById('fPreset').value!=='':document.getElementById('fMsg').value.trim().length>0;
+  document.getElementById('btnSubmit').disabled=!(name&&hasMsg);
+}
+
+function setStatus(type,msg){
+  const el=document.getElementById('statusMsg');
+  el.className='status-msg '+type;
   el.innerHTML=(type==='loading'?'<div style="width:12px;height:12px;border:2px solid currentColor;border-top-color:transparent;border-radius:50%;animation:spin .6s linear infinite;flex-shrink:0"></div>':'')+'<span>'+msg+'</span>';
 }
 
+/* SUBMIT */
 async function submitGreeting(){
-  const prefix = document.getElementById('fPrefix').value;
-  const name   = document.getElementById('fName').value.trim();
-  const role   = document.getElementById('fRole').value.trim();
-  const gen    = document.getElementById('fGen').value.trim();
-  const year   = document.getElementById('fYear').value.trim();
-  const msg    = document.getElementById('fMsg').value.trim();
-  if(!name||!msg) return;
-  if(!NC.pass){ setStatus('err','กรุณาตั้งค่า App Password ใน admin.html ก่อน'); return; }
+  if(!rateLimit()){setStatus('err','กรุณารอสักครู่ก่อนส่งใหม่');return;}
+  const name=sanitizeRaw(document.getElementById('fName').value,80);
+  const detail=sanitizeRaw(document.getElementById('fDetail').value,120);
+  let message='';
+  if(activeTab==='preset'){
+    const idx=document.getElementById('fPreset').value;
+    if(idx===''||!CFG.presets[+idx]){setStatus('err','กรุณาเลือกคำอวยพร');return;}
+    message=sanitizeRaw(CFG.presets[+idx],500);
+  }else{
+    message=sanitizeRaw(document.getElementById('fMsg').value,500);
+  }
+  if(!name){setStatus('err','กรุณากรอกชื่อ');return;}
+  if(!message){setStatus('err','กรุณาใส่คำอวยพร');return;}
+  if(!NC.pass){setStatus('err','ระบบยังไม่พร้อม กรุณาติดต่อผู้ดูแล');return;}
 
   document.getElementById('btnSubmit').disabled=true;
   document.getElementById('submitSpin').style.display='block';
   document.getElementById('btnLabel').textContent='กำลังส่ง...';
-  setStatus('loading','กำลังบันทึกลง KU Drive...');
+  setStatus('loading','กำลังบันทึก...');
 
   try{
-    let list = await NC.getJSON('greetings.json');
-    if(!Array.isArray(list)) list=[];
-    const entry = {
-      id: uid(), name, prefix, fullName:[prefix,name].filter(Boolean).join(''),
-      role, gen, year, message: msg, time: new Date().toISOString()
-    };
-    list.push(entry);
-    await NC.putJSON('greetings.json', list);
-    document.getElementById('successMsg').textContent = msg;
-    document.getElementById('successFrom').textContent = '— ' + (entry.fullName||name) + (role?' · '+role:'') + (gen?' · '+gen:'');
+    let list=await NC.getJSON('greetings.json');
+    if(!Array.isArray(list))list=[];
+    // ป้องกัน spam
+    const cutoff=Date.now()-3600000;
+    if(list.find(d=>d.name===name&&new Date(d.time).getTime()>cutoff)){
+      setStatus('err','ชื่อนี้ส่งคำอวยพรไปแล้วใน 1 ชั่วโมงที่ผ่านมา');
+      document.getElementById('btnSubmit').disabled=false;
+      document.getElementById('submitSpin').style.display='none';
+      document.getElementById('btnLabel').textContent='ส่งคำอวยพร ✦';
+      return;
+    }
+    list.push({id:uid(),name,detail,message,cardImage:selectedCard||null,time:new Date().toISOString()});
+    await NC.putJSON('greetings.json',list);
+    document.getElementById('successMsg').textContent=message;
+    document.getElementById('successFrom').textContent='— '+name+(detail?' · '+detail:'');
     document.getElementById('successWrap').classList.add('show');
+    // กลับหน้าหลักอัตโนมัติ 4 วินาที
+    setTimeout(()=>window.location.href='anniversary-wall.html',4000);
   }catch(e){
     setStatus('err','❌ ส่งไม่สำเร็จ: '+e.message);
     document.getElementById('btnSubmit').disabled=false;
     document.getElementById('submitSpin').style.display='none';
-    document.getElementById('btnLabel').textContent='SEND GREETING ✦';
+    document.getElementById('btnLabel').textContent='ส่งคำอวยพร ✦';
   }
 }
 
-function resetForm(){
-  document.getElementById('successWrap').classList.remove('show');
-  ['fPrefix','fName','fRole','fGen','fYear','fMsg'].forEach(id=>{
-    const el=document.getElementById(id);
-    if(el) el.value='';
-  });
-  document.querySelectorAll('.preset-item').forEach(b=>b.classList.remove('selected'));
-  document.getElementById('btnSubmit').disabled=true;
-  document.getElementById('submitSpin').style.display='none';
-  document.getElementById('btnLabel').textContent='SEND GREETING ✦';
-  document.getElementById('statusBox').className='status-box';
-  updatePreview();
-}
-
-if(!NC.pass) document.getElementById('ncWarn').style.display='block';
-loadConfig();
-updatePreview();
+document.getElementById('fName').addEventListener('input',checkForm);
+init();
 </script>
 </body>
 </html>
