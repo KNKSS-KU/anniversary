@@ -265,7 +265,7 @@ async function loadBanner(){
     const xml=new DOMParser().parseFromString(await r.text(),'application/xml');
     const hrefs=[...xml.querySelectorAll('response href')].map(h=>h.textContent).filter(h=>/\.(jpg|jpeg|png|webp|gif)$/i.test(h));
     if(!hrefs.length)return;
-    const path=hrefs[0].replace(/.*\/dav\/files\/[^/]+\//,'');
+    const m=hrefs[0].match(/\/dav\/files\/[^/]+\/[^/]+\/(.+)/); const path=m?m[1]:hrefs[0];
     const blob=await fetch(NC.imgURL(path),{headers:NC.imgHeaders}).then(r=>r.blob());
     const img=document.getElementById('bannerImg');
     img.src=URL.createObjectURL(blob);
@@ -303,7 +303,7 @@ async function loadCards(){
     const paths=[...xml.querySelectorAll('response href')]
       .map(h=>h.textContent)
       .filter(h=>/\.(jpg|jpeg|png|webp|gif)$/i.test(h))
-      .map(h=>h.replace(/.*\/dav\/files\/[^/]+\//,''));
+      .map(h=>{ const m=h.match(/\/dav\/files\/[^/]+\/[^/]+\/(.+)/); return m?m[1]:h; });
     cardImages=paths;
     if(!paths.length){renderNoCards();return;}
     renderCards(paths);
