@@ -383,7 +383,7 @@ const NC={
     const r=await fetch(`${this.dav}/${folder}/`,{method:'PROPFIND',headers:{...this.imgHeaders,'Depth':'1'}});
     if(!r.ok)return[];
     const xml=new DOMParser().parseFromString(await r.text(),'application/xml');
-    return[...xml.querySelectorAll('response href')].map(h=>h.textContent).filter(h=>/\.(jpg|jpeg|png|webp|gif)$/i.test(h)).map(h=>h.replace(/.*\/dav\/files\/[^/]+\//,''));
+    return[...xml.querySelectorAll('response href')].map(h=>h.textContent).filter(h=>/\.(jpg|jpeg|png|webp|gif)$/i.test(h)).map(h=>{ const m=h.match(/\/dav\/files\/[^/]+\/[^/]+\/(.+)/); return m?m[1]:h; });
   }
 };
 
