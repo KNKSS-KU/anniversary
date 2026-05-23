@@ -198,7 +198,7 @@ const NC={
   get pass(){return sessionStorage.getItem('nc_pass')||''},
   get dav(){return`${this.base}/remote.php/dav/files/${this.user}/${this.folder}`},
   get headers(){return{'Authorization':'Basic '+safeB64(`${this.user}:${this.pass}`),'Content-Type':'application/json'}},
-  get imgHeaders(){return{'Authorization':'Basic '+safeB64(`${this.user}:${this.pass}`)}},
+  get imgHeaders(){return{}}  // Worker ฝัง credentials สำหรับ GET แล้ว,
   async getJSON(f){const r=await fetch(`${this.dav}/${f}`,{headers:this.headers});if(r.status===404)return null;if(!r.ok)throw new Error(r.status);return r.json()},
   imgURL(path){return`${this.dav}/${path}`}
 };
