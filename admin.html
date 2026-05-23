@@ -9,140 +9,139 @@
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
   --o:#FF8200;--od:#CC6800;--ol:#FFF3E0;
-  --g:#3DAA6B;--gl:#E8F5E9;
-  --r:#E53935;--rl:#FFEBEE;
+  --g:#3DAA6B;--gl:#E8F5E9;--r:#E53935;--rl:#FFEBEE;
   --gray1:#74787B;--gray2:#222221;--gray3:#f7f5f2;
   --disp:'Cinzel',serif;--thai:'Sarabun',sans-serif;
-  --border:0.5px solid rgba(0,0,0,.1);
+  --border:0.5px solid rgba(0,0,0,.1);--radius:12px;
 }
-body{font-family:var(--thai);background:#EDE8E1;color:var(--gray2);min-height:100vh}
+html,body{min-height:100%;background:#EDE8E1;font-family:var(--thai);color:var(--gray2)}
 
-/* ── HEADER ── */
-.adm-header{
-  background:#fff;border-bottom:var(--border);
-  padding:0 24px;height:52px;
-  display:flex;align-items:center;justify-content:space-between;
-  position:sticky;top:0;z-index:50;
-}
-.h-brand{font-family:var(--disp);font-size:14px;letter-spacing:.08em}
+/* HEADER */
+.adm-header{background:#fff;border-bottom:var(--border);padding:0 clamp(12px,4vw,24px);height:52px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50}
+.h-brand{font-family:var(--disp);font-size:clamp(11px,2.5vw,14px);letter-spacing:.08em;white-space:nowrap}
 .h-links{display:flex;gap:8px}
-.h-link{font-size:12px;padding:5px 12px;border-radius:100px;
-  border:var(--border);text-decoration:none;color:var(--gray1);background:#fff;transition:all .2s}
+.h-link{font-size:12px;padding:5px 12px;border-radius:100px;border:var(--border);text-decoration:none;color:var(--gray1);background:#fff;transition:all .2s;white-space:nowrap}
 .h-link:hover{background:var(--gray3)}
 .h-link.primary{background:var(--o);color:#fff;border-color:var(--o)}
 .h-link.primary:hover{background:var(--od)}
 
-/* ── LAYOUT ── */
-.adm-main{max-width:900px;margin:0 auto;padding:24px 16px;display:flex;flex-direction:column;gap:20px}
+/* LAYOUT */
+.adm-main{max-width:960px;margin:0 auto;padding:clamp(16px,4vw,24px) clamp(12px,4vw,16px);display:flex;flex-direction:column;gap:16px}
 
-/* ── CARD ── */
-.acard{background:#fff;border-radius:12px;border:var(--border);overflow:hidden}
-.acard-head{
-  padding:14px 20px;border-bottom:var(--border);
-  display:flex;align-items:center;justify-content:space-between;gap:10px;
-}
+/* CARD */
+.acard{background:#fff;border-radius:var(--radius);border:var(--border);overflow:hidden}
+.acard-head{padding:clamp(10px,3vw,14px) clamp(14px,4vw,20px);border-bottom:var(--border);display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
 .acard-title{font-size:14px;font-weight:600;display:flex;align-items:center;gap:8px}
 .acard-title .icon{font-size:16px}
-.acard-body{padding:20px}
+.acard-body{padding:clamp(14px,4vw,20px)}
 
-/* ── STATUS ── */
-.status-row{
-  display:flex;align-items:center;gap:10px;padding:10px 14px;
-  border-radius:8px;border:var(--border);font-size:13px;margin-bottom:16px;
-  background:var(--gray3);
-}
-.status-row.ok{background:var(--gl);border-color:#a5d6a7;color:#1b5e20}
-.status-row.err{background:var(--rl);border-color:#ef9a9a;color:#b71c1c}
-.status-row.loading{background:#fff8e1;border-color:#ffe082;color:#7c6000}
-.spin{width:14px;height:14px;border:2px solid currentColor;border-top-color:transparent;border-radius:50%;animation:spin .6s linear infinite;flex-shrink:0}
+/* STATUS */
+.srow{display:flex;align-items:center;gap:8px;padding:9px 12px;border-radius:8px;font-size:12px;margin-bottom:14px;background:var(--gray3);border:var(--border)}
+.srow.ok{background:var(--gl);border-color:#a5d6a7;color:#1b5e20}
+.srow.err{background:var(--rl);border-color:#ef9a9a;color:#b71c1c}
+.srow.loading{background:#fff8e1;border-color:#ffe082;color:#7c6000}
+.spin{width:13px;height:13px;border:2px solid currentColor;border-top-color:transparent;border-radius:50%;animation:spin .6s linear infinite;flex-shrink:0}
 @keyframes spin{to{transform:rotate(360deg)}}
 
-/* ── FORM ── */
-.form-row{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
-.form-row label{font-size:12px;font-weight:500;color:var(--gray1)}
-.form-row input,.form-row textarea{
-  font-family:var(--thai);font-size:13px;padding:8px 12px;
-  border:var(--border);border-radius:8px;background:#fff;color:var(--gray2);
-  outline:none;width:100%;transition:border-color .2s;
-}
-.form-row input:focus,.form-row textarea:focus{border-color:var(--o)}
-.form-row input[type=password]{letter-spacing:.1em}
-.form-row .hint{font-size:11px;color:var(--gray1)}
+/* FORMS */
+.frow{display:flex;flex-direction:column;gap:5px;margin-bottom:12px}
+.frow label{font-size:12px;font-weight:500;color:var(--gray1)}
+.frow input,.frow textarea{font-family:var(--thai);font-size:13px;padding:8px 12px;border:var(--border);border-radius:8px;background:#fff;color:var(--gray2);outline:none;width:100%;transition:border-color .2s}
+.frow input:focus,.frow textarea:focus{border-color:var(--o)}
+.frow input[type=password]{letter-spacing:.1em}
+.frow .hint{font-size:11px;color:var(--gray1)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+@media(max-width:500px){.grid2{grid-template-columns:1fr}.grid3{grid-template-columns:1fr 1fr}}
 
-/* ── BUTTONS ── */
-.btn{
-  font-family:var(--thai);font-size:13px;font-weight:500;
-  padding:8px 16px;border-radius:8px;border:var(--border);
-  cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:6px;
-}
-.btn-primary{background:var(--o);color:#fff;border-color:var(--o)}
-.btn-primary:hover{background:var(--od)}
-.btn-ghost{background:transparent;color:var(--gray1)}
-.btn-ghost:hover{background:var(--gray3)}
-.btn-danger{background:var(--r);color:#fff;border-color:var(--r)}
-.btn-danger:hover{background:#c62828}
+/* BUTTONS */
+.btn{font-family:var(--thai);font-size:13px;font-weight:500;padding:8px 16px;border-radius:8px;border:var(--border);cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:6px}
+.btn-primary{background:var(--o);color:#fff;border-color:var(--o)}.btn-primary:hover{background:var(--od)}
+.btn-ghost{background:transparent;color:var(--gray1)}.btn-ghost:hover{background:var(--gray3)}
+.btn-danger{background:var(--r);color:#fff;border-color:var(--r)}.btn-danger:hover{background:#c62828}
 .btn-sm{font-size:12px;padding:5px 10px;border-radius:6px}
 .btn-row{display:flex;gap:8px;flex-wrap:wrap}
 
-/* ── GRID (greetings list) ── */
-.g-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px}
-.g-card{
-  border:var(--border);border-radius:8px;padding:12px;background:var(--gray3);
-  display:flex;flex-direction:column;gap:8px;
-}
+/* STATS */
+.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:0}
+.stat-box{background:var(--gray3);border-radius:8px;padding:14px;text-align:center}
+.stat-num{font-size:24px;font-weight:700;color:var(--o)}
+.stat-label{font-size:11px;color:var(--gray1);margin-top:2px}
+@media(max-width:400px){.stats-grid{grid-template-columns:1fr 1fr}}
+
+/* IMAGE UPLOAD */
+.upload-zone{border:2px dashed rgba(0,0,0,.15);border-radius:10px;padding:clamp(16px,5vw,28px);text-align:center;cursor:pointer;transition:all .2s;background:#fafaf9}
+.upload-zone:hover,.upload-zone.drag{border-color:var(--o);background:var(--ol)}
+.upload-zone input{display:none}
+.upload-icon{font-size:28px;margin-bottom:8px;opacity:.4}
+.upload-text{font-size:13px;color:var(--gray1);line-height:1.6}
+.upload-text span{color:var(--o);font-weight:500}
+
+.img-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(clamp(100px,20vw,140px),1fr));gap:8px;margin-top:14px}
+.img-thumb{position:relative;aspect-ratio:4/3;border-radius:8px;overflow:hidden;border:var(--border);background:#f0ede8}
+.img-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.img-del{position:absolute;top:4px;right:4px;width:22px;height:22px;border-radius:50%;background:rgba(229,57,53,.85);color:#fff;border:none;cursor:pointer;font-size:11px;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.img-del:hover{background:var(--r);transform:scale(1.1)}
+.img-loading{display:flex;align-items:center;justify-content:center;height:100%;font-size:10px;color:var(--gray1)}
+.upload-progress{font-size:12px;color:var(--gray1);margin-top:8px;text-align:center}
+
+/* TOGGLE */
+.toggle-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.toggle-label{font-size:13px;font-weight:500}
+.toggle-sub{font-size:11px;color:var(--gray1)}
+.sw{width:38px;height:22px;border-radius:100px;border:none;cursor:pointer;position:relative;transition:background .2s;flex-shrink:0}
+.sw span{position:absolute;top:3px;width:16px;height:16px;border-radius:50%;background:#fff;transition:all .2s}
+.sw.on{background:var(--o)}.sw.on span{right:3px;left:auto}
+.sw.off{background:#ccc}.sw.off span{left:3px;right:auto}
+
+/* GREETINGS */
+.g-search{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap}
+.g-search input{font-family:var(--thai);font-size:13px;flex:1;min-width:160px;padding:7px 12px;border:var(--border);border-radius:8px;background:#fafaf9;outline:none;transition:border-color .2s}
+.g-search input:focus{border-color:var(--o)}
+.g-search select{font-family:var(--thai);font-size:12px;padding:7px 10px;border-radius:8px;border:var(--border);background:#fff;cursor:pointer}
+
+.g-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(clamp(220px,40vw,280px),1fr));gap:10px}
+.g-card{border:var(--border);border-radius:8px;padding:12px;background:var(--gray3);display:flex;flex-direction:column;gap:8px}
 .g-card.flagged{border-color:#ef9a9a;background:var(--rl)}
 .g-card-top{display:flex;align-items:center;gap:8px}
-.g-av{width:28px;height:28px;border-radius:50%;flex-shrink:0;
-  display:flex;align-items:center;justify-content:center;
-  font-size:10px;font-weight:700;color:#fff}
-.g-name{font-size:13px;font-weight:600;flex:1}
-.g-time{font-size:10px;color:var(--gray1)}
-.g-msg{font-size:12px;color:var(--gray2);line-height:1.6;
-  display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
-.g-actions{display:flex;gap:6px}
+.g-av{width:28px;height:28px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff}
+.g-name{font-size:13px;font-weight:600;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.g-time{font-size:10px;color:var(--gray1);white-space:nowrap}
+.g-msg{font-size:12px;color:var(--gray2);line-height:1.6;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.g-detail{font-size:11px;color:var(--gray1)}
+.g-actions{display:flex;gap:6px;flex-wrap:wrap}
 
-/* ── STATS ── */
-.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:0}
-.stat-box{background:var(--gray3);border-radius:8px;padding:14px;text-align:center}
-.stat-num{font-size:24px;font-weight:600;color:var(--o)}
-.stat-label{font-size:11px;color:var(--gray1);margin-top:2px}
-
-/* ── PAGINATION ── */
-.g-pager{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:14px}
-.g-pager button{font-family:var(--thai);font-size:12px;padding:4px 10px;
-  border-radius:6px;border:var(--border);background:#fff;cursor:pointer;color:var(--gray2)}
+.g-pager{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:14px;flex-wrap:wrap}
+.g-pager button{font-family:var(--thai);font-size:12px;padding:4px 12px;border-radius:6px;border:var(--border);background:#fff;cursor:pointer;color:var(--gray2);transition:all .2s}
 .g-pager button.active{background:var(--o);color:#fff;border-color:var(--o)}
 .g-pager button:disabled{opacity:.35;cursor:not-allowed}
 .g-pager .info{font-size:12px;color:var(--gray1)}
 
-/* ── TOAST ── */
-.toast{
-  position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(8px);
-  background:rgba(34,34,33,.88);color:#fff;font-size:13px;
-  padding:8px 18px;border-radius:100px;z-index:300;
-  opacity:0;transition:all .25s;pointer-events:none;
-}
-.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-
-/* ── CONFIRM MODAL ── */
-.modal-wrap{
-  position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:200;
-  display:none;align-items:center;justify-content:center;padding:20px;
-}
+/* MODAL */
+.modal-wrap{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:200;display:none;align-items:center;justify-content:center;padding:20px}
 .modal-wrap.show{display:flex}
-.modal{background:#fff;border-radius:12px;padding:24px;max-width:360px;width:100%;text-align:center}
+.modal{background:#fff;border-radius:var(--radius);padding:clamp(18px,5vw,28px);max-width:360px;width:100%;text-align:center}
 .modal h3{font-size:16px;font-weight:600;margin-bottom:8px}
 .modal p{font-size:13px;color:var(--gray1);line-height:1.6;margin-bottom:18px}
-.modal .btn-row{justify-content:center}
 
-@media(max-width:500px){
-  .stats-row{grid-template-columns:1fr 1fr}
-  .g-grid{grid-template-columns:1fr}
-}
+/* TOAST */
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(8px);background:rgba(34,34,33,.88);color:#fff;font-size:13px;padding:8px 18px;border-radius:100px;z-index:300;opacity:0;transition:all .25s;pointer-events:none;white-space:nowrap}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 </style>
 </head>
 <body>
 
+<!-- LOCK SCREEN (Google OAuth) -->
+<div id="lockScreen" style="position:fixed;inset:0;z-index:9999;background:#EDE8E1;display:flex;align-items:center;justify-content:center;">
+  <div style="background:#fff;border-radius:16px;border:var(--border);padding:clamp(24px,6vw,36px);width:min(320px,90vw);text-align:center;box-shadow:0 4px 24px rgba(0,0,0,.08)">
+    <div style="font-family:var(--disp);font-size:15px;letter-spacing:.08em;margin-bottom:6px">ADMIN</div>
+    <div style="font-size:12px;color:var(--gray1);margin-bottom:20px;line-height:1.6">เข้าสู่ระบบด้วยเมล @ku.th<br>ที่ได้รับสิทธิ์เท่านั้น</div>
+    <div id="gSignInBtn" style="display:flex;justify-content:center;margin-bottom:12px"></div>
+    <div id="lockErr" style="font-size:12px;color:#e53935;display:none;margin-top:8px;line-height:1.6;padding:8px;background:#ffebee;border-radius:6px"></div>
+  </div>
+</div>
+
+<script src="https://accounts.google.com/gsi/client" async></script>
 
 <!-- HEADER -->
 <div class="adm-header">
@@ -153,38 +152,28 @@ body{font-family:var(--thai);background:#EDE8E1;color:var(--gray2);min-height:10
   </div>
 </div>
 
-<!-- MAIN -->
 <div class="adm-main">
 
-  <!-- 1. KU Drive Connection -->
+  <!-- 1. KU Drive -->
   <div class="acard">
     <div class="acard-head">
       <div class="acard-title"><span class="icon">☁</span> เชื่อมต่อ KU Drive</div>
       <span id="connBadge" style="font-size:11px;padding:3px 10px;border-radius:100px;border:var(--border);color:var(--gray1)">ยังไม่ได้เชื่อมต่อ</span>
     </div>
     <div class="acard-body">
-      <div class="status-row" id="connStatus" style="display:none"></div>
-      <div class="form-row">
-        <label>WebDAV URL (ค่าเริ่มต้น)</label>
-        <input type="text" id="fBase" value="https://anniversary-proxy.kunakorn-son.workers.dev" readonly style="color:var(--gray1)">
+      <div class="srow" id="connStatus" style="display:none"></div>
+      <div class="frow"><label>WebDAV URL</label><input type="text" id="fBase" value="https://anniversary-proxy.kunakorn-son.workers.dev" readonly style="color:var(--gray1)"></div>
+      <div class="grid2">
+        <div class="frow"><label>Username</label><input type="text" id="fUser" value="feconkos"></div>
+        <div class="frow"><label>Folder</label><input type="text" id="fFolder" value="anniversary"></div>
       </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
-        <div class="form-row">
-          <label>Username</label>
-          <input type="text" id="fUser" value="feconkos">
-        </div>
-        <div class="form-row">
-          <label>Folder</label>
-          <input type="text" id="fFolder" value="anniversary">
-        </div>
-      </div>
-      <div class="form-row">
-        <label>App Password <span style="font-weight:400;color:var(--gray1)">(สร้างได้ที่ KU Drive → Settings → Security)</span></label>
+      <div class="frow">
+        <label>App Password <span style="font-weight:400;color:var(--gray1)">(KU Drive → Settings → Security)</span></label>
         <input type="password" id="fPass" placeholder="วาง App Password ที่นี่...">
-        <span class="hint">Password จะเก็บใน sessionStorage เท่านั้น — ปิด browser แล้วต้องกรอกใหม่</span>
+        <span class="hint">เก็บใน sessionStorage เท่านั้น — ปิด browser ต้องกรอกใหม่</span>
       </div>
       <div class="btn-row">
-        <button class="btn btn-ghost" onclick="testConn()">🔍 ทดสอบการเชื่อมต่อ</button>
+        <button class="btn btn-ghost" onclick="testConn()">🔍 ทดสอบ</button>
         <button class="btn btn-primary" onclick="saveConn()">✓ บันทึกและเชื่อมต่อ</button>
       </div>
     </div>
@@ -197,145 +186,113 @@ body{font-family:var(--thai);background:#EDE8E1;color:var(--gray2);min-height:10
       <button class="btn btn-sm btn-primary" onclick="saveSiteConfig()">บันทึกลง KU Drive</button>
     </div>
     <div class="acard-body">
-      <div class="status-row" id="cfgStatus" style="display:none"></div>
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px">
-        <div class="form-row">
-          <label>ชื่อองค์กร</label>
-          <input type="text" id="cfgOrg" placeholder="เช่น คณะเศรษฐศาสตร์">
-        </div>
-        <div class="form-row">
-          <label>ปีครบรอบ</label>
-          <input type="number" id="cfgYear" value="50" min="1" max="200">
-        </div>
-        <div class="form-row">
-          <label>การ์ดต่อหน้า</label>
-          <input type="number" id="cfgPerPage" value="9" min="3" max="30">
-        </div>
+      <div class="srow" id="cfgStatus" style="display:none"></div>
+      <div class="grid3">
+        <div class="frow"><label>ชื่อองค์กร</label><input type="text" id="cfgOrg" placeholder="เช่น คณะเศรษฐศาสตร์ ศรีราชา"></div>
+        <div class="frow"><label>ปีครบรอบ</label><input type="number" id="cfgYear" value="50" min="1" max="200"></div>
+        <div class="frow"><label>การ์ดต่อหน้า</label><input type="number" id="cfgPerPage" value="12" min="4" max="48"></div>
       </div>
+      <div class="frow"><label>Label ช่องรายละเอียด</label><input type="text" id="cfgDetailLabel" placeholder="เช่น ตำแหน่ง / รุ่น / แผนก" value="รายละเอียด (ตำแหน่ง / รุ่น / แผนก)"></div>
     </div>
   </div>
 
-  <!-- 3. Stats -->
+  <!-- 3. ข้อความ Preset -->
   <div class="acard">
     <div class="acard-head">
-      <div class="acard-title"><span class="icon">📊</span> สถิติ</div>
-      <button class="btn btn-sm btn-ghost" onclick="loadGreetings()">↻ รีเฟรช</button>
+      <div class="acard-title"><span class="icon">💬</span> ข้อความสำเร็จรูป (Preset)</div>
+      <button class="btn btn-sm btn-primary" onclick="savePresets()">บันทึกลง KU Drive</button>
     </div>
     <div class="acard-body">
-      <div class="stats-row">
-        <div class="stat-box">
-          <div class="stat-num" id="stTotal">—</div>
-          <div class="stat-label">คำอวยพรทั้งหมด</div>
-        </div>
-        <div class="stat-box">
-          <div class="stat-num" id="stNew">—</div>
-          <div class="stat-label">ใหม่ (24 ชม.)</div>
-        </div>
-        <div class="stat-box">
-          <div class="stat-num" id="stFlagged">—</div>
-          <div class="stat-label">รอตรวจสอบ</div>
-        </div>
+      <div class="srow" id="presetStatus" style="display:none"></div>
+      <div class="frow">
+        <label>ใส่ข้อความคนละบรรทัด — ผู้ส่งจะเห็นเป็น dropdown</label>
+        <textarea id="cfgPresets" style="min-height:120px;font-size:13px;line-height:1.8" placeholder="ขอแสดงความยินดีในโอกาสครบรอบ...&#10;ขอให้องค์กรเจริญรุ่งเรือง...&#10;สิ่งดีๆ จงบังเกิดแก่ทุกท่าน..."></textarea>
       </div>
     </div>
   </div>
 
+  <!-- 4. Banner -->
+  <div class="acard">
+    <div class="acard-head">
+      <div class="acard-title"><span class="icon">🖼</span> Banner หน้าหลัก</div>
+      <span style="font-size:11px;color:var(--gray1)">อัปโหลดไปที่ anniversary/banner/</span>
+    </div>
+    <div class="acard-body">
+      <div class="srow" id="bannerStatus" style="display:none"></div>
+      <div class="upload-zone" id="bannerZone" onclick="document.getElementById('bannerFile').click()" ondragover="dragOver(event,'bannerZone')" ondragleave="dragLeave('bannerZone')" ondrop="dropFiles(event,'banner')">
+        <input type="file" id="bannerFile" accept="image/*" multiple onchange="uploadImages(this.files,'banner')">
+        <div class="upload-icon">📷</div>
+        <div class="upload-text">คลิกหรือลากรูปมาวางที่นี่<br><span>รองรับ JPG, PNG, WebP</span><br><span style="font-size:11px;color:var(--gray1)">แนะนำ: ขนาด 1600×400px ขึ้นไป</span></div>
+      </div>
+      <div class="upload-progress" id="bannerProgress"></div>
+      <div class="img-grid" id="bannerGrid"></div>
+    </div>
+  </div>
 
-  <!-- ADMIN EMAILS -->
+  <!-- 5. Card Images -->
+  <div class="acard">
+    <div class="acard-head">
+      <div class="acard-title"><span class="icon">🎴</span> บัตรอวยพร</div>
+      <span style="font-size:11px;color:var(--gray1)">อัปโหลดไปที่ anniversary/cards/</span>
+    </div>
+    <div class="acard-body">
+      <div class="srow" id="cardsStatus" style="display:none"></div>
+      <div class="upload-zone" id="cardsZone" onclick="document.getElementById('cardsFile').click()" ondragover="dragOver(event,'cardsZone')" ondragleave="dragLeave('cardsZone')" ondrop="dropFiles(event,'cards')">
+        <input type="file" id="cardsFile" accept="image/*" multiple onchange="uploadImages(this.files,'cards')">
+        <div class="upload-icon">🎴</div>
+        <div class="upload-text">คลิกหรือลากรูปบัตรอวยพรมาวางที่นี่<br><span>รองรับ JPG, PNG, WebP</span><br><span style="font-size:11px;color:var(--gray1)">แนะนำ: อัตราส่วน 4:3</span></div>
+      </div>
+      <div class="upload-progress" id="cardsProgress"></div>
+      <div class="img-grid" id="cardsGrid"></div>
+    </div>
+  </div>
+
+  <!-- 6. Admin Emails -->
   <div class="acard">
     <div class="acard-head">
       <div class="acard-title"><span class="icon">👤</span> รายชื่อ Admin</div>
       <button class="btn btn-sm btn-primary" onclick="saveAdmins()">บันทึกลง KU Drive</button>
     </div>
     <div class="acard-body">
-      <div class="status-row" id="adminsStatus" style="display:none"></div>
-      <div style="font-size:12px;color:var(--gray1);margin-bottom:10px;line-height:1.6">
-        ใส่เมล <strong>@ku.th</strong> ที่อนุญาตให้เข้า Admin — คนละบรรทัด<br>
-        ต้องระบุเมลที่อนุญาตเท่านั้น — ถ้าว่างจะไม่มีใครเข้าได้เลย
+      <div class="srow" id="adminsStatus" style="display:none"></div>
+      <div class="frow">
+        <label>เมล @ku.th ที่อนุญาต — คนละบรรทัด (ถ้าว่างจะไม่มีใครเข้าได้)</label>
+        <textarea id="adminEmails" style="font-family:monospace;font-size:13px;min-height:100px" placeholder="someone@ku.th&#10;another@ku.th"></textarea>
       </div>
-      <textarea id="adminEmails" style="font-family:monospace;font-size:13px;width:100%;min-height:120px;padding:10px 14px;border:0.5px solid rgba(0,0,0,.1);border-radius:10px;resize:vertical;outline:none;" placeholder="someone@ku.th&#10;another@ku.th"></textarea>
     </div>
   </div>
 
-  <!-- GREETING FIELDS CONFIG -->
+  <!-- 7. Stats -->
   <div class="acard">
     <div class="acard-head">
-      <div class="acard-title"><span class="icon">🎴</span> ตั้งค่าหน้าอวยพร</div>
-      <button class="btn btn-sm btn-primary" onclick="saveGreetingConfig()">บันทึกลง KU Drive</button>
+      <div class="acard-title"><span class="icon">📊</span> สถิติ</div>
+      <button class="btn btn-sm btn-ghost" onclick="loadGreetings()">↻ รีเฟรช</button>
     </div>
     <div class="acard-body">
-      <div class="status-row" id="gcStatus" style="display:none"></div>
-
-      <!-- คำนำหน้า -->
-      <div style="margin-bottom:16px">
-        <div style="font-size:12px;font-weight:600;color:var(--gray2);margin-bottom:8px">คำนำหน้าชื่อ</div>
-        <div style="font-size:12px;color:var(--gray1);margin-bottom:6px">ใส่คำนำหน้าคนละบรรทัด</div>
-        <textarea id="gcPrefixes" style="font-family:monospace;font-size:13px;width:100%;min-height:80px;padding:10px 14px;border:0.5px solid rgba(0,0,0,.1);border-radius:10px;resize:vertical;outline:none;" placeholder="นาย&#10;นาง&#10;นางสาว&#10;ดร.&#10;ผศ."></textarea>
+      <div class="stats-grid">
+        <div class="stat-box"><div class="stat-num" id="stTotal">—</div><div class="stat-label">ทั้งหมด</div></div>
+        <div class="stat-box"><div class="stat-num" id="stNew">—</div><div class="stat-label">ใหม่ 24 ชม.</div></div>
+        <div class="stat-box"><div class="stat-num" id="stFlagged">—</div><div class="stat-label">รอตรวจสอบ</div></div>
       </div>
-
-      <!-- Extra fields -->
-      <div style="font-size:12px;font-weight:600;color:var(--gray2);margin-bottom:10px">ช่องข้อมูลเพิ่มเติม</div>
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px">
-        <div style="border:var(--border);border-radius:10px;padding:12px">
-          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
-            <span style="font-size:13px;font-weight:500">ตำแหน่ง</span>
-            <button class="toggle-sw" id="swRole" onclick="toggleSw('swRole')" style="width:36px;height:20px;border-radius:100px;border:none;cursor:pointer;background:var(--o);position:relative;transition:background .2s">
-              <span style="position:absolute;top:3px;right:3px;width:14px;height:14px;border-radius:50%;background:#fff;transition:all .2s"></span>
-            </button>
-          </div>
-          <input type="text" id="gcRoleLabel" value="ตำแหน่ง" style="font-size:12px;padding:5px 8px" placeholder="ชื่อ label">
-          <div style="font-size:11px;color:var(--gray1);margin-top:6px">แสดงบนการ์ด <button class="toggle-sw" id="swRoleCard" onclick="toggleSw('swRoleCard')" style="width:28px;height:16px;border-radius:100px;border:none;cursor:pointer;background:var(--o);position:relative;transition:background .2s;vertical-align:middle"><span style="position:absolute;top:2px;right:2px;width:12px;height:12px;border-radius:50%;background:#fff;transition:all .2s"></span></button></div>
-        </div>
-        <div style="border:var(--border);border-radius:10px;padding:12px">
-          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
-            <span style="font-size:13px;font-weight:500">รุ่น</span>
-            <button class="toggle-sw" id="swGen" onclick="toggleSw('swGen')" style="width:36px;height:20px;border-radius:100px;border:none;cursor:pointer;background:var(--o);position:relative;transition:background .2s">
-              <span style="position:absolute;top:3px;right:3px;width:14px;height:14px;border-radius:50%;background:#fff;transition:all .2s"></span>
-            </button>
-          </div>
-          <input type="text" id="gcGenLabel" value="รุ่น" style="font-size:12px;padding:5px 8px" placeholder="ชื่อ label">
-          <div style="font-size:11px;color:var(--gray1);margin-top:6px">แสดงบนการ์ด <button class="toggle-sw" id="swGenCard" onclick="toggleSw('swGenCard')" style="width:28px;height:16px;border-radius:100px;border:none;cursor:pointer;background:var(--o);position:relative;transition:background .2s;vertical-align:middle"><span style="position:absolute;top:2px;right:2px;width:12px;height:12px;border-radius:50%;background:#fff;transition:all .2s"></span></button></div>
-        </div>
-        <div style="border:var(--border);border-radius:10px;padding:12px">
-          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
-            <span style="font-size:13px;font-weight:500">ปี</span>
-            <button class="toggle-sw" id="swYear" onclick="toggleSw('swYear')" style="width:36px;height:20px;border-radius:100px;border:none;cursor:pointer;background:#ccc;position:relative;transition:background .2s">
-              <span style="position:absolute;top:3px;left:3px;width:14px;height:14px;border-radius:50%;background:#fff;transition:all .2s"></span>
-            </button>
-          </div>
-          <input type="text" id="gcYearLabel" value="ปี" style="font-size:12px;padding:5px 8px" placeholder="ชื่อ label">
-          <div style="font-size:11px;color:var(--gray1);margin-top:6px">แสดงบนการ์ด <button class="toggle-sw" id="swYearCard" onclick="toggleSw('swYearCard')" style="width:28px;height:16px;border-radius:100px;border:none;cursor:pointer;background:#ccc;position:relative;transition:background .2s;vertical-align:middle"><span style="position:absolute;top:2px;left:2px;width:12px;height:12px;border-radius:50%;background:#fff;transition:all .2s"></span></button></div>
-        </div>
-      </div>
-
-      <!-- Presets -->
-      <div style="font-size:12px;font-weight:600;color:var(--gray2);margin-bottom:6px">ข้อความ Preset</div>
-      <div style="font-size:12px;color:var(--gray1);margin-bottom:6px">ใส่ข้อความสำเร็จรูปให้ผู้ส่งเลือก — คนละบรรทัด</div>
-      <textarea id="gcPresets" style="font-family:var(--thai);font-size:13px;width:100%;min-height:100px;padding:10px 14px;border:0.5px solid rgba(0,0,0,.1);border-radius:10px;resize:vertical;outline:none;line-height:1.7" placeholder="ขอแสดงความยินดีในโอกาสครบรอบ...&#10;ขอให้องค์กรเจริญรุ่งเรือง..."></textarea>
     </div>
   </div>
 
-  <!-- 4. Manage Greetings -->
+  <!-- 8. Manage Greetings -->
   <div class="acard">
     <div class="acard-head">
-      <div class="acard-title"><span class="icon">💬</span> จัดการคำอวยพร</div>
-      <div style="display:flex;gap:8px;align-items:center">
-        <select id="gFilter" onchange="renderGreetings()" style="font-family:var(--thai);font-size:12px;padding:4px 8px;border-radius:6px;border:var(--border)">
+      <div class="acard-title"><span class="icon">💌</span> จัดการคำอวยพร</div>
+      <button class="btn btn-sm btn-danger" onclick="confirmDeleteAll()">ลบทั้งหมด</button>
+    </div>
+    <div class="acard-body">
+      <div class="g-search">
+        <input type="text" id="gSearch" placeholder="🔍 ค้นหาชื่อหรือข้อความ..." oninput="gPage=0;renderGreetings()">
+        <select id="gFilter" onchange="gPage=0;renderGreetings()">
           <option value="all">ทั้งหมด</option>
-          <option value="new">ใหม่ (24ชม.)</option>
+          <option value="new">ใหม่ 24ชม.</option>
           <option value="flagged">รอตรวจสอบ</option>
         </select>
-        <button class="btn btn-sm btn-danger" onclick="confirmDeleteAll()">ลบทั้งหมด</button>
       </div>
-    </div>
-    <div class="acard-body">
-      <div style="margin-bottom:12px;display:flex;gap:8px">
-        <input type="text" id="gSearch" placeholder="🔍 ค้นหาชื่อหรือข้อความ..." oninput="gPage=0;renderGreetings()" style="flex:1;font-size:13px;padding:7px 12px;border-radius:8px;border:var(--border)">
-      </div>
-      <div id="gList">
-        <div style="text-align:center;color:var(--gray1);font-size:13px;padding:30px">
-          กรุณาเชื่อมต่อ KU Drive ก่อน
-        </div>
-      </div>
+      <div id="gList"><div style="text-align:center;color:var(--gray1);font-size:13px;padding:30px">กรุณาเชื่อมต่อ KU Drive ก่อน</div></div>
       <div class="g-pager" id="gPager"></div>
     </div>
   </div>
@@ -345,464 +302,354 @@ body{font-family:var(--thai);background:#EDE8E1;color:var(--gray2);min-height:10
 <!-- CONFIRM MODAL -->
 <div class="modal-wrap" id="modalWrap">
   <div class="modal">
-    <h3 id="modalTitle">ยืนยันการลบ</h3>
+    <h3 id="modalTitle"></h3>
     <p id="modalMsg"></p>
-    <div class="btn-row">
+    <div class="btn-row" style="justify-content:center">
       <button class="btn btn-ghost" onclick="closeModal()">ยกเลิก</button>
-      <button class="btn btn-danger" id="modalConfirm">ลบ</button>
+      <button class="btn btn-danger" id="modalConfirm">ยืนยัน</button>
     </div>
   </div>
 </div>
 
-<!-- TOAST -->
 <div class="toast" id="toast"></div>
 
 <script>
-function safeB64(str){
-  return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g,
-    (_,p)=>String.fromCharCode('0x'+p)));
-}
+/* ── Google OAuth ── */
+const GOOGLE_CLIENT_ID='860378627815-16uh0n9nb91p72vlf2h1l02pdt109p9t.apps.googleusercontent.com';
+let ADMIN_EMAILS=['kunakorn.son@ku.th'];
 
-/* ================================================================
-   KU Drive WebDAV
-   ================================================================ */
-const NC = {
-  get base(){ return document.getElementById('fBase').value.trim() || 'https://anniversary-proxy.kunakorn-son.workers.dev' },
-  get user(){ return document.getElementById('fUser').value.trim() || 'feconkos' },
-  get folder(){ return document.getElementById('fFolder').value.trim() || 'anniversary' },
-  get pass(){ return sessionStorage.getItem('nc_pass') || '' },
-  get dav(){ return `${this.base}/remote.php/dav/files/${this.user}/${this.folder}` },
-  get headers(){
-    return {
-      'Authorization': 'Basic ' + safeB64(`${this.user}:${this.pass}`),
-      'Content-Type': 'application/json'
-    };
-  },
-  async getJSON(file){
-    const r = await fetch(`${this.dav}/${file}`, { headers: this.headers });
-    if(r.status===404) return null;
-    if(!r.ok) throw new Error(`GET ${file}: ${r.status} ${r.statusText}`);
-    return r.json();
-  },
-  async putJSON(file, data){
-    const r = await fetch(`${this.dav}/${file}`, {
-      method: 'PUT', headers: this.headers,
-      body: JSON.stringify(data, null, 2)
-    });
-    if(!r.ok) throw new Error(`PUT ${file}: ${r.status} ${r.statusText}`);
-    return true;
-  }
-};
-
-/* ── State ── */
-let allGreetings = [], gPage = 0;
-const G_PER_PAGE = 12;
-const COLORS = ['#FF8200','#3DAA6B','#C0715A','#5B7FA6','#8A6FB5','#D4845A'];
-function colorFor(n){ let h=0; for(let c of n) h=(h<<5)-h+c.charCodeAt(0); return COLORS[Math.abs(h)%COLORS.length]; }
-function initials(n){ return n.trim().split(/\s+/).map(w=>w[0]).slice(0,2).join('').toUpperCase(); }
-
-/* ── Status helpers ── */
-function setStatus(id, type, msg){
-  const el = document.getElementById(id);
-  el.className = 'status-row ' + type;
-  el.style.display = 'flex';
-  el.innerHTML = (type==='loading'?'<div class="spin"></div>':'')+'<span>'+msg+'</span>';
-  if(type==='ok') setTimeout(()=>el.style.display='none', 2500);
-}
-function showToast(t){
-  const el=document.getElementById('toast');
-  el.textContent=t; el.classList.add('show');
-  setTimeout(()=>el.classList.remove('show'),2800);
-}
-
-/* ── Connection ── */
-async function testConn(){
-  const pass = document.getElementById('fPass').value.trim();
-  if(!pass){ setStatus('connStatus','err','กรุณาใส่ App Password ก่อน'); return; }
-  sessionStorage.setItem('nc_pass', pass);
-  setStatus('connStatus','loading','กำลังทดสอบการเชื่อมต่อ KU Drive...');
-  try{
-    const r = await fetch(NC.dav+'/greetings.json', { headers: NC.headers });
-    if(r.status===401){ setStatus('connStatus','err','❌ Password ไม่ถูกต้อง'); return; }
-    if(r.status===403){ setStatus('connStatus','err','❌ ไม่มีสิทธิ์เข้าถึงโฟลเดอร์'); return; }
-    if(r.status===404){ setStatus('connStatus','ok','✓ เชื่อมต่อสำเร็จ — ยังไม่มี greetings.json (จะสร้างเมื่อบันทึก)'); return; }
-    if(r.ok){ setStatus('connStatus','ok','✓ เชื่อมต่อสำเร็จ — พบ greetings.json แล้ว'); return; }
-    setStatus('connStatus','err',`❌ Error ${r.status}: ${r.statusText}`);
-  }catch(e){
-    setStatus('connStatus','err','❌ เชื่อมต่อไม่ได้ — ตรวจสอบ CORS หรือ network: '+e.message);
-  }
-}
-
-async function saveConn(){
-  const pass = document.getElementById('fPass').value.trim();
-  if(!pass){ setStatus('connStatus','err','กรุณาใส่ App Password ก่อน'); return; }
-  sessionStorage.setItem('nc_pass', pass);
-  setStatus('connStatus','loading','กำลังเชื่อมต่อและตั้งค่า...');
-  try{
-    // สร้าง greetings.json ถ้ายังไม่มี
-    const check = await fetch(NC.dav+'/greetings.json', { headers: NC.headers });
-    if(check.status===404){
-      await fetch(NC.dav+'/greetings.json', {
-        method:'PUT', headers: NC.headers, body:'[]'
-      });
-    } else if(!check.ok){
-      throw new Error(`${check.status} ${check.statusText}`);
-    }
-    setStatus('connStatus','ok','✓ เชื่อมต่อสำเร็จ — Session นี้พร้อมใช้งาน');
-    document.getElementById('connBadge').textContent='✓ เชื่อมต่อแล้ว';
-    document.getElementById('connBadge').style.cssText='font-size:11px;padding:3px 10px;border-radius:100px;background:#e8f5e9;color:#1b5e20;border:1px solid #a5d6a7';
-    await loadGreetings();
-    await loadSiteConfig();
-  }catch(e){
-    setStatus('connStatus','err','❌ ไม่สำเร็จ: '+e.message);
-  }
-}
-
-/* ── Site Config ── */
-async function loadSiteConfig(){
-  try{
-    const cfg = await NC.getJSON('config.json');
-    if(cfg){
-      if(cfg.orgName) document.getElementById('cfgOrg').value = cfg.orgName;
-      if(cfg.year) document.getElementById('cfgYear').value = cfg.year;
-      if(cfg.perPage) document.getElementById('cfgPerPage').value = cfg.perPage;
-    }
-  }catch(_){}
-}
-
-async function saveSiteConfig(){
-  if(!NC.pass){ setStatus('cfgStatus','err','กรุณาเชื่อมต่อ KU Drive ก่อน'); return; }
-  setStatus('cfgStatus','loading','กำลังบันทึก config.json...');
-  try{
-    const cfg = {
-      orgName: document.getElementById('cfgOrg').value.trim(),
-      year: +document.getElementById('cfgYear').value,
-      perPage: +document.getElementById('cfgPerPage').value
-    };
-    await NC.putJSON('config.json', cfg);
-    setStatus('cfgStatus','ok','✓ บันทึก config.json เรียบร้อย');
-  }catch(e){
-    setStatus('cfgStatus','err','❌ '+e.message);
-  }
-}
-
-/* ── Greetings ── */
-async function loadGreetings(){
-  if(!NC.pass){ return; }
-  try{
-    const data = await NC.getJSON('greetings.json');
-    allGreetings = Array.isArray(data) ? data : [];
-    updateStats();
-    renderGreetings();
-  }catch(e){
-    showToast('โหลดไม่ได้: '+e.message);
-  }
-}
-
-function updateStats(){
-  const cutoff = Date.now()-86400000;
-  const newCount = allGreetings.filter(d=>new Date(d.time)>cutoff).length;
-  const flagged = allGreetings.filter(d=>d.flagged).length;
-  document.getElementById('stTotal').textContent = allGreetings.length;
-  document.getElementById('stNew').textContent = newCount;
-  document.getElementById('stFlagged').textContent = flagged;
-}
-
-function renderGreetings(){
-  const f = document.getElementById('gFilter').value;
-  const cutoff = Date.now()-86400000;
-  let list = [...allGreetings].reverse();
-  if(f==='new') list = list.filter(d=>new Date(d.time)>cutoff);
-  if(f==='flagged') list = list.filter(d=>d.flagged);
-  const q = (document.getElementById('gSearch')?.value||'').trim().toLowerCase();
-  if(q) list = list.filter(d=>(d.fullName||d.name||'').toLowerCase().includes(q)||(d.message||'').toLowerCase().includes(q));
-
-  const total = Math.ceil(list.length/G_PER_PAGE);
-  if(gPage>=total) gPage=Math.max(0,total-1);
-  const page = list.slice(gPage*G_PER_PAGE,(gPage+1)*G_PER_PAGE);
-
-  const el = document.getElementById('gList');
-  if(!list.length){
-    el.innerHTML='<div style="text-align:center;color:var(--gray1);font-size:13px;padding:30px">ไม่มีข้อมูล</div>';
-    document.getElementById('gPager').innerHTML='';
-    return;
-  }
-
-  el.innerHTML='<div class="g-grid">'+page.map(d=>{
-    const col = colorFor(d.name);
-    const isNew = new Date(d.time)>cutoff;
-    return `<div class="g-card${d.flagged?' flagged':''}">
-      <div class="g-card-top">
-        <div class="g-av" style="background:${col}">${initials(d.name)}</div>
-        <div class="g-name">${escHtml(d.name)}</div>
-        <div class="g-time">${new Date(d.time).toLocaleDateString('th-TH')}</div>
-        ${isNew?'<span style="font-size:9px;padding:1px 5px;background:#fff3e0;color:#FF8200;border-radius:100px;font-weight:700">NEW</span>':''}
-      </div>
-      <div class="g-msg">${escHtml(d.message)}</div>
-      ${[d.role,d.gen,d.year].filter(Boolean).map(t=>`<span style="font-size:10px;padding:1px 6px;border-radius:100px;background:#fff3e0;color:#cc6800;margin-right:4px">${escHtml(t)}</span>`).join('')}
-      <div class="g-actions">
-        <button class="btn btn-sm btn-ghost" onclick="toggleFlag('${d.id}')">${d.flagged?'✓ คืนสถานะ':'⚑ Flag'}</button>
-        <button class="btn btn-sm btn-danger" onclick="confirmDelete('${d.id}','${escHtml(d.name)}')">ลบ</button>
-      </div>
-    </div>`;
-  }).join('')+'</div>';
-
-  // Pager
-  const pg = document.getElementById('gPager');
-  if(total<=1){ pg.innerHTML=''; return; }
-  pg.innerHTML=
-    `<button ${gPage===0?'disabled':''} onclick="gGoPage(${gPage-1})">&#8592;</button>`+
-    `<span class="info">${gPage+1} / ${total}</span>`+
-    `<button ${gPage>=total-1?'disabled':''} onclick="gGoPage(${gPage+1})">&#8594;</button>`;
-}
-
-function gGoPage(p){ gPage=p; renderGreetings(); }
-
-function escHtml(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
-
-/* ── Flag ── */
-async function toggleFlag(id){
-  const idx = allGreetings.findIndex(d=>d.id===id);
-  if(idx<0) return;
-  allGreetings[idx].flagged = !allGreetings[idx].flagged;
-  try{
-    await NC.putJSON('greetings.json', allGreetings);
-    updateStats(); renderGreetings();
-    showToast(allGreetings[idx].flagged?'⚑ Flagged แล้ว':'✓ คืนสถานะแล้ว');
-  }catch(e){ showToast('❌ '+e.message); }
-}
-
-/* ── Delete single ── */
-function confirmDelete(id, name){
-  document.getElementById('modalTitle').textContent='ยืนยันการลบ';
-  document.getElementById('modalMsg').textContent=`ลบคำอวยพรของ "${name}" ออกจาก KU Drive?`;
-  document.getElementById('modalConfirm').onclick=()=>deleteOne(id);
-  document.getElementById('modalWrap').classList.add('show');
-}
-async function deleteOne(id){
-  closeModal();
-  allGreetings = allGreetings.filter(d=>d.id!==id);
-  try{
-    await NC.putJSON('greetings.json', allGreetings);
-    updateStats(); renderGreetings();
-    showToast('✓ ลบแล้ว');
-  }catch(e){ showToast('❌ '+e.message); }
-}
-
-/* ── Delete all ── */
-function confirmDeleteAll(){
-  document.getElementById('modalTitle').textContent='ลบทั้งหมด?';
-  document.getElementById('modalMsg').textContent=`ลบคำอวยพรทั้งหมด ${allGreetings.length} รายการออกจาก KU Drive อย่างถาวร ไม่สามารถกู้คืนได้`;
-  document.getElementById('modalConfirm').onclick=()=>deleteAll();
-  document.getElementById('modalWrap').classList.add('show');
-}
-async function deleteAll(){
-  closeModal();
-  allGreetings=[];
-  try{
-    await NC.putJSON('greetings.json',[]);
-    updateStats(); renderGreetings();
-    showToast('✓ ลบทั้งหมดแล้ว');
-  }catch(e){ showToast('❌ '+e.message); }
-}
-
-function closeModal(){ document.getElementById('modalWrap').classList.remove('show'); }
-
-
-async function saveAdmins(){
-  if(!NC.pass){ setStatus('adminsStatus','err','กรุณาเชื่อมต่อ KU Drive ก่อน'); return; }
-  setStatus('adminsStatus','loading','กำลังบันทึก...');
-  try{
-    const emails = document.getElementById('adminEmails').value
-      .split('\n').map(e=>e.trim().toLowerCase())
-      .filter(e=>e && e.endsWith('@ku.th'));
-    const cfg = await NC.getJSON('config.json') || {};
-    cfg.admins = emails;
-    await NC.putJSON('config.json', cfg);
-    setStatus('adminsStatus','ok','✓ บันทึกแล้ว — มีผลทันทีใน session ถัดไป');
-  }catch(e){
-    setStatus('adminsStatus','err','❌ '+e.message);
-  }
-}
-
-async function loadAdminEmailsIntoForm(){
-  try{
-    const cfg = await NC.getJSON('config.json');
-    if(cfg && Array.isArray(cfg.admins)){
-      document.getElementById('adminEmails').value = cfg.admins.join('\n');
-    }
-  }catch(_){}
-}
-
-
-/* ── Toggle switches ── */
-const SW_STATE = {};
-function toggleSw(id){
-  const btn = document.getElementById(id);
-  const span = btn.querySelector('span');
-  SW_STATE[id] = !SW_STATE[id];
-  const on = SW_STATE[id];
-  btn.style.background = on ? 'var(--o)' : '#ccc';
-  span.style.right = on ? '3px' : '';
-  span.style.left  = on ? '' : '3px';
-}
-function getSw(id){ return !!SW_STATE[id]; }
-function setSw(id, val){
-  SW_STATE[id] = !val; // toggle will flip it
-  toggleSw(id);
-}
-
-/* ── Load greeting config into form ── */
-async function loadGreetingConfig(){
-  try{
-    const cfg = await NC.getJSON('config.json');
-    if(!cfg) return;
-    if(cfg.prefixes) document.getElementById('gcPrefixes').value = cfg.prefixes.join('\n');
-    if(cfg.roleLabel) document.getElementById('gcRoleLabel').value = cfg.roleLabel;
-    if(cfg.genLabel)  document.getElementById('gcGenLabel').value  = cfg.genLabel;
-    if(cfg.yearLabel) document.getElementById('gcYearLabel').value = cfg.yearLabel;
-    setSw('swRole',     cfg.showRole !== false);
-    setSw('swGen',      cfg.showGen  !== false);
-    setSw('swYear',     !!cfg.showYear);
-    setSw('swRoleCard', cfg.showMetaOnCard !== false);
-    setSw('swGenCard',  cfg.showMetaOnCard !== false);
-    setSw('swYearCard', !!cfg.showYear);
-    if(cfg.presets) document.getElementById('gcPresets').value = cfg.presets.join('\n');
-    // site config
-    if(cfg.orgName) document.getElementById('cfgOrg').value = cfg.orgName;
-    if(cfg.year)    document.getElementById('cfgYear').value = cfg.year;
-    if(cfg.perPage) document.getElementById('cfgPerPage').value = cfg.perPage;
-  }catch(_){}
-}
-
-async function saveGreetingConfig(){
-  if(!NC.pass){ setStatus('gcStatus','err','กรุณาเชื่อมต่อ KU Drive ก่อน'); return; }
-  setStatus('gcStatus','loading','กำลังบันทึก...');
-  try{
-    const existing = await NC.getJSON('config.json') || {};
-    const prefixes = document.getElementById('gcPrefixes').value.split('\n').map(s=>s.trim()).filter(Boolean);
-    const presets  = document.getElementById('gcPresets').value.split('\n').map(s=>s.trim()).filter(Boolean);
-    const cfg = {
-      ...existing,
-      prefixes,
-      roleLabel:  document.getElementById('gcRoleLabel').value.trim() || 'ตำแหน่ง',
-      genLabel:   document.getElementById('gcGenLabel').value.trim()  || 'รุ่น',
-      yearLabel:  document.getElementById('gcYearLabel').value.trim() || 'ปี',
-      showRole:   getSw('swRole'),
-      showGen:    getSw('swGen'),
-      showYear:   getSw('swYear'),
-      showMetaOnCard: getSw('swRoleCard') || getSw('swGenCard') || getSw('swYearCard'),
-      presets,
-    };
-    await NC.putJSON('config.json', cfg);
-    setStatus('gcStatus','ok','✓ บันทึกแล้ว');
-  }catch(e){
-    setStatus('gcStatus','err','❌ '+e.message);
-  }
-}
-
-/* ── Init ── */
-if(sessionStorage.getItem('nc_pass')){
-  document.getElementById('fPass').value = '••••••••••••';
-  document.getElementById('connBadge').textContent='✓ เชื่อมต่อแล้ว (session)';
-  document.getElementById('connBadge').style.cssText='font-size:11px;padding:3px 10px;border-radius:100px;background:#e8f5e9;color:#1b5e20;border:1px solid #a5d6a7';
-  loadGreetings();
-  loadSiteConfig();
-  loadAdminEmailsIntoForm();
-  loadGreetingConfig();
-}
-</script>
-
-<!-- GOOGLE OAUTH LOCK -->
-<div id="lockScreen" style="position:fixed;inset:0;z-index:9999;background:#EDE8E1;display:flex;align-items:center;justify-content:center;">
-  <div style="background:#fff;border-radius:16px;border:0.5px solid rgba(0,0,0,.1);padding:32px;width:340px;text-align:center;box-shadow:0 4px 24px rgba(0,0,0,.06);">
-    <div style="font-family:'Cinzel',serif;font-size:16px;letter-spacing:.08em;margin-bottom:6px">ADMIN</div>
-    <div style="font-size:12px;color:#74787B;margin-bottom:20px;line-height:1.6">เข้าสู่ระบบด้วยเมล @ku.th<br>ที่ได้รับสิทธิ์เท่านั้น</div>
-    <div id="gSignInBtn" style="display:flex;justify-content:center;margin-bottom:12px"></div>
-    <div id="lockErr" style="font-size:12px;color:#e53935;display:none;margin-top:8px;line-height:1.6"></div>
-  </div>
-</div>
-
-<script src="https://accounts.google.com/gsi/client" async></script>
-<script>
-const GOOGLE_CLIENT_ID = '860378627815-16uh0n9nb91p72vlf2h1l02pdt109p9t.apps.googleusercontent.com';
-
-/* ── Admin emails โหลดจาก config.json บน KU Drive ──
-   ถ้ายังไม่มี admins ใน config จะใช้ list นี้เป็น fallback */
-let ADMIN_EMAILS = ['kunakorn.son@ku.th'];
-
-function showLockErr(msg){
-  const el = document.getElementById('lockErr');
-  el.textContent = msg;
-  el.style.display = 'block';
-}
-
-function unlockAdmin(){
-  document.getElementById('lockScreen').style.display = 'none';
-  sessionStorage.setItem('admin_auth','1');
-  // โหลดข้อมูลหลัง login สำเร็จ
-  if(typeof loadGreetings === 'function') loadGreetings();
-  if(typeof loadSiteConfig === 'function') loadSiteConfig();
-}
+function safeB64(s){return btoa(encodeURIComponent(s).replace(/%([0-9A-F]{2})/g,(_,p)=>String.fromCharCode('0x'+p)))}
+function escHtml(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
 
 async function loadAdminEmails(){
   try{
-    const r = await fetch(NC.dav+'/config.json', { headers: NC.headers });
-    if(r.ok){
-      const cfg = await r.json();
-      if(Array.isArray(cfg.admins) && cfg.admins.length){
-        ADMIN_EMAILS = cfg.admins.map(e=>e.toLowerCase().trim());
-      }
-    }
+    const r=await fetch(NC.dav+'/config.json',{headers:NC.headers});
+    if(r.ok){const cfg=await r.json();if(Array.isArray(cfg.admins)&&cfg.admins.length)ADMIN_EMAILS=cfg.admins.map(e=>e.toLowerCase().trim());}
   }catch(_){}
 }
 
 function handleGoogleCredential(response){
   try{
-    const payload = JSON.parse(atob(response.credential.split('.')[1]));
-    const email = (payload.email||'').toLowerCase();
-    const hd = (payload.hd||'');
-
-    // เช็ค domain @ku.th
-    if(!email.endsWith('@ku.th') && hd !== 'ku.th'){
-      showLockErr('❌ อนุญาตเฉพาะเมล @ku.th เท่านั้น');
-      return;
-    }
-    // เช็ครายชื่อ admin
-    if(!ADMIN_EMAILS.includes(email)){
-      showLockErr('❌ เมลนี้ไม่มีสิทธิ์เข้า Admin\n(' + email + ')');
-      return;
-    }
-    // ผ่านทั้งหมด
-    sessionStorage.setItem('admin_email', email);
-    unlockAdmin();
-  }catch(e){
-    showLockErr('❌ เกิดข้อผิดพลาด: ' + e.message);
-  }
+    const payload=JSON.parse(atob(response.credential.split('.')[1]));
+    const email=(payload.email||'').toLowerCase();
+    if(!email.endsWith('@ku.th')){showLockErr('❌ อนุญาตเฉพาะเมล @ku.th เท่านั้น');return;}
+    if(ADMIN_EMAILS.length&&!ADMIN_EMAILS.includes(email)){showLockErr('❌ เมลนี้ไม่มีสิทธิ์เข้า Admin\n('+email+')');return;}
+    sessionStorage.setItem('admin_auth','1');sessionStorage.setItem('admin_email',email);
+    document.getElementById('lockScreen').style.display='none';
+    afterLogin();
+  }catch(e){showLockErr('❌ เกิดข้อผิดพลาด: '+e.message);}
 }
+
+function showLockErr(msg){const el=document.getElementById('lockErr');el.textContent=msg;el.style.display='block';}
 
 async function initGoogleAuth(){
-  if(sessionStorage.getItem('admin_auth')==='1'){
-    document.getElementById('lockScreen').style.display='none';
-    return;
-  }
+  if(sessionStorage.getItem('admin_auth')==='1'){document.getElementById('lockScreen').style.display='none';afterLogin();return;}
   await loadAdminEmails();
-  google.accounts.id.initialize({
-    client_id: GOOGLE_CLIENT_ID,
-    callback: handleGoogleCredential,
-    hd: 'ku.th'
-  });
-  google.accounts.id.renderButton(
-    document.getElementById('gSignInBtn'),
-    { theme:'outline', size:'large', text:'signin_with', locale:'th' }
-  );
+  google.accounts.id.initialize({client_id:GOOGLE_CLIENT_ID,callback:handleGoogleCredential,hd:'ku.th'});
+  google.accounts.id.renderButton(document.getElementById('gSignInBtn'),{theme:'outline',size:'large',text:'signin_with',locale:'th'});
 }
 
-window.addEventListener('load', ()=>{
-  if(typeof google !== 'undefined') initGoogleAuth();
-  else document.querySelector('script[src*="gsi"]').addEventListener('load', initGoogleAuth);
-});
-</script>
+function afterLogin(){
+  if(sessionStorage.getItem('nc_pass')){
+    document.getElementById('fPass').value='••••••••••••';
+    setBadge(true);
+    loadAll();
+  }
+}
 
+window.addEventListener('load',()=>{
+  if(typeof google!=='undefined')initGoogleAuth();
+  else document.querySelector('script[src*="gsi"]').addEventListener('load',initGoogleAuth);
+});
+
+/* ── KU Drive ── */
+const NC={
+  get base(){return document.getElementById('fBase').value.trim()||'https://anniversary-proxy.kunakorn-son.workers.dev'},
+  get user(){return document.getElementById('fUser').value.trim()||'feconkos'},
+  get folder(){return document.getElementById('fFolder').value.trim()||'anniversary'},
+  get pass(){return sessionStorage.getItem('nc_pass')||''},
+  get dav(){return`${this.base}/remote.php/dav/files/${this.user}/${this.folder}`},
+  get headers(){return{'Authorization':'Basic '+safeB64(`${this.user}:${this.pass}`),'Content-Type':'application/json'}},
+  get imgHeaders(){return{'Authorization':'Basic '+safeB64(`${this.user}:${this.pass}`)}},
+  async getJSON(f){const r=await fetch(`${this.dav}/${f}`,{headers:this.headers});if(r.status===404)return null;if(!r.ok)throw new Error(`${r.status} ${r.statusText}`);return r.json()},
+  async putJSON(f,d){const r=await fetch(`${this.dav}/${f}`,{method:'PUT',headers:this.headers,body:JSON.stringify(d,null,2)});if(!r.ok)throw new Error(`${r.status} ${r.statusText}`)},
+  async putFile(f,blob,mime){
+    const h={'Authorization':'Basic '+safeB64(`${this.user}:${this.pass}`),'Content-Type':mime};
+    const r=await fetch(`${this.dav}/${f}`,{method:'PUT',headers:h,body:blob});
+    if(!r.ok)throw new Error(`${r.status} ${r.statusText}`);
+  },
+  async deleteFile(f){const r=await fetch(`${this.dav}/${f}`,{method:'DELETE',headers:this.imgHeaders});if(!r.ok&&r.status!==404)throw new Error(`${r.status}`)},
+  async listFolder(folder){
+    const r=await fetch(`${this.dav}/${folder}/`,{method:'PROPFIND',headers:{...this.imgHeaders,'Depth':'1'}});
+    if(!r.ok)return[];
+    const xml=new DOMParser().parseFromString(await r.text(),'application/xml');
+    return[...xml.querySelectorAll('response href')].map(h=>h.textContent).filter(h=>/\.(jpg|jpeg|png|webp|gif)$/i.test(h)).map(h=>h.replace(/.*\/dav\/files\/[^/]+\//,''));
+  }
+};
+
+/* ── Helpers ── */
+const COLORS=['#FF8200','#3DAA6B','#C0715A','#5B7FA6','#8A6FB5','#D4845A'];
+function colorFor(n){let h=0;for(let c of String(n||''))h=(h<<5)-h+c.charCodeAt(0);return COLORS[Math.abs(h)%COLORS.length]}
+function initials(n){return String(n||'').trim().split(/\s+/).map(w=>w[0]).slice(0,2).join('').toUpperCase()||'?'}
+function timeAgo(iso){const d=(Date.now()-new Date(iso))/1000;if(d<60)return'เมื่อกี้';if(d<3600)return`${Math.floor(d/60)} นาทีที่แล้ว`;if(d<86400)return`${Math.floor(d/3600)} ชม.ที่แล้ว`;return`${Math.floor(d/86400)} วันที่แล้ว`}
+function showToast(t){const el=document.getElementById('toast');el.textContent=t;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),2800)}
+
+function setStatus(id,type,msg){
+  const el=document.getElementById(id);
+  el.className='srow '+type;el.style.display='flex';
+  el.innerHTML=(type==='loading'?'<div class="spin"></div>':'')+'<span>'+msg+'</span>';
+  if(type==='ok')setTimeout(()=>el.style.display='none',2500);
+}
+
+function setBadge(on){
+  const b=document.getElementById('connBadge');
+  b.textContent=on?'✓ เชื่อมต่อแล้ว':'ยังไม่ได้เชื่อมต่อ';
+  b.style.cssText=on?'font-size:11px;padding:3px 10px;border-radius:100px;background:#e8f5e9;color:#1b5e20;border:1px solid #a5d6a7':'font-size:11px;padding:3px 10px;border-radius:100px;border:var(--border);color:var(--gray1)';
+}
+
+/* ── Connection ── */
+async function testConn(){
+  const pass=document.getElementById('fPass').value.trim();
+  if(!pass){setStatus('connStatus','err','กรุณาใส่ App Password ก่อน');return;}
+  sessionStorage.setItem('nc_pass',pass);
+  setStatus('connStatus','loading','กำลังทดสอบ...');
+  try{
+    const r=await fetch(NC.dav+'/greetings.json',{headers:NC.headers});
+    if(r.status===401){setStatus('connStatus','err','❌ Password ไม่ถูกต้อง');return;}
+    if(r.status===403){setStatus('connStatus','err','❌ ไม่มีสิทธิ์เข้าถึง');return;}
+    setStatus('connStatus','ok',r.status===404?'✓ เชื่อมต่อได้ — จะสร้าง greetings.json ใหม่':'✓ เชื่อมต่อสำเร็จ');
+  }catch(e){setStatus('connStatus','err','❌ '+e.message);}
+}
+
+async function saveConn(){
+  const pass=document.getElementById('fPass').value.trim();
+  if(!pass){setStatus('connStatus','err','กรุณาใส่ App Password ก่อน');return;}
+  sessionStorage.setItem('nc_pass',pass);
+  setStatus('connStatus','loading','กำลังเชื่อมต่อ...');
+  try{
+    const check=await fetch(NC.dav+'/greetings.json',{headers:NC.headers});
+    if(check.status===401){setStatus('connStatus','err','❌ Password ไม่ถูกต้อง');return;}
+    if(check.status===404){
+      await fetch(NC.dav+'/greetings.json',{method:'PUT',headers:NC.headers,body:'[]'});
+    }else if(!check.ok){throw new Error(`${check.status}`);}
+    // สร้างโฟลเดอร์ถ้ายังไม่มี
+    for(const f of['banner','cards']){
+      try{await fetch(`${NC.dav}/${f}/`,{method:'MKCOL',headers:NC.imgHeaders})}catch(_){}
+    }
+    setStatus('connStatus','ok','✓ เชื่อมต่อสำเร็จ');
+    setBadge(true);
+    loadAll();
+  }catch(e){setStatus('connStatus','err','❌ '+e.message);}
+}
+
+async function loadAll(){
+  await Promise.all([loadConfig(),loadGreetings(),loadImages('banner'),loadImages('cards')]);
+}
+
+/* ── Config ── */
+async function loadConfig(){
+  try{
+    const cfg=await NC.getJSON('config.json');
+    if(!cfg)return;
+    if(cfg.orgName)document.getElementById('cfgOrg').value=cfg.orgName;
+    if(cfg.year)document.getElementById('cfgYear').value=cfg.year;
+    if(cfg.perPage)document.getElementById('cfgPerPage').value=cfg.perPage;
+    if(cfg.detailLabel)document.getElementById('cfgDetailLabel').value=cfg.detailLabel;
+    if(cfg.presets)document.getElementById('cfgPresets').value=cfg.presets.join('\n');
+    if(Array.isArray(cfg.admins))document.getElementById('adminEmails').value=cfg.admins.join('\n');
+  }catch(_){}
+}
+
+async function saveSiteConfig(){
+  if(!NC.pass){setStatus('cfgStatus','err','กรุณาเชื่อมต่อก่อน');return;}
+  setStatus('cfgStatus','loading','กำลังบันทึก...');
+  try{
+    const existing=await NC.getJSON('config.json')||{};
+    await NC.putJSON('config.json',{...existing,
+      orgName:document.getElementById('cfgOrg').value.trim(),
+      year:+document.getElementById('cfgYear').value,
+      perPage:+document.getElementById('cfgPerPage').value,
+      detailLabel:document.getElementById('cfgDetailLabel').value.trim(),
+    });
+    setStatus('cfgStatus','ok','✓ บันทึกแล้ว');
+  }catch(e){setStatus('cfgStatus','err','❌ '+e.message);}
+}
+
+async function savePresets(){
+  if(!NC.pass){setStatus('presetStatus','err','กรุณาเชื่อมต่อก่อน');return;}
+  setStatus('presetStatus','loading','กำลังบันทึก...');
+  try{
+    const existing=await NC.getJSON('config.json')||{};
+    const presets=document.getElementById('cfgPresets').value.split('\n').map(s=>s.trim()).filter(Boolean);
+    await NC.putJSON('config.json',{...existing,presets});
+    setStatus('presetStatus','ok',`✓ บันทึก ${presets.length} ข้อความแล้ว`);
+  }catch(e){setStatus('presetStatus','err','❌ '+e.message);}
+}
+
+async function saveAdmins(){
+  if(!NC.pass){setStatus('adminsStatus','err','กรุณาเชื่อมต่อก่อน');return;}
+  setStatus('adminsStatus','loading','กำลังบันทึก...');
+  try{
+    const emails=document.getElementById('adminEmails').value.split('\n').map(e=>e.trim().toLowerCase()).filter(e=>e&&e.endsWith('@ku.th'));
+    const existing=await NC.getJSON('config.json')||{};
+    await NC.putJSON('config.json',{...existing,admins:emails});
+    setStatus('adminsStatus','ok',`✓ บันทึก ${emails.length} เมลแล้ว`);
+  }catch(e){setStatus('adminsStatus','err','❌ '+e.message);}
+}
+
+/* ── Images ── */
+async function loadImages(folder){
+  const gridId=folder+'Grid';
+  try{
+    const paths=await NC.listFolder(folder);
+    renderImageGrid(paths,folder);
+  }catch(_){}
+}
+
+function renderImageGrid(paths,folder){
+  const grid=document.getElementById(folder+'Grid');
+  if(!paths.length){grid.innerHTML='';return;}
+  grid.innerHTML='';
+  paths.forEach(path=>{
+    const thumb=document.createElement('div');
+    thumb.className='img-thumb';
+    thumb.innerHTML='<div class="img-loading">⌛</div>';
+    const del=document.createElement('button');
+    del.className='img-del';del.textContent='✕';del.title='ลบรูปนี้';
+    del.onclick=()=>confirmDeleteImg(path,folder);
+    thumb.appendChild(del);
+    grid.appendChild(thumb);
+    // โหลดรูป
+    fetch(NC.imgURL(path),{headers:NC.imgHeaders}).then(r=>r.blob()).then(blob=>{
+      const img=document.createElement('img');
+      img.src=URL.createObjectURL(blob);img.alt='';
+      thumb.querySelector('.img-loading').replaceWith(img);
+    }).catch(()=>{thumb.querySelector('.img-loading').textContent='❌';});
+  });
+}
+
+async function uploadImages(files,folder){
+  if(!NC.pass){showToast('กรุณาเชื่อมต่อ KU Drive ก่อน');return;}
+  const statusId=folder+'Status',progressId=folder+'Progress';
+  const total=files.length;let done=0,failed=0;
+  setStatus(statusId,'loading',`กำลังอัปโหลด 0/${total}...`);
+
+  for(const file of files){
+    try{
+      const fname=`${folder}/${Date.now()}_${file.name.replace(/[^a-zA-Z0-9._-]/g,'_')}`;
+      await NC.putFile(fname,file,file.type||'application/octet-stream');
+      done++;
+      setStatus(statusId,'loading',`กำลังอัปโหลด ${done}/${total}...`);
+    }catch(e){failed++;console.error(e);}
+  }
+
+  if(failed===0){setStatus(statusId,'ok',`✓ อัปโหลด ${done} ไฟล์สำเร็จ`);}
+  else{setStatus(statusId,'err',`อัปโหลดสำเร็จ ${done}, ล้มเหลว ${failed}`);}
+  document.getElementById(progressId).textContent='';
+  await loadImages(folder);
+}
+
+/* Drag & drop */
+function dragOver(e,id){e.preventDefault();document.getElementById(id).classList.add('drag')}
+function dragLeave(id){document.getElementById(id).classList.remove('drag')}
+function dropFiles(e,folder){e.preventDefault();dragLeave(folder+'Zone');uploadImages(e.dataTransfer.files,folder)}
+
+function confirmDeleteImg(path,folder){
+  const name=path.split('/').pop();
+  document.getElementById('modalTitle').textContent='ลบรูปนี้?';
+  document.getElementById('modalMsg').textContent=`"${name}" จะถูกลบออกจาก KU Drive`;
+  document.getElementById('modalConfirm').onclick=async()=>{
+    closeModal();
+    try{await NC.deleteFile(path);await loadImages(folder);showToast('✓ ลบแล้ว');}
+    catch(e){showToast('❌ '+e.message);}
+  };
+  document.getElementById('modalWrap').classList.add('show');
+}
+
+/* ── Greetings ── */
+let allGreetings=[],gPage=0;
+const G_PER=12;
+
+async function loadGreetings(){
+  if(!NC.pass)return;
+  try{
+    const data=await NC.getJSON('greetings.json');
+    allGreetings=Array.isArray(data)?data:[];
+    updateStats();renderGreetings();
+  }catch(e){showToast('โหลดไม่ได้: '+e.message);}
+}
+
+function updateStats(){
+  const cutoff=Date.now()-86400000;
+  document.getElementById('stTotal').textContent=allGreetings.length;
+  document.getElementById('stNew').textContent=allGreetings.filter(d=>new Date(d.time)>cutoff).length;
+  document.getElementById('stFlagged').textContent=allGreetings.filter(d=>d.flagged).length;
+}
+
+function renderGreetings(){
+  const f=document.getElementById('gFilter').value;
+  const q=(document.getElementById('gSearch').value||'').trim().toLowerCase();
+  const cutoff=Date.now()-86400000;
+  let list=[...allGreetings].reverse();
+  if(f==='new')list=list.filter(d=>new Date(d.time)>cutoff);
+  if(f==='flagged')list=list.filter(d=>d.flagged);
+  if(q)list=list.filter(d=>(d.name||'').toLowerCase().includes(q)||(d.message||'').toLowerCase().includes(q)||(d.detail||'').toLowerCase().includes(q));
+
+  const total=Math.ceil(list.length/G_PER);
+  if(gPage>=total)gPage=Math.max(0,total-1);
+  const page=list.slice(gPage*G_PER,(gPage+1)*G_PER);
+
+  const el=document.getElementById('gList');
+  if(!list.length){el.innerHTML='<div style="text-align:center;color:var(--gray1);font-size:13px;padding:30px">ไม่พบข้อมูล</div>';document.getElementById('gPager').innerHTML='';return;}
+
+  el.innerHTML='<div class="g-grid">'+page.map(d=>{
+    const col=colorFor(d.name);
+    const isNew=new Date(d.time)>cutoff;
+    const tags=[d.detail].filter(Boolean).map(t=>`<span style="font-size:10px;padding:1px 6px;border-radius:100px;background:#fff3e0;color:#cc6800">${escHtml(t)}</span>`).join('');
+    return`<div class="g-card${d.flagged?' flagged':''}">
+      <div class="g-card-top">
+        <div class="g-av" style="background:${col}">${escHtml(initials(d.name))}</div>
+        <div class="g-name">${escHtml(d.name)}</div>
+        <div class="g-time">${timeAgo(d.time)}</div>
+        ${isNew?'<span style="font-size:9px;padding:1px 5px;border-radius:100px;background:#fff3e0;color:#FF8200;font-weight:700">NEW</span>':''}
+      </div>
+      <div class="g-msg">${escHtml(d.message)}</div>
+      ${tags?`<div class="g-detail">${tags}</div>`:''}
+      <div class="g-actions">
+        <button class="btn btn-sm btn-ghost" onclick="toggleFlag('${d.id}')">${d.flagged?'✓ คืนสถานะ':'⚑ Flag'}</button>
+        <button class="btn btn-sm btn-danger" onclick="confirmDeleteOne('${d.id}','${escHtml(d.name)}')">ลบ</button>
+      </div>
+    </div>`;
+  }).join('')+'</div>';
+
+  // Pager
+  const pg=document.getElementById('gPager');
+  if(total<=1){pg.innerHTML='';return;}
+  pg.innerHTML=`<button ${gPage===0?'disabled':''} onclick="gPage--;renderGreetings()">&#8592;</button><span class="info">${gPage+1} / ${total}</span><button ${gPage>=total-1?'disabled':''} onclick="gPage++;renderGreetings()">&#8594;</button>`;
+}
+
+async function toggleFlag(id){
+  const i=allGreetings.findIndex(d=>d.id===id);if(i<0)return;
+  allGreetings[i].flagged=!allGreetings[i].flagged;
+  try{await NC.putJSON('greetings.json',allGreetings);updateStats();renderGreetings();showToast(allGreetings[i].flagged?'⚑ Flagged':'✓ คืนสถานะแล้ว');}
+  catch(e){showToast('❌ '+e.message);}
+}
+
+function confirmDeleteOne(id,name){
+  document.getElementById('modalTitle').textContent='ยืนยันการลบ';
+  document.getElementById('modalMsg').textContent=`ลบคำอวยพรของ "${name}" ออกจาก KU Drive?`;
+  document.getElementById('modalConfirm').onclick=async()=>{closeModal();allGreetings=allGreetings.filter(d=>d.id!==id);try{await NC.putJSON('greetings.json',allGreetings);updateStats();renderGreetings();showToast('✓ ลบแล้ว');}catch(e){showToast('❌ '+e.message);}};
+  document.getElementById('modalWrap').classList.add('show');
+}
+
+function confirmDeleteAll(){
+  document.getElementById('modalTitle').textContent='ลบทั้งหมด?';
+  document.getElementById('modalMsg').textContent=`ลบคำอวยพรทั้งหมด ${allGreetings.length} รายการ ไม่สามารถกู้คืนได้`;
+  document.getElementById('modalConfirm').onclick=async()=>{closeModal();allGreetings=[];try{await NC.putJSON('greetings.json',[]);updateStats();renderGreetings();showToast('✓ ลบทั้งหมดแล้ว');}catch(e){showToast('❌ '+e.message);}};
+  document.getElementById('modalWrap').classList.add('show');
+}
+
+function closeModal(){document.getElementById('modalWrap').classList.remove('show')}
+</script>
 </body>
 </html>
