@@ -375,7 +375,7 @@ const NC={
   get pass(){return sessionStorage.getItem('nc_pass')||''},
   get dav(){return`${this.base}/remote.php/dav/files/${this.user}/${this.folder}`},
   get headers(){return{'Authorization':'Basic '+safeB64(`${this.user}:${this.pass}`),'Content-Type':'application/json'}},
-  get imgHeaders(){return{}},
+  get imgHeaders(){return this.pass?{'Authorization':'Basic '+safeB64(`${this.user}:${this.pass}`)}:{}},
   async getJSON(f){const r=await fetch(`${this.dav}/${f}`,{headers:this.headers});if(r.status===404)return null;if(!r.ok)throw new Error(`${r.status} ${r.statusText}`);return r.json()},
   async putJSON(f,d){const r=await fetch(`${this.dav}/${f}`,{method:'PUT',headers:this.headers,body:JSON.stringify(d,null,2)});if(!r.ok)throw new Error(`${r.status} ${r.statusText}`)},
   async putFile(f,blob,mime){
@@ -437,10 +437,7 @@ async function saveConn(){
     if(check.status===404){
       await fetch(NC.dav+'/greetings.json',{method:'PUT',headers:NC.headers,body:'[]'});
     }else if(!check.ok){throw new Error(`${check.status}`);}
-    // สร้างโฟลเดอร์ถ้ายังไม่มี
-    for(const f of['banner','cards']){
-      try{await fetch(`${NC.dav}/${f}/`,{method:'MKCOL',headers:NC.imgHeaders})}catch(_){}
-    }
+    // โฟลเดอร์ banner/ และ cards/ ต้องสร้างเองใน KU Drive
     setStatus('connStatus','ok','✓ เชื่อมต่อสำเร็จ');
     setBadge(true);
     loadAll();
